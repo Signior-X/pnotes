@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta tags and title -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+
+    <!-- Firebase SCripts, currently using app, auth and database for right now! -->
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.14.4/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
+    <!-- <script defer src="/__/firebase/7.14.4/firebase-messaging.js"></script> -->
+    <!-- <script defer src="/__/firebase/7.14.4/firebase-storage.js"></script> -->
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+    <!-- Stylesheets -->
+    <style media="screen">
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px;}
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; background: white; box-shadow: none; }
+      }
+    </style>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+  </head>
+  <body>
+
+    <!-- this line tells which firebase services are loaded or say using here! -->
+    <!-- Check script below which tells about the services -->
+    <p id="load">Firebase SDK Loading&hellip;</p>
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        window.signInEmail = "";
+
+        signInfunction=()=>{
+            // Start the sign in Activity!
+            console.log("Sign In NOw!");
+
+            // Google sign in
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(function(result){
+                console.log(result);
+                console.log("success, check now!");
+            }).catch(function(err){
+                console.log(err);
+                console.log("Failed to do");
+            });
+
+            
+        //     firebase.auth().signInWithRedirect(provider);
+
+        //     firebase.auth().getRedirectResult()
+        //         .then(function(result) {
+
+        //             if (result.credential) {
+        //                 // This gives you a Google Access Token. You can use it to access the Google API.
+        //                 var token = result.credential.accessToken;
+        //                 // ...
+        //             }
+        //             // The signed-in user info.
+        //             var user = result.user;
+        //             console.log("Sign In success!");
+        //             console.log(user);
+                    
+        //         })
+        //         .catch(function(error) {
+        //             // Handle Errors here.
+        //             console.log("Sign In Failed!");
+        //             var errorCode = error.code;
+        //             var errorMessage = error.message;
+        //             // The email of the user's account used.
+        //             var email = error.email;
+        //             // The firebase.auth.AuthCredential type that was used.
+        //             var credential = error.credential;
+        //             // ...
+        //         });
+
+        }
+
+        var family = {
+            aaron: {
+                title: 'Aaron',
+                description: 30,
+                date: "May 18"
+            },
+            megan: {
+                title: 'Megan',
+                description: 40,
+                date: "May 17"
+            },
+            aaliyah: {
+                title: 'Aaliyah',
+                description: 2,
+                date: "May 18"
+            }
+        }
+
+        var noteListId = document.getElementById('note-family');
+        var list = function(family) {
+            for (var prop in family) {
+                noteListId.innerHTML += '<li>' + prop + '</li>';
+                console.log(prop);
+            }
+        }
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                console.log("User is signed in!");
+                window.signInEmail = user.email;
+                console.log(window.signInEmail);
+                document.getElementById('guser').innerHTML = "Welcome "+window.signInEmail;
+                document.getElementById('signInButton').style.display = "none";
+                document.getElementById('signOutButton').style.display = "block";
+                list(family);
+                
+            } else {
+                console.log("NO user signed in!");
+                window.signInEmail = "";
+                document.getElementById('guser').innerHTML = "Welcome to Pnotes!";
+                document.getElementById('signInButton').style.display = "block";
+                document.getElementById('signOutButton').style.display = "none";
+                document.getElementById('note-family').innerHTML = '';
+                // No user is signed in.
+            }
+        });
+
+
+
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+
+      
+    </script>
+
+    <script>
+        signOutfunction=()=>{
+            //Start the user delete or sign out activity
+            console.log("Sign Out User!");
+
+            var user = firebase.auth().signOut();
+        }
+    </script>
+
+    <!-- Main content -->
+    <div class="container">
+
+        <div id="message">
+            <span class="heading" id="guser"> Weclome to Pnotes!</span> 
+            <button onclick="signInfunction()" class='btn btn-success pull-right' id="signInButton">Google Sign In!</button>
+            <button onclick="signOutfunction()" class='btn btn-success pull-right' id="signOutButton">Sign out</button>
+
+            <ul id="note-family">
+            </ul>
+        </div>
+        
+    </div>
+
+  </body>
+</html>
