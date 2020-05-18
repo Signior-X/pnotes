@@ -125,12 +125,37 @@
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 console.log("User is signed in!");
-                window.signInEmail = user.email;
+                var len = user.email.length;
+                //console.log(len);
+                window.signInEmail = user.email.toString().substr(0, len-10); //Removing the @gmail.com
                 console.log(window.signInEmail);
                 document.getElementById('guser').innerHTML = "Welcome "+window.signInEmail;
                 document.getElementById('signInButton').style.display = "none";
                 document.getElementById('signOutButton').style.display = "block";
-                list(family);
+
+                // Now call the data extract for only once so as to get the list of datas
+                firebase.database().ref(window.signInEmail).once('value').then(function(snapshot){
+                    
+                    // Get the id of the list
+                    var noteListId = document.getElementById('note-family');
+                    
+                    snapshot.forEach(function(childSnapshot) {
+                        var childKey = childSnapshot.key;
+                        var childData = childSnapshot.val();
+                        //console.log("childkey", childKey);
+                        //console.log("childData", childData);
+                        // ...
+
+                        
+                        noteListId.innerHTML += '<ul id="noterow">' + childKey + '<li>' + childData.title + '</li>' + '<li>' + childData.description + '</li>' + '<li>' + childData.date + '</li>' + '</ul>';
+                        
+                    });
+                })
+                .catch(function(error){
+                    console.log("ERRor", error);
+                });
+
+                //list(family);
                 
             } else {
                 console.log("NO user signed in!");
