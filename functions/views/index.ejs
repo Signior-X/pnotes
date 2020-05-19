@@ -36,7 +36,6 @@
     <!-- Check script below which tells about the services -->
     <p id="load">Firebase SDK Loading&hellip;</p>
 
-
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
@@ -96,32 +95,6 @@
 
         }
 
-        var family = {
-            aaron: {
-                title: 'Aaron',
-                description: 30,
-                date: "May 18"
-            },
-            megan: {
-                title: 'Megan',
-                description: 40,
-                date: "May 17"
-            },
-            aaliyah: {
-                title: 'Aaliyah',
-                description: 2,
-                date: "May 18"
-            }
-        }
-
-        var noteListId = document.getElementById('note-family');
-        var list = function(family) {
-            for (var prop in family) {
-                noteListId.innerHTML += '<li>' + prop + '</li>';
-                console.log(prop);
-            }
-        }
-
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 console.log("User is signed in!");
@@ -132,12 +105,16 @@
                 document.getElementById('guser').innerHTML = "Welcome "+window.signInEmail;
                 document.getElementById('signInButton').style.display = "none";
                 document.getElementById('signOutButton').style.display = "block";
+                document.getElementById('addNoteButton').style.display = "block";
 
                 // Now call the data extract for only once so as to get the list of datas
-                firebase.database().ref(window.signInEmail).once('value').then(function(snapshot){
-                    
+                firebase.database().ref(window.signInEmail).on('value', function(snapshot){
+                        
                     // Get the id of the list
                     var noteListId = document.getElementById('note-family');
+                    
+                    //Clear the list
+                    noteListId.innerHTML ='';
                     
                     snapshot.forEach(function(childSnapshot) {
                         var childKey = childSnapshot.key;
@@ -147,15 +124,41 @@
                         // ...
 
                         
-                        noteListId.innerHTML += '<ul id="noterow">' + childKey + '<li>' + childData.title + '</li>' + '<li>' + childData.description + '</li>' + '<li>' + childData.date + '</li>' + '</ul>';
+                        noteListId.innerHTML += '<div id="noterow">' 
+                            + '<p id="notekey">' + childKey + '</p>'
+                            + '<h6 id="note-date">' + childData.date + '</h6>' 
+                            + '<h3 id="note-title">' + childData.title + '</h3>'
+                            + '<p>' + childData.description + '</p>'
+                            + '</div>';
                         
                     });
-                })
-                .catch(function(error){
-                    console.log("ERRor", error);
                 });
 
                 //list(family);
+
+                // Here the firebase is correctly defined purely!
+                //console.log(firebase.database.ServerValue.TIMESTAMP);
+
+                addNotefunction=()=>{
+                    //Start the add note function
+                    console.log("Add Note");
+                    
+                    var newNote = {
+                        title: "Note using js",
+                        description: "hEllo",
+                        date: "May 20",
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    }
+
+                    // Get a key for a new Post.
+                    var newPostKey = firebase.database().ref(window.signInEmail).push().key;
+
+                    // Write the new post's data simultaneously in the posts list and the user's post list.
+                    var updates = {};
+                    updates[newPostKey] = newNote;
+
+                    return firebase.database().ref(window.signInEmail).update(updates);
+                }
                 
             } else {
                 console.log("NO user signed in!");
@@ -163,6 +166,7 @@
                 document.getElementById('guser').innerHTML = "Welcome to Pnotes!";
                 document.getElementById('signInButton').style.display = "block";
                 document.getElementById('signOutButton').style.display = "none";
+                document.getElementById('addNoteButton').style.display = "none";
                 document.getElementById('note-family').innerHTML = '';
                 // No user is signed in.
             }
@@ -192,19 +196,62 @@
         }
     </script>
 
+
+
     <!-- Main content -->
     <div class="container">
 
         <div id="message">
-            <span class="heading" id="guser"> Weclome to Pnotes!</span> 
+            <span class="heading" id="guser"> Weclome to Pnotes!</span>
             <button onclick="signInfunction()" class='btn btn-success pull-right' id="signInButton">Google Sign In!</button>
             <button onclick="signOutfunction()" class='btn btn-success pull-right' id="signOutButton">Sign out</button>
+            <button class='btn btn-success pull-right' id="addNoteButton">Add Note</button>
 
-            <ul id="note-family">
-            </ul>
+            <div id="note-family">
+            </div>
         </div>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+            </div>
         
+        </div>
+
     </div>
 
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        
+        // Get the button that opens the modal
+        var addbtn = document.getElementById("addNoteButton");
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks the button, open the modal 
+        addbtn.onclick = function() {
+          modal.style.display = "block";
+        }
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+        
+    
   </body>
 </html>
