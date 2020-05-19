@@ -58,6 +58,11 @@ body {
     margin-top: 10px !important;
 }
 
+/* Showing line gap in note description and next liness */
+#note-description {
+    white-space: pre-line;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -96,4 +101,23 @@ body {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
+}
+
+/* For submit button */
+#add-note-submit-button { 
+    background-color: #17b8b8; 
+    color: white; 
+    margin: 4px 0; 
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border: none; 
+    cursor: pointer;
+    border-radius: 0.25em;
+}
+
+#addescription{
+    height: 300px;
+    white-space: pre-line;
+}
