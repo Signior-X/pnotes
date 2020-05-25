@@ -28,7 +28,8 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   </head>
   <body>
 
@@ -139,11 +140,15 @@
                         var childData = childSnapshot.childData;
 
                         //Setting the value
-                        noteListId.innerHTML += '<div id="noterow">' 
+                        noteListId.innerHTML += '<div class="noterow" id="'+ childKey +'">' 
                             + '<p id="notekey">' + childKey + '</p>'
+                            + '<!-- Expand Button -->'
+                            //+ '<button class="btn btn-primary" id="expand-button" style="display: block;" >'
+                            + '<i id="expand-toggler-icon" onclick=expandCollapseFun("' + childKey + '") '
+                                + ' style="font-size:24px;" class="fa btn">&#xf107;</i>'
                             + '<h6 id="note-date">' + childData.date + '</h6>' 
                             + '<h3 id="note-title">' + childData.title + '</h3>'
-                            + '<p id="note-description">' + childData.description + '</p>'
+                            + '<p id="note-description" style="display: none;">' + childData.description + '</p>'
                             + '</div>';
                     });
                 });
@@ -219,8 +224,8 @@
         <div id="message">
             <span class="heading" id="guser"> Weclome to Pnotes!</span>
             <button onclick="signInfunction()" class='btn btn-success pull-right' id="signInButton">Google Sign In!</button>
-            <button onclick="signOutfunction()" class='btn btn-success pull-right' id="signOutButton">Sign out</button>
-            <button class='btn btn-success pull-right' id="addNoteButton">Add Note</button>
+            <button onclick="signOutfunction()" class='btn btn-danger pull-right' id="signOutButton">Sign out</button>
+            <button class='btn btn-primary pull-right' id="addNoteButton">Add Note</button>
 
             <div id="note-family">
             </div>
@@ -311,6 +316,26 @@
 
     </script>
         
-    
+    <!-- script for expand and collapse -->
+    <script>
+        function expandCollapseFun(divId) {
+            var clickedDiv = document.getElementById(divId);
+            var desc = clickedDiv.getElementsByTagName('p')[1];
+            console.log(desc);
+
+            var expBtnStyle = clickedDiv.getElementsByTagName('i')[0];
+            if(desc.style.display === 'none'){
+                // This is collapsed
+                // Expand this
+                desc.style.display = "block";
+                expBtnStyle.innerHTML = "&#xf106;";
+            } else {
+                expBtnStyle.innerHTML = "&#xf107;"
+                desc.style.display = "none";
+            }
+
+        }
+    </script>
+
   </body>
 </html>

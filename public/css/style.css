@@ -3,12 +3,11 @@ body {
 }
 
 #message {
-    background: #eee;
+    background: #f2f5f4;
     max-width: 800px; 
     margin: 32px auto 16px; 
     padding: 32px 24px;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
-    border-radius: 3px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 .heading { 
@@ -20,21 +19,21 @@ body {
 /* Hide the sign out button and show this when signed in! */
 #signOutButton {
     display: none;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(255,152,0,.4);
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,0,0,0.2);
 }
 
 #signInButton {
     display: none;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(255,152,0,.4);
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,0,0,0.2);
 }
 
 #addNoteButton {
     display: none;
     margin-right: 10px;
-    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(255,152,0,.4);
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(0,0,0,0.2);
 }
 
-#noterow {
+.noterow {
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
@@ -42,7 +41,7 @@ body {
     margin-top: 24px;
     padding: 14px;
     border-radius: 6px;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 /* Hide the note key */
@@ -52,10 +51,15 @@ body {
 
 #note-date {
     float: right;
+    margin-right: 10px;
+}
+
+#expand-toggler-icon {
+    float: right;
 }
 
 #note-title {
-    margin-top: 10px !important;
+    margin-top: 0px !important;
 }
 
 /* Showing line gap in note description and next liness */
