@@ -1,5 +1,6 @@
 body {
     background-color: aqua !important;
+    overflow-y: scroll;
 }
 
 #message {
@@ -53,21 +54,21 @@ body {
     display: none;
 }
 
-#note-date {
+.note-date {
     float: right;
     margin-right: 10px;
 }
 
-#expand-toggler-icon {
+.expand-toggler-icon {
     float: right;
 }
 
-#note-title {
+.note-title {
     margin-top: 0px !important;
 }
 
 /* Showing line gap in note description and next liness */
-#note-description {
+.note-description {
     white-space: pre-line;
 }
 
@@ -77,6 +78,7 @@ body {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
+    padding-bottom: 50px;
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -84,6 +86,7 @@ body {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    overflow-y: auto !important;
 }
   
   /* Modal Content */
@@ -125,7 +128,19 @@ body {
     border-radius: 0.25em;
 }
 
-#addescription{
-    height: 300px;
+#add-description{
+    height: 400px;
     white-space: pre-line;
+}
+
+.update-note-button {
+    float: right;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.remove-note-button {
+    float: right;
+    margin-left: 4px;
+    margin-right: 4px;
 }

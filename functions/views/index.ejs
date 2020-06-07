@@ -144,11 +144,13 @@
                             + '<p class="notekey" >' + childKey + '</p>'
                             + '<!-- Expand Button -->'
                             //+ '<button class="btn btn-primary" id="expand-button" style="display: block;" >'
-                            + '<i id="expand-toggler-icon"  '
-                                + ' style="font-size:24px;" class="fa btn">&#xf107;</i>'
-                            + '<h6 id="note-date">' + childData.date + '</h6>' 
-                            + '<h4 id="note-title">' + childData.title + '</h4>'
-                            + '<p id="note-description" style="display: none;">' + childData.description + '</p>'
+                            + '<i '
+                                + ' style="font-size:24px;" class="expand-toggler-icon fa btn">&#xf107;</i>'
+                            + '<Button class="update-note-button btn btn-secondary" onclick=openUpdateNoteModal(\'' + childKey + '\') >' + 'Update' + '</Button>' 
+                            + '<Button class="remove-note-button btn btn-danger" onclick=alert("hello") >' + 'Remove' + '</Button>' 
+                            + '<h6 class="note-date">' + childData.date + '</h6>'
+                            + '<h4 class="note-title">' + childData.title + '</h4>'
+                            + '<p class="note-description" style="display: none;">' + childData.description + '</p>'
                             + '</div>';
                     });
                 });
@@ -162,10 +164,14 @@
                     //Start the add note function
                     console.log("Add Note");
                     
+                    var options = {month: 'short', day: 'numeric' };
+                    var today  = new Date();
+                    // console.log(today.toLocaleDateString("en-US", options));
+
                     var newNote = {
                         title: title,
                         description: description,
-                        date: "May 20",
+                        date: today.toLocaleDateString("en-US", options),
                         timestamp: firebase.database.ServerValue.TIMESTAMP
                     }
 
@@ -175,6 +181,29 @@
                     // Write the new post's data simultaneously in the posts list and the user's post list.
                     var updates = {};
                     updates[newPostKey] = newNote;
+
+                    return firebase.database().ref(window.signInEmail).update(updates);
+                }
+
+                updateNotefunction=(noteId, title, description)=>{
+                    
+                    //Start the update note function
+                    console.log("Update Note");
+                    
+                    var options = {month: 'short', day: 'numeric' };
+                    var today  = new Date();
+                    // console.log(today.toLocaleDateString("en-US", options));
+
+                    var newNote = {
+                        title: title,
+                        description: description,
+                        date: today.toLocaleDateString("en-US", options),
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    }
+
+                    // Write the new post's data simultaneously in the posts list and the user's post list.
+                    var updates = {};
+                    updates[noteId] = newNote;
 
                     return firebase.database().ref(window.signInEmail).update(updates);
                 }
@@ -216,7 +245,66 @@
         }
     </script>
 
+    <!-- Script to open update note modal-->
+    <script>
+        function openUpdateNoteModal(noteRowId) {
+            // console.log(noteRowId);
+            var noteRowSelected = document.getElementById(noteRowId);
+            // console.log(noteRowSelected);
 
+            // Now update after taking values from this
+            var noteDescr = noteRowSelected.getElementsByClassName('note-description')[0].innerHTML;
+            var noteTitle = noteRowSelected.getElementsByClassName('note-title')[0].innerHTML;
+            console.log(noteDescr);
+            // console.log(noteTitle);
+
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            
+            var formNoteTitle = document.getElementById('add-title');
+            var formNoteDescr = document.getElementById('add-description');
+            formNoteTitle.value = noteTitle;
+            formNoteDescr.innerHTML = noteDescr;
+            // When the user clicks the button, open the modal 
+            modal.style.display = "block";
+            // Certainly some times an unexpected problem arise if value is not updated
+            formNoteDescr.value = noteDescr;
+            
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // Now for the submit button
+            var submitUpdateNote = document.getElementById('add-note-submit-button');
+            submitUpdateNote.innerHTML = 'Update Note';
+
+             submitUpdateNote.onclick = function(){
+                
+            var addNoteTitle = document.getElementById('add-title').value;
+                var addNoteDescription = document.getElementById('add-description').value;
+                //console.log(addNoteTitle);
+                //console.log(addNoteDescription);
+                if(addNoteTitle){
+                    // Note title not empty
+                    // Now do the thing which you want to do call addNotefunction
+                    updateNotefunction(noteRowId, addNoteTitle, addNoteDescription);
+                    modal.style.display = "none";
+
+                } else{
+                    //Empty
+                    console.log("Empty Note Title");
+                    modal.style.display = "none";
+                }
+            }
+            
+
+
+        }
+    </script>    
 
     <!-- Main content -->
     <div class="container">
@@ -284,15 +372,15 @@
           modal.style.display = "none";
         }
         
-        // When the user clicks anywhere outside of the modal, close it
-        // window.onclick = function(event) {
-        //   if (event.target == modal) {
-        //     modal.style.display = "none";
-        //   }
-        // }
+        // empty the textboxes
+        var formNoteTitle = document.getElementById('add-title');
+        var formNoteDescr = document.getElementById('add-description');
+        formNoteTitle.value = '';
+        formNoteDescr.innerHTML = '';
 
         // Now for the submit button
         var submitAddNote = document.getElementById('add-note-submit-button');
+        submitAddNote.innerHTML = 'Add Note';
 
         submitAddNote.onclick = function(){
             
@@ -321,7 +409,7 @@
         function expandCollapseFun(divId) {
             var clickedDiv = document.getElementById(divId);
             var desc = clickedDiv.getElementsByTagName('p')[1];
-            console.log(desc);
+            // console.log(desc);
 
             var expBtnStyle = clickedDiv.getElementsByTagName('i')[0];
             if(desc.style.display === 'none'){
