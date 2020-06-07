@@ -149,7 +149,7 @@
                                 + '<i '
                                     + ' style="font-size:24px;" class="expand-toggler-icon fa btn">&#xf107;</i>'
                                 + '<Button class="update-note-button btn btn-secondary" onclick=openUpdateNoteModal(\'' + childKey + '\') >' + 'Update' + '</Button>' 
-                                + '<Button class="remove-note-button btn btn-danger" onclick=deleteNotefunction(\'' + childKey + '\') >' + 'Remove' + '</Button>' 
+                                + '<Button class="remove-note-button btn btn-danger" onclick=openDeleteNoteModal(\'' + childKey + '\') >' + 'Remove' + '</Button>' 
                                 + '<h6 class="note-date">' + childData.date + '</h6>'
                                 + '<h4 class="note-title">' + childData.title + '</h4>'
                             + '</div>'
@@ -326,7 +326,7 @@
             </div>
         </div>
 
-        <!-- The Modal -->
+        <!-- The Add and delete Modal -->
         <div id="myModal" class="modal">
 
             <!-- Modal content -->
@@ -356,6 +356,24 @@
         
         </div>
 
+        <!-- The delete Modal -->
+        <div id="deleteModal" class="modal" style="padding-top: 200px;">
+
+            <!-- Modal content -->
+            <div class="modal-content" style="max-width: 400px;">
+                <!-- Heading and close button -->
+                <span class="close">&times;</span>
+                <h3 style="margin-top: 5px !important;">Delete Note Warning</h3>
+                <p>Are You Sure You want to Delete this Note?<p>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary cancel">Close</button>
+                    <button type="button" class="btn btn-primary confirm-delete">Delete Note</button>
+                  </div>
+            </div>
+
+        </div>
+
     </div>
 
     <!-- Script for all add note form and all -->
@@ -379,11 +397,6 @@
           modal.style.display = "none";
         }
         
-        // empty the textboxes
-        var formNoteTitle = document.getElementById('add-title');
-        var formNoteDescr = document.getElementById('add-description');
-        formNoteTitle.value = '';
-        formNoteDescr.innerHTML = '';
 
         // Now for the submit button
         var submitAddNote = document.getElementById('add-note-submit-button');
@@ -399,6 +412,13 @@
                 // Note title not empty
                 // Now do the thing which you want to do call addNotefunction
                 addNotefunction(addNoteTitle, addNoteDescription);
+
+                        // empty the textboxes
+                var formNoteTitle = document.getElementById('add-title');
+                var formNoteDescr = document.getElementById('add-description');
+                formNoteTitle.value = '';
+                formNoteDescr.innerHTML = '';
+
                 modal.style.display = "none";
 
             } else{
@@ -411,6 +431,35 @@
 
     </script>
         
+    <script>
+        function openDeleteNoteModal(noteRowId){
+            // Get the modal
+            var modal = document.getElementById("deleteModal");
+            modal.style.display = "block";
+
+            // Get the <span> element that closes the modal
+            var span = modal.getElementsByClassName("close")[0];
+            
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            var cancel = modal.getElementsByClassName("cancel")[0];
+            cancel.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            confirmDelete = modal.getElementsByClassName("confirm-delete")[0];
+            confirmDelete.onclick = function() {
+                deleteNotefunction(noteRowId);
+                modal.style.display ="none";
+            }
+        
+        }
+    </script>
+
+
     <!-- script for expand and collapse -->
     <script>
         function expandCollapseFun(divId) {
