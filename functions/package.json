@@ -18,7 +18,8 @@
     "firebase-functions": "^3.6.1",
     "http-errors": "^1.7.3",
     "morgan": "^1.10.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "websocket-extensions": "^0.1.4"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0"
