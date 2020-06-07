@@ -140,14 +140,14 @@
                         var childData = childSnapshot.childData;
 
                         //Setting the value
-                        noteListId.innerHTML += '<div class="noterow" id="'+ childKey +'">' 
-                            + '<p id="notekey">' + childKey + '</p>'
+                        noteListId.innerHTML += '<div class="noterow" id="'+ childKey +'" onclick=expandCollapseFun("' + childKey + '") >' 
+                            + '<p class="notekey" >' + childKey + '</p>'
                             + '<!-- Expand Button -->'
                             //+ '<button class="btn btn-primary" id="expand-button" style="display: block;" >'
-                            + '<i id="expand-toggler-icon" onclick=expandCollapseFun("' + childKey + '") '
+                            + '<i id="expand-toggler-icon"  '
                                 + ' style="font-size:24px;" class="fa btn">&#xf107;</i>'
                             + '<h6 id="note-date">' + childData.date + '</h6>' 
-                            + '<h3 id="note-title">' + childData.title + '</h3>'
+                            + '<h4 id="note-title">' + childData.title + '</h4>'
                             + '<p id="note-description" style="display: none;">' + childData.description + '</p>'
                             + '</div>';
                     });
