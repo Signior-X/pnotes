@@ -57,6 +57,7 @@ body {
 .note-date {
     float: right;
     margin-right: 10px;
+    margin-left: 10px;
 }
 
 .expand-toggler-icon {
