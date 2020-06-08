@@ -320,7 +320,7 @@
             <span class="heading" id="guser"> Weclome to Pnotes!</span>
             <button onclick="signInfunction()" class='btn btn-success pull-right' id="signInButton">Google Sign In!</button>
             <button onclick="signOutfunction()" class='btn btn-danger pull-right' id="signOutButton">Sign out</button>
-            <button class='btn btn-primary pull-right' id="addNoteButton">Add Note</button>
+            <button class='btn btn-primary pull-right' id="addNoteButton" onclick=openAddNoteModal()>Add Note</button>
 
             <div id="note-family">
             </div>
@@ -331,9 +331,15 @@
 
             <!-- Modal content -->
             <div class="modal-content">
+
                 <!-- Heading and close button -->
-                <span class="close">&times;</span>
-                <h3 style="margin-top: 5px !important;">Add Note</h3>
+                <span class="close" style="padding-top: 4px; font-size: 30px;">&times;</span>
+                <!-- Submit Button --> <!-- Changed it to have it only for function -->
+                <div style="padding-bottom: 50px">
+                    <h3 style="margin-top: 5px !important; float: left;">Add Note</h3>
+                    <button id="add-note-submit-button" style="float: right; margin-right: 16px;">Add Note</button>
+                </div>
+                
 
                 <!-- Function to add a note-->
 
@@ -345,11 +351,6 @@
                     <!-- Description -->
                     <div class="form-group">
                         <textarea id="add-description" type="text" class="form-control input-contrast input-block" placeholder="Add Note Description here"></textarea>
-                    </div>
-                    
-                    <!-- Submit Button --> <!-- Changed it to have it only for function -->
-                    <div style="text-align: center; margin-top: 16px;">
-                        <button id="add-note-submit-button">Add Note</button>
                     </div>
                 
             </div>
@@ -378,57 +379,56 @@
 
     <!-- Script for all add note form and all -->
     <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-        
-        // Get the button that opens the modal
-        var addbtn = document.getElementById("addNoteButton");
-        
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        
-        // When the user clicks the button, open the modal 
-        addbtn.onclick = function() {
-          modal.style.display = "block";
-        }
-        
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-        
+        function openAddNoteModal() {
 
-        // Now for the submit button
-        var submitAddNote = document.getElementById('add-note-submit-button');
-        submitAddNote.innerHTML = 'Add Note';
-
-        submitAddNote.onclick = function(){
+            // Get the modal
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
             
-            var addNoteTitle = document.getElementById('add-title').value;
-            var addNoteDescription = document.getElementById('add-description').value;
-            //console.log(addNoteTitle);
-            //console.log(addNoteDescription);
-            if(addNoteTitle){
-                // Note title not empty
-                // Now do the thing which you want to do call addNotefunction
-                addNotefunction(addNoteTitle, addNoteDescription);
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
 
-                        // empty the textboxes
-                var formNoteTitle = document.getElementById('add-title');
-                var formNoteDescr = document.getElementById('add-description');
-                formNoteTitle.value = '';
-                formNoteDescr.innerHTML = '';
-
-                modal.style.display = "none";
-
-            } else{
-                //Empty
-                console.log("Empty Note Title");
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
                 modal.style.display = "none";
             }
+
+            // empty the textboxes
+            var formNoteTitle = document.getElementById('add-title');
+            var formNoteDescr = document.getElementById('add-description');
+            formNoteDescr.innerHTML = '';
+            formNoteTitle.value = '';
+            formNoteDescr.value = '';
+
+            // Now for the submit button
+            var submitAddNote = document.getElementById('add-note-submit-button');
+            submitAddNote.innerHTML = 'Add Note';
+
+            submitAddNote.onclick = function () {
+
+                var addNoteTitle = document.getElementById('add-title').value;
+                var addNoteDescription = document.getElementById('add-description').value;
+                //console.log(addNoteTitle);
+                //console.log(addNoteDescription);
+                if (addNoteTitle) {
+                    // Note title not empty
+                    // Now do the thing which you want to do call addNotefunction
+                    addNotefunction(addNoteTitle, addNoteDescription);
+
+                    formNoteTitle.value = '';
+                    formNoteDescr.innerHTML = '';
+
+                    modal.style.display = "none";
+
+                } else {
+                    //Empty
+                    console.log("Empty Note Title");
+                    modal.style.display = "none";
+                }
+            }
+
         }
         
-
     </script>
         
     <script>
