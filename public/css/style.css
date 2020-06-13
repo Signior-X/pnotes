@@ -155,24 +155,12 @@ body {
         margin-top: 50px;
     }
 
-    .note-date {
-        margin-left: -2px;
-    }
     #message {
         margin: 32px auto 8px;
         padding: 32px 12px;
     }
 
-    .expand-toggler-icon {
-        padding-right: 5px !important;
-        padding-left: 5px !important;
-    }
-
     .noterow ul, .noterow ol {
         padding-inline-start: 20px !important;
-    }
-
-    .noterow {
-        padding: 10px;
     }
 }
