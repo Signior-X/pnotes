@@ -16,6 +16,7 @@
     <!-- <script defer src="/__/firebase/7.14.4/firebase-storage.js"></script> -->
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
+    <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
 
     <!-- Stylesheets -->
     <style media="screen">
@@ -50,6 +51,8 @@
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
         window.signInEmail = "";
+        var md = new Remarkable();
+        // console.log(md.render('# Remarkable rulezz!'));
 
         signInfunction=()=>{
             // Start the sign in Activity!
@@ -154,6 +157,7 @@
                                 + '<h4 class="note-title">' + childData.title + '</h4>'
                             + '</div>'
                             + '<p class="note-description" style="display: none;">' + childData.description + '</p>'
+                            + '<div class="note-descripiton-md" style="display: none;">' + md.render(childData.description) + '</div>'
                             + '</div>';
                     });
                 });
@@ -465,25 +469,24 @@
         function expandCollapseFun(divId) {
             try {
                 var clickedDiv = document.getElementById(divId);
-                var desc = clickedDiv.getElementsByTagName('p')[1];
-                // console.log(desc);
+                var descMd = clickedDiv.getElementsByClassName('note-descripiton-md')[0];
+                console.log(descMd);
 
                 var expBtnStyle = clickedDiv.getElementsByTagName('i')[0];
-                if(desc.style.display === 'none'){
+                if(descMd.style.display === 'none'){
                     // This is collapsed
                     // Expand this
-                    desc.style.display = "block";
+                    descMd.style.display = "block";
                     expBtnStyle.innerHTML = "&#xf106;";
                 } else {
                     expBtnStyle.innerHTML = "&#xf107;"
-                    desc.style.display = "none";
+                    descMd.style.display = "none";
                 }
             } catch(e) {
                 console.log(e);
                 console.log("Ignore this message, this comes when remove is done")
             }
             
-
         }
     </script>
 
