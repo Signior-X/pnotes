@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
     window.signInEmail = "";
+    window.notesData = {};
     var md = new Remarkable();
     // console.log(md.render('# Remarkable rulezz!'));
 
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var len = user.email.length;
             //console.log(len);
             window.signInEmail = user.email.toString().substr(0, len - 10); //Removing the @gmail.com
-            console.log(window.signInEmail);
+            // console.log(window.signInEmail);
             document.getElementById('guser').innerHTML = "Welcome " + window.signInEmail;
             document.getElementById('signInButton').style.display = "none";
             document.getElementById('signOutButton').style.display = "block";
@@ -98,11 +99,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Reverse the array
                 descNoteList.reverse();
 
+                // Empty the notes data
+                window.notesData = {};
+
                 descNoteList.forEach(function (childSnapshot) {
                     var childKey = childSnapshot.childKey;
                     var childData = childSnapshot.childData;
 
-                    //Setting the value
+                    // Only storing notes description in it
+                    window.notesData[childKey] = childData.description;
+
+                    // Setting the values
                     noteListId.innerHTML += '<div class="noterow" id="' + childKey + '" >'
                         + '<p class="notekey" >' + childKey + '</p>'
                         + '<!-- Expand Button -->'
@@ -116,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         + '<h6 class="note-date">' + childData.date + '</h6>'
                         + '<h4 class="note-title">' + childData.title + '</h4>'
                         + '</div>'
-                        + '<p class="note-description" style="display: none;">' + childData.description + '</p>'
                         + '<div class="note-descripiton-md" style="display: none;">' + md.render(childData.description) + '</div>'
                         + '</div>';
                 });
@@ -196,10 +202,8 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
         let app = firebase.app();
         let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-        document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
     } catch (e) {
         console.error(e);
-        document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
     }
 });
 
@@ -219,9 +223,9 @@ function openUpdateNoteModal(noteRowId) {
     // console.log(noteRowSelected);
 
     // Now update after taking values from this
-    var noteDescr = noteRowSelected.getElementsByClassName('note-description')[0].innerHTML;
+    var noteDescr = window.notesData[noteRowId];
     var noteTitle = noteRowSelected.getElementsByClassName('note-title')[0].innerHTML;
-    console.log(noteDescr);
+    // console.log(noteDescr);
     // console.log(noteTitle);
 
     // Get the modal
@@ -234,6 +238,7 @@ function openUpdateNoteModal(noteRowId) {
     var formNoteDescr = document.getElementById('add-description');
     formNoteTitle.value = noteTitle;
     formNoteDescr.innerHTML = noteDescr;
+
     // When the user clicks the button, open the modal 
     modal.style.display = "block";
     // Certainly some times an unexpected problem arise if value is not updated
