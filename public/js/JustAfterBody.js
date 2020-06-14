@@ -66,15 +66,16 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("User is signed in!");
             var len = user.email.length;
             //console.log(len);
-            window.signInEmail = user.email.toString().substr(0, len - 10); //Removing the @gmail.com
+            window.signInEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
+            var signInUserEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
             // console.log(window.signInEmail);
-            document.getElementById('guser').innerHTML = "Welcome " + window.signInEmail;
+            document.getElementById('guser').innerHTML = "Welcome " + signInUserEmail;
             document.getElementById('signInButton').style.display = "none";
             document.getElementById('signOutButton').style.display = "block";
             document.getElementById('addNoteButton').style.display = "block";
 
             // Now call the data extract for only once so as to get the list of datas
-            firebase.database().ref(window.signInEmail).orderByChild('timestamp').on('value', function (snapshot) {
+            firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
 
                 // Get the id of the list
                 var noteListId = document.getElementById('note-family');
@@ -149,13 +150,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Get a key for a new Post.
-                var newPostKey = firebase.database().ref(window.signInEmail).push().key;
+                var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 var updates = {};
                 updates[newPostKey] = newNote;
 
-                return firebase.database().ref(window.signInEmail).update(updates);
+                return firebase.database().ref(signInUserEmail).update(updates);
             }
 
             updateNotefunction = (noteId, title, description) => {
@@ -178,11 +179,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 var updates = {};
                 updates[noteId] = newNote;
 
-                return firebase.database().ref(window.signInEmail).update(updates);
+                return firebase.database().ref(signInUserEmail).update(updates);
             }
 
             deleteNotefunction = (noteId) => {
-                return firebase.database().ref(window.signInEmail).child(noteId).remove();
+                return firebase.database().ref(signInUserEmail).child(noteId).remove();
             }
 
         } else {
@@ -196,15 +197,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // No user is signed in.
         }
     });
-
-
-    // Tell which firebase apps are active
-    try {
-        let app = firebase.app();
-        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-    } catch (e) {
-        console.error(e);
-    }
 });
 
 // Sign out Function
