@@ -41,13 +41,13 @@ body {
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
-    background-color: transparent;
+    background-color: rgba(0,0,0,.05);
     color: rgba(0,0,0,.6);
 }
 
 .btn:hover {
     color: #111;
-    background: rgba(0,0,0,.05);
+    background: rgba(0, 0, 0, 0.103);
 }
 
 .btn-danger {
@@ -189,4 +189,30 @@ code {
 
 code, kbd, pre, samp {
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #fff;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #202020;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 2px 4px 25px rgba(0,0,0,.15);
+    overflow-wrap: normal;
+}
+
+pre code {
+    color: white;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
 }
