@@ -11,7 +11,7 @@ router.get('/', function(req, res, next){
         // Desktop site
         if(req.signedCookies.sessionEmail){
             console.log("User is signed in!");
-            res.render('desktop.ejs');
+            res.render('desktop.ejs', { userEmail: req.signedCookies.sessionEmail } );
         }
         console.log("Cookie ",req.signedCookies.sessionEmail);
         res.render('login.ejs');
@@ -23,7 +23,9 @@ router.get('/', function(req, res, next){
 
 // Make this set cookie
 router.post('/set', function(req, res, next){
-    res.cookie('sessionEmail', req.body.userEmail, { signed : true });
+    var userEmail = req.body.userEmail.toString();
+    var len = userEmail.length;
+    res.cookie('sessionEmail', userEmail.substr(0, len-10), { signed : true });
     console.log("Cookie set");
     res.json({success: 1})
 });

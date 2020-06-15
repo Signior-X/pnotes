@@ -32,118 +32,110 @@
   </head>
   <body>
 
-    <!-- <script>
+    <script>
       document.addEventListener('DOMContentLoaded', function () {
         var md = new Remarkable();
         // console.log(md.render('# Remarkable rulezz!'));
         
-        console.log("User is signed in!");
-        var len = user.email.length;
-                //console.log(len);
-        window.signInEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
-        var signInUserEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
-                console.log(window.signInEmail);
+        window.signInEmail = '<%= userEmail %>';
+        const signInUserEmail = '<%= userEmail %>';
+        console.log(signInUserEmail);
+
+        // var signInUserEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
                 
-                // Now call the data extract for only once so as to get the list of datas
-                firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
+                // // Now call the data extract for only once so as to get the list of datas
+                // firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
 
 
-                    //console.log(snapshot);
+                //     //console.log(snapshot);
 
-                    var descNoteList = [];
+                //     var descNoteList = [];
 
-                    snapshot.forEach(function (childSnapshot) {
-                        var childKey = childSnapshot.key;
-                        var childData = childSnapshot.val();
-                        //console.log("childkey", childKey);
-                        //console.log("childData", childData);
-                        // ...
-                        descNoteList.push({ childKey: childKey, childData: childData });
+                //     snapshot.forEach(function (childSnapshot) {
+                //         var childKey = childSnapshot.key;
+                //         var childData = childSnapshot.val();
+                //         //console.log("childkey", childKey);
+                //         //console.log("childData", childData);
+                //         // ...
+                //         descNoteList.push({ childKey: childKey, childData: childData });
 
-                    });
+                //     });
 
-                    // Reverse the array
-                    descNoteList.reverse();
+                //     // Reverse the array
+                //     descNoteList.reverse();
 
-                    // Empty the notes data
-                    window.notesData = {};
+                //     // Empty the notes data
+                //     window.notesData = {};
 
-                    descNoteList.forEach(function (childSnapshot) {
-                        var childKey = childSnapshot.childKey;
-                        var childData = childSnapshot.childData;
+                //     descNoteList.forEach(function (childSnapshot) {
+                //         var childKey = childSnapshot.childKey;
+                //         var childData = childSnapshot.childData;
 
-                        // Only storing notes description in it
-                        window.notesData[childKey] = childData.description;
-                      });
-                });
+                //         // Only storing notes description in it
+                //         window.notesData[childKey] = childData.description;
+                //       });
+                // });
 
-                //list(family);
+                // //list(family);
 
-                // Here the firebase is correctly defined purely!
-                //console.log(firebase.database.ServerValue.TIMESTAMP);
+                // // Here the firebase is correctly defined purely!
+                // //console.log(firebase.database.ServerValue.TIMESTAMP);
 
-                addNotefunction = (title, description) => {
-                    //Start the add note function
-                    console.log("Add Note");
+                // addNotefunction = (title, description) => {
+                //     //Start the add note function
+                //     console.log("Add Note");
 
-                    var options = { month: 'short', day: 'numeric' };
-                    var today = new Date();
-                    // console.log(today.toLocaleDateString("en-US", options));
+                //     var options = { month: 'short', day: 'numeric' };
+                //     var today = new Date();
+                //     // console.log(today.toLocaleDateString("en-US", options));
 
-                    var newNote = {
-                        title: title,
-                        description: description,
-                        date: today.toLocaleDateString("en-US", options),
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
-                    }
+                //     var newNote = {
+                //         title: title,
+                //         description: description,
+                //         date: today.toLocaleDateString("en-US", options),
+                //         timestamp: firebase.database.ServerValue.TIMESTAMP
+                //     }
 
-                    // Get a key for a new Post.
-                    var newPostKey = firebase.database().ref(signInUserEmail).push().key;
+                //     // Get a key for a new Post.
+                //     var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
-                    // Write the new post's data simultaneously in the posts list and the user's post list.
-                    var updates = {};
-                    updates[newPostKey] = newNote;
+                //     // Write the new post's data simultaneously in the posts list and the user's post list.
+                //     var updates = {};
+                //     updates[newPostKey] = newNote;
 
-                    return firebase.database().ref(signInUserEmail).update(updates);
-                }
+                //     return firebase.database().ref(signInUserEmail).update(updates);
+                // }
 
-                updateNotefunction = (noteId, title, description) => {
+                // updateNotefunction = (noteId, title, description) => {
 
-                    //Start the update note function
-                    console.log("Update Note");
+                //     //Start the update note function
+                //     console.log("Update Note");
 
-                    var options = { month: 'short', day: 'numeric' };
-                    var today = new Date();
-                    // console.log(today.toLocaleDateString("en-US", options));
+                //     var options = { month: 'short', day: 'numeric' };
+                //     var today = new Date();
+                //     // console.log(today.toLocaleDateString("en-US", options));
 
-                    var newNote = {
-                        title: title,
-                        description: description,
-                        date: today.toLocaleDateString("en-US", options),
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
-                    }
+                //     var newNote = {
+                //         title: title,
+                //         description: description,
+                //         date: today.toLocaleDateString("en-US", options),
+                //         timestamp: firebase.database.ServerValue.TIMESTAMP
+                //     }
 
-                    // Write the new post's data simultaneously in the posts list and the user's post list.
-                    var updates = {};
-                    updates[noteId] = newNote;
+                //     // Write the new post's data simultaneously in the posts list and the user's post list.
+                //     var updates = {};
+                //     updates[noteId] = newNote;
 
-                    return firebase.database().ref(signInUserEmail).update(updates);
-                }
+                //     return firebase.database().ref(signInUserEmail).update(updates);
+                // }
 
-                deleteNotefunction = (noteId) => {
-                    return firebase.database().ref(signInUserEmail).child(noteId).remove();
-                }
+                // deleteNotefunction = (noteId) => {
+                //     return firebase.database().ref(signInUserEmail).child(noteId).remove();
+                // }
 
-            } else {
-                console.log("NO user signed in!");
-                window.signInEmail = "";
-                
-                // No user is signed in.
-            }
-        });
     });
 
-    </script> -->
+    </script>
 
     <!-- Sign Out Function -->
     <script>
@@ -175,6 +167,7 @@
     </script>
 
     <div id="main">
+      <%= userEmail %>
       <div id="top-nav">
         <button id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
       </div>
