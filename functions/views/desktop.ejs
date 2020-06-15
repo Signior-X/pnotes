@@ -220,6 +220,12 @@
         var descriptionWindow = document.getElementById('note-description-content');
         descriptionWindow.innerHTML = md.render(descriptionWindowString);
 
+        // now change all a tags to have target="_none" in note-description-content
+        var anchors = descriptionWindow.getElementsByTagName('a');
+        for (var i=0; i < anchors.length; i++){
+          anchors[i].setAttribute('target', '_blank');
+        }
+        
         // Select the note
         window.currentNote = noteRow.id;
         noteRow.classList.add("is--active");

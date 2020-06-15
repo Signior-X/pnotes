@@ -87,7 +87,9 @@ body {
 }
 
 #sidebar {
-    width: 400px;
+    width: 30%;
+    min-width: 300px;
+    flex: none;
     float: left;
     height: 100%;
     padding-top: 0px;
@@ -171,7 +173,20 @@ body {
 }
 
 #note-description-content {
-    margin: 8px 16px;
+    margin: 16px;
     padding: 16px;
+    flex: 3 2 auto;
     overflow-y: auto;
+}
+
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+
+code, kbd, pre, samp {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
