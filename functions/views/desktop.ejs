@@ -36,104 +36,99 @@
       document.addEventListener('DOMContentLoaded', function () {
         var md = new Remarkable();
         // console.log(md.render('# Remarkable rulezz!'));
-        
+
         window.signInEmail = '<%= userEmail %>';
         const signInUserEmail = '<%= userEmail %>';
         console.log(signInUserEmail);
 
-        // var signInUserEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
-                
-                // // Now call the data extract for only once so as to get the list of datas
-                // firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
+        // Now call the data extract for only once so as to get the list of datas
+        firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
 
+          //console.log(snapshot);
+          var descNoteList = [];
 
-                //     //console.log(snapshot);
+          snapshot.forEach(function (childSnapshot) {
+            var childKey = childSnapshot.key;
+            var childData = childSnapshot.val();
+            //console.log("childkey", childKey);
+            //console.log("childData", childData);
+            // ...
+            descNoteList.push({ childKey: childKey, childData: childData });
 
-                //     var descNoteList = [];
+          });
 
-                //     snapshot.forEach(function (childSnapshot) {
-                //         var childKey = childSnapshot.key;
-                //         var childData = childSnapshot.val();
-                //         //console.log("childkey", childKey);
-                //         //console.log("childData", childData);
-                //         // ...
-                //         descNoteList.push({ childKey: childKey, childData: childData });
+          // Reverse the array
+          descNoteList.reverse();
 
-                //     });
+          // Empty the notes data
+          window.notesData = {};
 
-                //     // Reverse the array
-                //     descNoteList.reverse();
+          descNoteList.forEach(function (childSnapshot) {
+            var childKey = childSnapshot.childKey;
+            var childData = childSnapshot.childData;
 
-                //     // Empty the notes data
-                //     window.notesData = {};
+            // Only storing notes description in it
+            window.notesData[childKey] = { description: childData.description, title: childData.title };
+          });
+        });
 
-                //     descNoteList.forEach(function (childSnapshot) {
-                //         var childKey = childSnapshot.childKey;
-                //         var childData = childSnapshot.childData;
+        //list(family);
 
-                //         // Only storing notes description in it
-                //         window.notesData[childKey] = childData.description;
-                //       });
-                // });
+        // Here the firebase is correctly defined purely!
+        //console.log(firebase.database.ServerValue.TIMESTAMP);
 
-                // //list(family);
+        addNotefunction = (title, description) => {
+            //Start the add note function
+            console.log("Add Note");
 
-                // // Here the firebase is correctly defined purely!
-                // //console.log(firebase.database.ServerValue.TIMESTAMP);
+            var options = { month: 'short', day: 'numeric' };
+            var today = new Date();
+            // console.log(today.toLocaleDateString("en-US", options));
 
-                // addNotefunction = (title, description) => {
-                //     //Start the add note function
-                //     console.log("Add Note");
+            var newNote = {
+                title: title,
+                description: description,
+                date: today.toLocaleDateString("en-US", options),
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            }
 
-                //     var options = { month: 'short', day: 'numeric' };
-                //     var today = new Date();
-                //     // console.log(today.toLocaleDateString("en-US", options));
+            // Get a key for a new Post.
+            var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
-                //     var newNote = {
-                //         title: title,
-                //         description: description,
-                //         date: today.toLocaleDateString("en-US", options),
-                //         timestamp: firebase.database.ServerValue.TIMESTAMP
-                //     }
+            // Write the new post's data simultaneously in the posts list and the user's post list.
+            var updates = {};
+            updates[newPostKey] = newNote;
 
-                //     // Get a key for a new Post.
-                //     var newPostKey = firebase.database().ref(signInUserEmail).push().key;
+            return firebase.database().ref(signInUserEmail).update(updates);
+        }
 
-                //     // Write the new post's data simultaneously in the posts list and the user's post list.
-                //     var updates = {};
-                //     updates[newPostKey] = newNote;
+        updateNotefunction = (noteId, title, description) => {
 
-                //     return firebase.database().ref(signInUserEmail).update(updates);
-                // }
+            //Start the update note function
+            console.log("Update Note");
 
-                // updateNotefunction = (noteId, title, description) => {
+            var options = { month: 'short', day: 'numeric' };
+            var today = new Date();
+            // console.log(today.toLocaleDateString("en-US", options));
 
-                //     //Start the update note function
-                //     console.log("Update Note");
+            var newNote = {
+                title: title,
+                description: description,
+                date: today.toLocaleDateString("en-US", options),
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            }
 
-                //     var options = { month: 'short', day: 'numeric' };
-                //     var today = new Date();
-                //     // console.log(today.toLocaleDateString("en-US", options));
+            // Write the new post's data simultaneously in the posts list and the user's post list.
+            var updates = {};
+            updates[noteId] = newNote;
 
-                //     var newNote = {
-                //         title: title,
-                //         description: description,
-                //         date: today.toLocaleDateString("en-US", options),
-                //         timestamp: firebase.database.ServerValue.TIMESTAMP
-                //     }
+            return firebase.database().ref(signInUserEmail).update(updates);
+        }
 
-                //     // Write the new post's data simultaneously in the posts list and the user's post list.
-                //     var updates = {};
-                //     updates[noteId] = newNote;
-
-                //     return firebase.database().ref(signInUserEmail).update(updates);
-                // }
-
-                // deleteNotefunction = (noteId) => {
-                //     return firebase.database().ref(signInUserEmail).child(noteId).remove();
-                // }
-
-    });
+        deleteNotefunction = (noteId) => {
+            return firebase.database().ref(signInUserEmail).child(noteId).remove();
+        }
+      });
 
     </script>
 
