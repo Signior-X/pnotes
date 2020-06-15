@@ -34,11 +34,11 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        var md = new Remarkable();
-        // console.log(md.render('# Remarkable rulezz!'));
-
+        
         window.signInEmail = '<%= userEmail %>';
         const signInUserEmail = '<%= userEmail %>';
+        window.currentNote = '';
+
         console.log(signInUserEmail);
 
         // Now call the data extract for only once so as to get the list of datas
@@ -63,13 +63,23 @@
           // Empty the notes data
           window.notesData = {};
 
+          var noteFamily = document.getElementById('note-family');
+          noteFamily.innerHTML = '';
+
           descNoteList.forEach(function (childSnapshot) {
             var childKey = childSnapshot.childKey;
             var childData = childSnapshot.childData;
 
+            noteFamily.innerHTML += '<div id="' + childKey + '" class="note-row hoverable" onclick=addToDescriptionWindow(this) >'
+              + '<div class="note-title">' + childData.title + '</div>'
+              + '<div class="note-date">' + childData.date + '</div>'
+              + '</div>';
+
             // Only storing notes description in it
             window.notesData[childKey] = { description: childData.description, title: childData.title };
           });
+
+          // noteFamily.innerHTML = noteFamilyString;
         });
 
         //list(family);
@@ -179,74 +189,42 @@
               <div class="search-input-container"><input id="search-input" placeholder="Search Notes" value=""></div>
             </div>
           </div>
-          <div id="note-family">
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-            <div class="note-row">
-              <div class="note-heading">Hello Notes</div>
-              <div class="note-date">May 27</div>
-            </div>
-          </div>
-          <div id="sidebar-footer"></div>
+          <hr>
+          <div id="note-family"></div>
         </div>
-        <div id="note-description-content">
-
-        </div>
+        <div id="note-description-content"></div>
       </div>
     </div>
+
+    <!-- Script to add the data of the currentNote to desccription on button click -->
+    <script>
+      function addToDescriptionWindow(noteRow){
+
+        var md = new Remarkable();
+        // console.log(md.render('# Remarkable rulezz!'));
+
+        // First deselect the current selected Note
+        console.log(window.currentNote);
+        if(window.currentNote) {
+          document.getElementById(window.currentNote).classList.remove('is--active');
+          document.getElementById(window.currentNote).classList.remove('hoverable');
+        }
+
+        // console.log(noteRow);
+        // console.log(noteRow.id);
+
+        descriptionWindowString = window.notesData[noteRow.id].description;
+        // console.log(descriptionWindowString);
+
+        // Now add the description
+        var descriptionWindow = document.getElementById('note-description-content');
+        descriptionWindow.innerHTML = md.render(descriptionWindowString);
+
+        // Select the note
+        window.currentNote = noteRow.id;
+        noteRow.classList.add("is--active");
+        noteRow.classList.remove("hoverable");
+      }
+    </script>
   </body>
 </html>

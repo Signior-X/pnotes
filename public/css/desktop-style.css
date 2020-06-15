@@ -12,6 +12,7 @@ html {
 body {
     margin: 0;
     height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, arial, sans-serif;
 }
 
 #main-content {
@@ -86,8 +87,7 @@ body {
 }
 
 #sidebar {
-    width: 30%;
-    min-width: 300px;
+    width: 400px;
     float: left;
     height: 100%;
     padding-top: 0px;
@@ -145,10 +145,6 @@ body {
     padding: 8px;
 }
 
-.note-row:hover {
-    background-color: #f7f7f7bd;
-}
-
 /* Not working mp... try to use js */
 /* .note-row:focus {
     background-color: #d3d2d2;
@@ -157,4 +153,25 @@ body {
 .note-date {
     float: right;
     margin-left: auto;
+    font-size: smaller;
+    min-width: 48px;
+    color: #00000077;
+}
+
+.note-title {
+    font-size: larger;
+}
+
+.is--active {
+    background-color: #cecdcd80;
+}
+
+.hoverable:hover {
+    background-color: #f7f7f7bd;
+}
+
+#note-description-content {
+    margin: 8px 16px;
+    padding: 16px;
+    overflow-y: auto;
 }
