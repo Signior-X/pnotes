@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta tags and title -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pnotes</title>
+
+    <link rel="icon" href="article-24px.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
+
+    <!-- Firebase Scripts, currently using app, auth and database for right now! -->
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.14.4/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
+    <!-- <script defer src="/__/firebase/7.14.4/firebase-messaging.js"></script> -->
+    <!-- <script defer src="/__/firebase/7.14.4/firebase-storage.js"></script> -->
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/desktop-style.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  
+  </head>
+  <body>
+
+    <!-- <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var md = new Remarkable();
+        // console.log(md.render('# Remarkable rulezz!'));
+        
+        console.log("User is signed in!");
+        var len = user.email.length;
+                //console.log(len);
+        window.signInEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
+        var signInUserEmail = user.email.toString().substr(0, len - 10); // Removing the @gmail.com
+                console.log(window.signInEmail);
+                
+                // Now call the data extract for only once so as to get the list of datas
+                firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
+
+
+                    //console.log(snapshot);
+
+                    var descNoteList = [];
+
+                    snapshot.forEach(function (childSnapshot) {
+                        var childKey = childSnapshot.key;
+                        var childData = childSnapshot.val();
+                        //console.log("childkey", childKey);
+                        //console.log("childData", childData);
+                        // ...
+                        descNoteList.push({ childKey: childKey, childData: childData });
+
+                    });
+
+                    // Reverse the array
+                    descNoteList.reverse();
+
+                    // Empty the notes data
+                    window.notesData = {};
+
+                    descNoteList.forEach(function (childSnapshot) {
+                        var childKey = childSnapshot.childKey;
+                        var childData = childSnapshot.childData;
+
+                        // Only storing notes description in it
+                        window.notesData[childKey] = childData.description;
+                      });
+                });
+
+                //list(family);
+
+                // Here the firebase is correctly defined purely!
+                //console.log(firebase.database.ServerValue.TIMESTAMP);
+
+                addNotefunction = (title, description) => {
+                    //Start the add note function
+                    console.log("Add Note");
+
+                    var options = { month: 'short', day: 'numeric' };
+                    var today = new Date();
+                    // console.log(today.toLocaleDateString("en-US", options));
+
+                    var newNote = {
+                        title: title,
+                        description: description,
+                        date: today.toLocaleDateString("en-US", options),
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    }
+
+                    // Get a key for a new Post.
+                    var newPostKey = firebase.database().ref(signInUserEmail).push().key;
+
+                    // Write the new post's data simultaneously in the posts list and the user's post list.
+                    var updates = {};
+                    updates[newPostKey] = newNote;
+
+                    return firebase.database().ref(signInUserEmail).update(updates);
+                }
+
+                updateNotefunction = (noteId, title, description) => {
+
+                    //Start the update note function
+                    console.log("Update Note");
+
+                    var options = { month: 'short', day: 'numeric' };
+                    var today = new Date();
+                    // console.log(today.toLocaleDateString("en-US", options));
+
+                    var newNote = {
+                        title: title,
+                        description: description,
+                        date: today.toLocaleDateString("en-US", options),
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    }
+
+                    // Write the new post's data simultaneously in the posts list and the user's post list.
+                    var updates = {};
+                    updates[noteId] = newNote;
+
+                    return firebase.database().ref(signInUserEmail).update(updates);
+                }
+
+                deleteNotefunction = (noteId) => {
+                    return firebase.database().ref(signInUserEmail).child(noteId).remove();
+                }
+
+            } else {
+                console.log("NO user signed in!");
+                window.signInEmail = "";
+                
+                // No user is signed in.
+            }
+        });
+    });
+
+    </script> -->
+
+    <!-- Sign Out Function -->
+    <script>
+      // Sign out Function
+      signOutFromGoogle = () => {
+            //Start the user delete or sign out activity
+            console.log("Sign Out User!");
+
+            var user = firebase.auth().signOut();
+
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.addEventListener("error", function (evt) {
+                console.log("Failed");
+                console.log(evt.toString());
+            });
+
+            xhttp.addEventListener("load", function (evt) {
+                console.log("Sign Out Success!");
+                location.reload();
+            });
+
+            // Defining parameters 
+            xhttp.open("POST", "/clear", true);
+            //Send the proper header information along with the request
+            xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
+            xhttp.send();
+      }
+    </script>
+
+    <div id="main">
+      <div id="top-nav">
+        <button id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
+      </div>
+    </div>
+  </body>
+</html>
