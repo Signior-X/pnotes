@@ -7,6 +7,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var ua = require('express-mobile-redirect');
+
 var router = require('./routes/route');
 
 // Create and Deploy Your First Cloud Functions
@@ -22,6 +24,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(ua.is_mobile());
+app.use(ua.is_tablet());
 
 // Routes
 app.use('/', router);
