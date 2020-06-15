@@ -17,6 +17,10 @@
 
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/desktop-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
   
@@ -68,9 +72,35 @@
       });
     </script>
   
-    <div id="welcome-message">
-      <h1>Welcome To Pnotes</h1>
-      <button id="sign-in-button" onclick=signInToGoogle()>Sign In</button>
+    <div id="main">
+      <div id="top-nav">
+        <button class="btn" id="create-note-button">Add Note</button>
+        <div class="right-menu">
+          <div id="user-email-heading">Anonymous Notes</div>
+          <button id="sign-in-button" class="btn" onclick=signInToGoogle()> <i class="fa fa-google" style="padding-right: 4px;"></i>Sign In with Google</button>
+        </div>
+      </div>
+
+      <!-- Main content contains the title and description -->
+      <div id="main-content">
+        <div id="sidebar">
+          <div id="search-notes-box-container">
+            <div id="search-notes-box">
+              <span class="search-icon"><i class="fa fa-search"></i></span>
+              <div class="search-input-container"><input id="search-input" placeholder="Search Notes" value=""></div>
+            </div>
+          </div>
+          <hr>
+          <div id="note-family"></div>
+        </div>
+        <div id="note-description-content">
+          <div id="welcome-message" style="text-align: center;">
+            <h1>Welcome To Pnotes</h1>
+            <button id="sign-in-button" onclick=signInToGoogle()> <i class="fa fa-google"></i> Sign In</button>
+          </div>
+        </div>
+      </div>
     </div>
+
   </body>
 </html>
