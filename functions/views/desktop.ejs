@@ -88,6 +88,12 @@
             window.notesData[childKey] = { description: childData.description, title: childData.title };
           });
 
+          // make the current note active if present
+          if(window.currentNote) {
+            document.getElementById(window.currentNote).classList.add('is--active');
+            document.getElementById(window.currentNote).classList.remove('hoverable');
+          }
+
           // noteFamily.innerHTML = noteFamilyString;
         });
 
