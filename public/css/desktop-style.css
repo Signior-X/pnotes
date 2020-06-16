@@ -9,6 +9,10 @@ html {
     height: 100%;
 }
 
+.hidden {
+    display: none !important;
+}
+
 body {
     margin: 0;
     height: 100%;
@@ -174,11 +178,30 @@ body {
     background-color: #f7f7f7bd;
 }
 
-#note-description-content {
-    margin: 16px;
-    padding: 16px;
+#main-content-main {
+    margin: 12px 16px;
     flex: 3 2 auto;
+    display: flex;
+    flex-direction: column;
+    flex-flow: column;
+    overflow-y: hidden;
+}
+
+#note-description-content {
     overflow-y: auto;
+    height: 100%;
+    padding: 16px;
+    padding-top: 0px;
+    border: 1px solid #e1e4e8!important;
+    border-radius: 4px;
+}
+
+#note-description-preview {
+    overflow-y: hidden;
+    height: 100%;
+    padding-top: 0px;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
 }
 
 code {
@@ -275,4 +298,37 @@ pre code {
 #logo-header img {
     height: 100%;
     width: 100%;
+}
+
+#tab-nav {
+    padding: 0px 16px;
+}
+
+.tab {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #24292e;
+    text-decoration: none;
+    background-color: initial;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    cursor: pointer;
+    width: 64px;
+    text-align: center;
+}
+
+.tab-active {
+    background-color: #fff;
+    border-color: #d1d5da;
+    border-radius: 3px 3px 0 0;
+}
+
+#note-description-editor {
+    resize: none;
+    height: 100%;
+    width: 100%;
+    padding: 16px;
+    border: none;
 }

@@ -40,6 +40,7 @@
         window.signInEmail = '<%= userEmail %>';
         const signInUserEmail = '<%= userEmail %>';
         window.currentNote = '';
+        window.editor = { id: '', title: '', description: ''};
 
         console.log(signInUserEmail);
 
@@ -195,7 +196,21 @@
           <hr>
           <div id="note-family"></div>
         </div>
-        <div id="note-description-content"></div>
+        <div id="main-content-main">
+          <div id="tab-nav" class="hidden">
+            <div id="preview-button" class="tab">Preview</div>
+            <div id="editing-button" class="tab">Edit</div>
+          </div>
+          <div id="note-description-content">
+            <div id="welcome-message">
+              <h1>Welcome</h1>
+              <p>Start by selecting any Note from the sidebar!</p>
+            </div>
+          </div>
+          <div id="note-description-preview" class="hidden">
+            <textarea id="note-description-editor"></textarea>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -228,11 +243,43 @@
         for (var i=0; i < anchors.length; i++){
           anchors[i].setAttribute('target', '_blank');
         }
-        
+
+        // Show the tab-nav
+        document.getElementById('tab-nav').classList.remove('hidden');
+
         // Select the note
         window.currentNote = noteRow.id;
         noteRow.classList.add("is--active");
         noteRow.classList.remove("hoverable");
+        
+        // Making the preview tab active
+        makePreviewTabActive();
+      }
+    </script>
+
+    <!-- Tab navigations -->
+    <script>
+
+      // Remember click actions are taken care by jquery
+
+      function makeEditTabActive() {
+        document.getElementById('editing-button').classList.add('tab-active');
+        document.getElementById('preview-button').classList.remove('tab-active');
+
+        document.getElementById('note-description-content').classList.add('hidden');
+        document.getElementById('note-description-preview').classList.remove('hidden');
+
+
+      }
+    </script>
+
+    <script>
+      function makePreviewTabActive() {
+        document.getElementById('preview-button').classList.add('tab-active');
+        document.getElementById('editing-button').classList.remove('tab-active');
+
+        document.getElementById('note-description-preview').classList.add('hidden');
+        document.getElementById('note-description-content').classList.remove('hidden');
       }
     </script>
 
