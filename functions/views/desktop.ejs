@@ -109,6 +109,10 @@
             // Get a key for a new Post.
             var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
+            console.log(newPostKey);
+            // Now this is going to be the current value which we are editing
+            window.currentNote = newPostKey;
+
             // Write the new post's data simultaneously in the posts list and the user's post list.
             var updates = {};
             updates[newPostKey] = newNote;
@@ -178,7 +182,7 @@
     <div id="main">
       <div id="top-nav">
         <div id="logo-header"><img src="pnotes-logo3.png"></img></div>
-        <button class="btn" id="create-note-button">Add Note</button>
+        <button class="btn" id="create-note-button" onclick=newNoteWindow() >Add Note</button>
         <div class="right-menu">
           <div id="user-email-heading">Welcome <%= userEmail %></div>
           <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
@@ -201,6 +205,10 @@
           <div id="tab-nav" class="hidden">
             <div id="preview-button" class="tab">Preview</div>
             <div id="editing-button" class="tab">Edit</div>
+            <div id="right-tab-menu">
+              <button id="cancel-button" class="btn">Cancel</button>
+              <button id="save-button" class="btn">Save</button>
+            </div>
           </div>
           <div id="note-description-content">
             <div id="welcome-message">
@@ -209,13 +217,13 @@
             </div>
           </div>
           <div id="note-description-preview" class="hidden">
-            <textarea id="note-description-editor" oninput=changeWindowEditorDescription(this) ></textarea>
+            <textarea id="note-description-editor" oninput=changeWindowEditorDescription(this) placeholder="Add Note description here.."></textarea>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Script to add the data of the currentNote to desccription on button click -->
+    <!-- Script to add the data of the currentNote to description on button click -->
     <script>
       function addToDescriptionWindow(noteRow){
 
@@ -223,11 +231,11 @@
 
         // First deselect the current selected Note
         console.log(window.currentNote);
-        if(window.currentNote) {
+
+        if (window.currentNote) {
           document.getElementById(window.currentNote).classList.remove('is--active');
           document.getElementById(window.currentNote).classList.remove('hoverable');
         }
-
         // console.log(noteRow);
         console.log(noteRow.id);
 
@@ -238,7 +246,7 @@
         window.currentNote = noteRow.id;
         noteRow.classList.add("is--active");
         noteRow.classList.remove("hoverable");
-        
+
         // Store the values in editor
         window.editor['id'] = noteRow.id;
         window.editor['title'] = window.notesData[noteRow.id].title;
@@ -249,7 +257,7 @@
       }
     </script>
 
-    <!-- Tab navigations -->
+    <!-- Tab navigations - To make edit tab active -->
     <script>
 
       // Remember click actions are taken care by jquery
@@ -272,6 +280,7 @@
       }
     </script>
 
+    <!-- To make the preview tab active -->
     <script>
       function makePreviewTabActive() {
 
@@ -311,10 +320,34 @@
       }
     </script>
 
-    <!-- Sccript to add a note -->
+    <!-- Sccript to open add a note create -->
+    <script>
+      function newNoteWindow() {
+
+        var returened = addNotefunction('New Note','# New Note')
+        console.log(returened);
+
+        // noteFamily.innerHTML = dataToAppend + presentData;
+        console.log("Check Now if new note is created!");
+        console.log("Now open the new note editor");
+
+        // Move the values of current note to editor
+        window.editor = {id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description};
+        console.log(window.editor);
+        
+        document.getElementById('tab-nav').classList.remove('hidden');
+        makeEditTabActive();
+        
+      }
+    </script>
+
+    <!-- Script to cancel saving a note -->
     <script>
 
     </script>
+
+    <!-- Script to update or say save a note -->
+
 
     <!-- JQuery for resize -->
     <script src="js/before-body-jquery.js"></script>

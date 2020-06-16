@@ -302,6 +302,7 @@ pre code {
 
 #tab-nav {
     padding: 0px 16px;
+    display: flex;
 }
 
 .tab {
@@ -335,4 +336,12 @@ pre code {
 
 #note-description-editor:focus {
     border-radius: 4px;
+}
+
+#right-tab-menu {
+    margin-left: auto;
+}
+
+#right-tab-menu {
+    display: inline;
 }
