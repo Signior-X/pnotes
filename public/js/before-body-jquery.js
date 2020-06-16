@@ -11,4 +11,13 @@ $(function() {
         makeEditTabActive();
     });
 
+    $('#dark-switcher').click(function() {
+        if($('body').hasClass('dark')) {
+            console.log('Already in Dark mode, switching to light');
+            $('body').removeClass('dark');
+        } else{
+            $('body').addClass('dark');
+        }
+    });
+
 });

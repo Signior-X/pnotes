@@ -38,156 +38,164 @@
     <script>hljs.initHighlightingOnLoad();</script>
   </head>
   <body>
-
+    
+    <!-- Script Just After Body -->
     <script>
       var md = new Remarkable();
       document.addEventListener('DOMContentLoaded', function () {
-        
-        window.signInEmail = '<%= userEmail %>';
-        const signInUserEmail = '<%= userEmail %>';
-        window.currentNote = '';
-        window.editor = { id: '', title: '', description: ''};
 
-        console.log(signInUserEmail);
+          window.signInEmail = '<%= userEmail %>';
+          const signInUserEmail = '<%= userEmail %>';
+          window.currentNote = '';
+          window.editor = { id: '', title: '', description: '' };
 
-        // Now call the data extract for only once so as to get the list of datas
-        firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
+          console.log(signInUserEmail);
 
-          //console.log(snapshot);
-          var descNoteList = [];
+          // Now call the data extract for only once so as to get the list of datas
+          firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
 
-          snapshot.forEach(function (childSnapshot) {
-            var childKey = childSnapshot.key;
-            var childData = childSnapshot.val();
-            //console.log("childkey", childKey);
-            //console.log("childData", childData);
-            // ...
-            descNoteList.push({ childKey: childKey, childData: childData });
+              //console.log(snapshot);
+              var descNoteList = [];
 
+              snapshot.forEach(function (childSnapshot) {
+                  var childKey = childSnapshot.key;
+                  var childData = childSnapshot.val();
+                  //console.log("childkey", childKey);
+                  //console.log("childData", childData);
+                  // ...
+                  descNoteList.push({ childKey: childKey, childData: childData });
+
+              });
+
+              // Reverse the array
+              descNoteList.reverse();
+
+              // Empty the notes data
+              window.notesData = {};
+
+              var noteFamily = document.getElementById('note-family');
+              noteFamily.innerHTML = '';
+              noteFamilyString = '';
+
+              descNoteList.forEach(function (childSnapshot) {
+                  var childKey = childSnapshot.childKey;
+                  var childData = childSnapshot.childData;
+
+                  noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
+                      + '<div class="note-title">' + childData.title + '</div>'
+                      + '<div class="note-date">' + childData.date + '</div>'
+                      + '</div>';
+
+                  // Only storing notes description in it
+                  window.notesData[childKey] = { description: childData.description, title: childData.title };
+              });
+
+              noteFamily.innerHTML = noteFamilyString;
+
+              // make the current note active if present
+              if (window.currentNote) {
+                try{
+                  document.getElementById(window.currentNote).classList.add('is--active');
+                  document.getElementById(window.currentNote).classList.remove('hoverable');
+                } catch(e) {
+                  console.log("Ignore this error, comes at time of delete",e.toString)
+                }
+              }
           });
 
-          // Reverse the array
-          descNoteList.reverse();
+          //list(family);
 
-          // Empty the notes data
-          window.notesData = {};
+          // Here the firebase is correctly defined purely!
+          //console.log(firebase.database.ServerValue.TIMESTAMP);
 
-          var noteFamily = document.getElementById('note-family');
-          noteFamily.innerHTML = '';
+          addNotefunction = (title, description) => {
+              //Start the add note function
+              console.log("Add Note");
 
-          descNoteList.forEach(function (childSnapshot) {
-            var childKey = childSnapshot.childKey;
-            var childData = childSnapshot.childData;
+              var options = { month: 'short', day: 'numeric' };
+              var today = new Date();
+              // console.log(today.toLocaleDateString("en-US", options));
 
-            noteFamily.innerHTML += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
-              + '<div class="note-title">' + childData.title + '</div>'
-              + '<div class="note-date">' + childData.date + '</div>'
-              + '</div>';
+              var newNote = {
+                  title: title,
+                  description: description,
+                  date: today.toLocaleDateString("en-US", options),
+                  timestamp: firebase.database.ServerValue.TIMESTAMP
+              }
 
-            // Only storing notes description in it
-            window.notesData[childKey] = { description: childData.description, title: childData.title };
-          });
+              // Get a key for a new Post.
+              var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
-          // make the current note active if present
-          if(window.currentNote) {
-            document.getElementById(window.currentNote).classList.add('is--active');
-            document.getElementById(window.currentNote).classList.remove('hoverable');
+              console.log(newPostKey);
+              // Now this is going to be the current value which we are editing
+              window.currentNote = newPostKey;
+
+              // Write the new post's data simultaneously in the posts list and the user's post list.
+              var updates = {};
+              updates[newPostKey] = newNote;
+
+              return firebase.database().ref(signInUserEmail).update(updates);
           }
 
-          // noteFamily.innerHTML = noteFamilyString;
-        });
+          updateNotefunction = (noteId, title, description) => {
 
-        //list(family);
+              //Start the update note function
+              console.log("Update Note");
 
-        // Here the firebase is correctly defined purely!
-        //console.log(firebase.database.ServerValue.TIMESTAMP);
+              var options = { month: 'short', day: 'numeric' };
+              var today = new Date();
+              // console.log(today.toLocaleDateString("en-US", options));
 
-        addNotefunction = (title, description) => {
-            //Start the add note function
-            console.log("Add Note");
+              var newNote = {
+                  title: title,
+                  description: description,
+                  date: today.toLocaleDateString("en-US", options),
+                  timestamp: firebase.database.ServerValue.TIMESTAMP
+              }
 
-            var options = { month: 'short', day: 'numeric' };
-            var today = new Date();
-            // console.log(today.toLocaleDateString("en-US", options));
+              // Write the new post's data simultaneously in the posts list and the user's post list.
+              var updates = {};
+              updates[noteId] = newNote;
 
-            var newNote = {
-                title: title,
-                description: description,
-                date: today.toLocaleDateString("en-US", options),
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            }
+              return firebase.database().ref(signInUserEmail).update(updates);
+          }
 
-            // Get a key for a new Post.
-            var newPostKey = firebase.database().ref(signInUserEmail).push().key;
-
-            console.log(newPostKey);
-            // Now this is going to be the current value which we are editing
-            window.currentNote = newPostKey;
-
-            // Write the new post's data simultaneously in the posts list and the user's post list.
-            var updates = {};
-            updates[newPostKey] = newNote;
-
-            return firebase.database().ref(signInUserEmail).update(updates);
-        }
-
-        updateNotefunction = (noteId, title, description) => {
-
-            //Start the update note function
-            console.log("Update Note");
-
-            var options = { month: 'short', day: 'numeric' };
-            var today = new Date();
-            // console.log(today.toLocaleDateString("en-US", options));
-
-            var newNote = {
-                title: title,
-                description: description,
-                date: today.toLocaleDateString("en-US", options),
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            }
-
-            // Write the new post's data simultaneously in the posts list and the user's post list.
-            var updates = {};
-            updates[noteId] = newNote;
-
-            return firebase.database().ref(signInUserEmail).update(updates);
-        }
-
-        deleteNotefunction = (noteId) => {
-            return firebase.database().ref(signInUserEmail).child(noteId).remove();
-        }
+          deleteNotefunction = (noteId) => {
+              return firebase.database().ref(signInUserEmail).child(noteId).remove();
+          }
       });
 
+      // <!-- Sign Out Function -->
     </script>
 
-    <!-- Sign Out Function -->
+    <!-- Script for sign out -->
     <script>
       // Sign out Function
       signOutFromGoogle = () => {
-            //Start the user delete or sign out activity
-            console.log("Sign Out User!");
+          //Start the user delete or sign out activity
+          console.log("Sign Out User!");
 
-            var user = firebase.auth().signOut();
+          var user = firebase.auth().signOut();
 
-            var xhttp = new XMLHttpRequest();
+          var xhttp = new XMLHttpRequest();
 
-            xhttp.addEventListener("error", function (evt) {
-                console.log("Failed");
-                console.log(evt.toString());
-            });
+          xhttp.addEventListener("error", function (evt) {
+              console.log("Failed");
+              console.log(evt.toString());
+          });
 
-            xhttp.addEventListener("load", function (evt) {
-                console.log("Sign Out Success!");
-                location.reload();
-            });
+          xhttp.addEventListener("load", function (evt) {
+              console.log("Sign Out Success!");
+              location.reload();
+          });
 
-            // Defining parameters 
-            xhttp.open("POST", "/clear", true);
-            //Send the proper header information along with the request
-            xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-            xhttp.send();
+          // Defining parameters 
+          xhttp.open("POST", "/clear", true);
+          //Send the proper header information along with the request
+          xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
+          xhttp.send();
       }
+
     </script>
 
     <div id="main">
@@ -206,6 +214,8 @@
         </div>
         <button class="btn btn-danger hidden" id="remove-note-button" onclick=openDeleteNoteModal()>Delete Note</button>
         <div class="right-menu">
+          <!-- replace with icon -->
+          <button id="dark-switcher" class="btn btn-primary">Dark mode</button>
           <div id="user-email-heading">Welcome <%= userEmail %></div>
           <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
         </div>
@@ -221,7 +231,11 @@
             </div>
           </div>
           <hr>
-          <div id="note-family"></div>
+          <div id="note-family">
+            <div id="startup">
+              <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            </div>
+          </div>
         </div>
         <div id="main-content-main">
           <div id="tab-nav" class="hidden">
@@ -235,7 +249,7 @@
           <div id="note-description-content">
             <div id="welcome-message">
               <h1>Welcome</h1>
-              <p>Start by selecting any Note from the sidebar!</p>
+              <p>Start by selecting a Note from the sidebar or create a new Note 😀!</p>
             </div>
           </div>
           <div id="note-description-preview" class="hidden">
@@ -262,233 +276,7 @@
       </div>
     </div>
     
-    <!-- Script to add the data of the currentNote to description on button click -->
-    <script>
-      function doOnNoteClick(noteRow){
-
-        // console.log(md.render('# Remarkable rulezz!'));
-
-        // First deselect the current selected Note
-        console.log(window.currentNote);
-
-        if (window.currentNote) {
-          try{
-            document.getElementById(window.currentNote).classList.remove('is--active');
-            document.getElementById(window.currentNote).classList.add('hoverable');
-          } catch(e) {
-            console.log("Error currentNote invalid!", e.toString());
-          }
-        }
-        // console.log(noteRow);
-        console.log(noteRow.id);
-
-        // Select the note
-        window.currentNote = noteRow.id;
-        noteRow.classList.add("is--active");
-        noteRow.classList.remove("hoverable");
-
-        // Show the remove and edit title buttons
-        document.getElementById('remove-note-button').classList.remove('hidden');
-        document.getElementById('edit-title-button').classList.remove('hidden');
-
-        // Show the tab-nav
-        document.getElementById('tab-nav').classList.remove('hidden');
-
-
-        // Store the values in editor
-        window.editor['id'] = noteRow.id;
-        window.editor['title'] = window.notesData[noteRow.id].title;
-        window.editor['description'] = window.notesData[noteRow.id].description;
-        console.log("Editor changed success!");
-        console.log(window.editor);
-        // Making the preview tab active
-        makePreviewTabActive();
-      }
-    </script>
-
-    <!-- Tab navigations - To make edit tab active -->
-    <script>
-
-      // Remember click actions are taken care by jquery
-
-      function makeEditTabActive() {
-
-        // console.log(window.editor);
-
-        // Now add the description
-        var editorWindowTextArea = document.getElementById('note-description-editor');
-        editorWindowTextArea.innerHTML = window.editor.description;
-        editorWindowTextArea.value = window.editor.description;
-
-        document.getElementById('editing-button').classList.add('tab-active');
-        document.getElementById('preview-button').classList.remove('tab-active');
-
-        document.getElementById('note-description-content').classList.add('hidden');
-        document.getElementById('note-description-preview').classList.remove('hidden');
-
-      }
-    </script>
-
-    <!-- To make the preview tab active -->
-    <script>
-      function makePreviewTabActive() {
-
-        // console.log(window.editor);
-
-        // Now update the preview with the editor values
-        
-        // Now add the description
-        var descriptionWindow = document.getElementById('note-description-content');
-        descriptionWindow.innerHTML = md.render(window.editor.description);
-
-        // now change all a tags to have target="_none" in note-description-content
-        var anchors = descriptionWindow.getElementsByTagName('a');
-        for (var i=0; i < anchors.length; i++){
-          anchors[i].setAttribute('target', '_blank');
-        }
-
-        // Change from document to desccription window
-        descriptionWindow.querySelectorAll('pre code').forEach((block) => {
-          hljs.highlightBlock(block);
-        });
-
-        document.getElementById('preview-button').classList.add('tab-active');
-        document.getElementById('editing-button').classList.remove('tab-active');
-
-        document.getElementById('note-description-preview').classList.add('hidden');
-        document.getElementById('note-description-content').classList.remove('hidden');
-      }
-    </script>
-
-    <!-- Script to change the editor values on textarea change -->
-    <script>
-      function changeWindowEditorDescription(textArea) {
-        console.log("Text Area changed!");
-
-        // Choose which is better value comes as the real time parameter
-        // console.log(textArea.innerHTML);
-        // console.log(textArea.value);
-
-        // Change the editor values
-        window.editor.description = textArea.value;
-      }
-    </script>
-
-    <!-- Sccript to open add a note create -->
-    <script>
-      function newNoteWindow() {
-
-        var returened = addNotefunction('New Note','# New Note')
-        console.log(returened);
-
-        // noteFamily.innerHTML = dataToAppend + presentData;
-        console.log("Check Now if new note is created!");
-        console.log("Now open the new note editor");
-
-        // Move the values of current note to editor
-        window.editor = {id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description};
-        console.log(window.editor);
-        
-        document.getElementById('tab-nav').classList.remove('hidden');
-        makeEditTabActive();
-        
-      }
-    </script>
-
-    <!-- Script to cancel saving a note -->
-    <script>
-      function restoreState() {
-        // console.log(window.editor);
-        window.editor.description = window.notesData[window.currentNote].description;
-        makePreviewTabActive();
-      }
-    </script>
-
-    <!-- Script to update or say save a note -->
-    <script>
-      function saveNote() {
-        console.log(window.editor);
-        var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
-        console.log(promisedResult);
-
-        restoreState(); // This will be done after the update
-
-      }
-    </script>
-
-    <!-- Show delete note modal -->
-    <script>
-      function openDeleteNoteModal() {
-        var deleteModal = document.getElementById("delete-modal");
-        deleteModal.classList.remove('hidden');
-
-        deleteModal.getElementsByClassName("close")[0].onclick = function() {
-          deleteModal.classList.add('hidden');
-        }
-
-        deleteModal.getElementsByClassName("cancel")[0].onclick = function() {
-          deleteModal.classList.add('hidden');
-        }
-        
-        confirmDelete = deleteModal.getElementsByClassName("confirm-delete")[0];
-        confirmDelete.onclick = function() {
-          deleteCurrentNote();
-          deleteModal.classList.add('hidden');
-        }
-        document.getElementById('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
-
-      }
-    </script>
-
-    <script>
-      // This function deletes the current active note
-      function deleteCurrentNote() {
-
-        console.log(window.currentNote);
-
-        // Make a confirm message for delete of a note
-        var onDeletePromise = deleteNotefunction(window.currentNote);
-        document.getElementById('note-description-content').innerHTML = '';
-        document.getElementById('note-description-editor').innerHTML = '';
-        document.getElementById('note-description-editor').value = '';
-        document.getElementById('remove-note-button').classList.add('hidden');
-        document.getElementById('edit-title-button').classList.add('hidden');
-        document.getElementById('tab-nav').classList.add('hidden');
-        window.currentNote = ''; // Now no note is in progress to be edited!
-      }
-    </script>
-
-    <!-- Sript to have the values updated -->
-    <script>
-    // window.onbeforeunload = function(event) {
-    //     // do stuff here
-    //     return "you have unsaved changes. Are you sure you want to navigate away?";
-    // };
-    </script>
-
-    <!-- Script to show edit title box -->
-    <Script>
-      function makeEditTitleBoxVisible() {
-
-        console.log("Update title");
-        editNoteTitleBox = document.getElementById('edit-note-title-box');
-        editNoteTitleBox.classList.remove('hidden');
-        editNoteTitleBox.getElementsByTagName('input')[0].value = window.editor.title;
-
-        editNoteTitleBox.getElementsByClassName('cancel')[0].onclick = function() {
-          editNoteTitleBox.classList.add('hidden');
-        }
-
-        editNoteTitleBox.getElementsByClassName('save')[0].onclick = function() {
-          var editNoteTitleIinputValue = document.getElementById('edit-note-title-input').value;
-          updateNotefunction(window.currentNote, editNoteTitleIinputValue, window.notesData[window.currentNote].description);
-          window.editor['title'] = editNoteTitleIinputValue; // As editor needs also be updated
-          editNoteTitleBox.classList.add('hidden');
-        }
-
-      }
-    </Script>
-
+    <script src="js/newdesign-before-body.js"></script>
     <!-- JQuery for resize -->
     <script src="js/before-body-jquery.js"></script>
   </body>
