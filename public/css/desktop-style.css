@@ -263,3 +263,16 @@ pre code {
     right: 1px;
     bottom: 1px;
 }
+
+#logo-header {
+    margin-top: -16px;
+    margin-bottom: -20px;
+    padding-right: 16px;
+    width: 64px;
+    height: 64px;
+}
+
+#logo-header img {
+    height: 100%;
+    width: 100%;
+}
