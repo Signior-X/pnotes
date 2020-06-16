@@ -74,7 +74,7 @@
             var childKey = childSnapshot.childKey;
             var childData = childSnapshot.childData;
 
-            noteFamily.innerHTML += '<div id="' + childKey + '" class="note-row hoverable" onclick=addToDescriptionWindow(this) >'
+            noteFamily.innerHTML += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
               + '<div class="note-title">' + childData.title + '</div>'
               + '<div class="note-date">' + childData.date + '</div>'
               + '</div>';
@@ -182,7 +182,9 @@
     <div id="main">
       <div id="top-nav">
         <div id="logo-header"><img src="pnotes-logo3.png"></img></div>
-        <button class="btn" id="create-note-button" onclick=newNoteWindow() >Add Note</button>
+        <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
+        <button class="btn btn-primary hidden" id="edit-title-button">Edit Title</button>
+        <button class="btn btn-danger hidden" id="remove-note-button" onclick=openDeleteNoteModal()>Delete Note</button>
         <div class="right-menu">
           <div id="user-email-heading">Welcome <%= userEmail %></div>
           <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
@@ -222,10 +224,27 @@
         </div>
       </div>
     </div>
-
+    
+    <!-- The delete Modal -->
+    <div id="delete-modal" class="modal hidden" style="padding-top: 200px;">
+    
+      <!-- Modal content -->
+      <div class="modal-content" style="max-width: 400px;">
+        <!-- Heading and close button -->
+        <span class="close">&times;</span>
+        <h3 style="margin-top: 5px !important;">Delete Note Warning</h3>
+        <p id="modal-message-p">Are You Sure You want to Delete this Note?<p>
+        <hr>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary cancel">Close</button>
+          <button type="button" class="btn btn-primary confirm-delete">Delete Note</button>
+        </div>
+      </div>
+    </div>
+    
     <!-- Script to add the data of the currentNote to description on button click -->
     <script>
-      function addToDescriptionWindow(noteRow){
+      function doOnNoteClick(noteRow){
 
         // console.log(md.render('# Remarkable rulezz!'));
 
@@ -243,19 +262,25 @@
         // console.log(noteRow);
         console.log(noteRow.id);
 
-        // Show the tab-nav
-        document.getElementById('tab-nav').classList.remove('hidden');
-
         // Select the note
         window.currentNote = noteRow.id;
         noteRow.classList.add("is--active");
         noteRow.classList.remove("hoverable");
 
+        // Show the remove and edit title buttons
+        document.getElementById('remove-note-button').classList.remove('hidden');
+        document.getElementById('edit-title-button').classList.remove('hidden');
+
+        // Show the tab-nav
+        document.getElementById('tab-nav').classList.remove('hidden');
+
+
         // Store the values in editor
         window.editor['id'] = noteRow.id;
         window.editor['title'] = window.notesData[noteRow.id].title;
         window.editor['description'] = window.notesData[noteRow.id].description;
-
+        console.log("Editor changed success!");
+        console.log(window.editor);
         // Making the preview tab active
         makePreviewTabActive();
       }
@@ -363,6 +388,48 @@
 
         restoreState(); // This will be done after the update
 
+      }
+    </script>
+
+    <!-- Show delete note modal -->
+    <script>
+      function openDeleteNoteModal() {
+        var deleteModal = document.getElementById("delete-modal");
+        deleteModal.classList.remove('hidden');
+
+        deleteModal.getElementsByClassName("close")[0].onclick = function() {
+          deleteModal.classList.add('hidden');
+        }
+
+        deleteModal.getElementsByClassName("cancel")[0].onclick = function() {
+          deleteModal.classList.add('hidden');
+        }
+        
+        confirmDelete = deleteModal.getElementsByClassName("confirm-delete")[0];
+        confirmDelete.onclick = function() {
+          deleteCurrentNote();
+          deleteModal.classList.add('hidden');
+        }
+        document.getElementById('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
+
+      }
+    </script>
+
+    <script>
+      // This function deletes the current active note
+      function deleteCurrentNote() {
+
+        console.log(window.currentNote);
+
+        // Make a confirm message for delete of a note
+        var onDeletePromise = deleteNotefunction(window.currentNote);
+        document.getElementById('note-description-content').innerHTML = '';
+        document.getElementById('note-description-editor').innerHTML = '';
+        document.getElementById('note-description-editor').value = '';
+        document.getElementById('remove-note-button').classList.add('hidden');
+        document.getElementById('edit-title-button').classList.add('hidden');
+        document.getElementById('tab-nav').classList.add('hidden');
+        window.currentNote = ''; // Now no note is in progress to be edited!
       }
     </script>
 
