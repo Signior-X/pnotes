@@ -31,6 +31,11 @@
     <!-- <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> -->
     <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <!-- Highlight js-->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/default.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
   </head>
   <body>
 
@@ -326,6 +331,11 @@
         for (var i=0; i < anchors.length; i++){
           anchors[i].setAttribute('target', '_blank');
         }
+
+        // Change from document to desccription window
+        descriptionWindow.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightBlock(block);
+        });
 
         document.getElementById('preview-button').classList.add('tab-active');
         document.getElementById('editing-button').classList.remove('tab-active');
