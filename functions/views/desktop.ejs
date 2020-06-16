@@ -35,6 +35,7 @@
   <body>
 
     <script>
+      var md = new Remarkable();
       document.addEventListener('DOMContentLoaded', function () {
         
         window.signInEmail = '<%= userEmail %>';
@@ -208,7 +209,7 @@
             </div>
           </div>
           <div id="note-description-preview" class="hidden">
-            <textarea id="note-description-editor"></textarea>
+            <textarea id="note-description-editor" oninput=changeWindowEditorDescription(this) ></textarea>
           </div>
         </div>
       </div>
@@ -218,7 +219,6 @@
     <script>
       function addToDescriptionWindow(noteRow){
 
-        var md = new Remarkable();
         // console.log(md.render('# Remarkable rulezz!'));
 
         // First deselect the current selected Note
@@ -229,20 +229,7 @@
         }
 
         // console.log(noteRow);
-        // console.log(noteRow.id);
-
-        descriptionWindowString = window.notesData[noteRow.id].description;
-        // console.log(descriptionWindowString);
-
-        // Now add the description
-        var descriptionWindow = document.getElementById('note-description-content');
-        descriptionWindow.innerHTML = md.render(descriptionWindowString);
-
-        // now change all a tags to have target="_none" in note-description-content
-        var anchors = descriptionWindow.getElementsByTagName('a');
-        for (var i=0; i < anchors.length; i++){
-          anchors[i].setAttribute('target', '_blank');
-        }
+        console.log(noteRow.id);
 
         // Show the tab-nav
         document.getElementById('tab-nav').classList.remove('hidden');
@@ -252,6 +239,11 @@
         noteRow.classList.add("is--active");
         noteRow.classList.remove("hoverable");
         
+        // Store the values in editor
+        window.editor['id'] = noteRow.id;
+        window.editor['title'] = window.notesData[noteRow.id].title;
+        window.editor['description'] = window.notesData[noteRow.id].description;
+
         // Making the preview tab active
         makePreviewTabActive();
       }
@@ -263,24 +255,65 @@
       // Remember click actions are taken care by jquery
 
       function makeEditTabActive() {
+
+        // console.log(window.editor);
+
+        // Now add the description
+        var editorWindowTextArea = document.getElementById('note-description-editor');
+        editorWindowTextArea.innerHTML = window.editor.description;
+        editorWindowTextArea.value = window.editor.description;
+
         document.getElementById('editing-button').classList.add('tab-active');
         document.getElementById('preview-button').classList.remove('tab-active');
 
         document.getElementById('note-description-content').classList.add('hidden');
         document.getElementById('note-description-preview').classList.remove('hidden');
 
-
       }
     </script>
 
     <script>
       function makePreviewTabActive() {
+
+        // console.log(window.editor);
+
+        // Now update the preview with the editor values
+        
+        // Now add the description
+        var descriptionWindow = document.getElementById('note-description-content');
+        descriptionWindow.innerHTML = md.render(window.editor.description);
+
+        // now change all a tags to have target="_none" in note-description-content
+        var anchors = descriptionWindow.getElementsByTagName('a');
+        for (var i=0; i < anchors.length; i++){
+          anchors[i].setAttribute('target', '_blank');
+        }
+
         document.getElementById('preview-button').classList.add('tab-active');
         document.getElementById('editing-button').classList.remove('tab-active');
 
         document.getElementById('note-description-preview').classList.add('hidden');
         document.getElementById('note-description-content').classList.remove('hidden');
       }
+    </script>
+
+    <!-- Script to change the editor values on textarea change -->
+    <script>
+      function changeWindowEditorDescription(textArea) {
+        console.log("Text Area changed!");
+
+        // Choose which is better value comes as the real time parameter
+        // console.log(textArea.innerHTML);
+        // console.log(textArea.value);
+
+        // Change the editor values
+        window.editor.description = textArea.value;
+      }
+    </script>
+
+    <!-- Sccript to add a note -->
+    <script>
+
     </script>
 
     <!-- JQuery for resize -->

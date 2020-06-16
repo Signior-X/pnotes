@@ -327,8 +327,12 @@ pre code {
 
 #note-description-editor {
     resize: none;
-    height: 100%;
-    width: 100%;
+    height: 95%;
+    width: 95%;
     padding: 16px;
     border: none;
+}
+
+#note-description-editor:focus {
+    border-radius: 4px;
 }
