@@ -57,7 +57,7 @@ body {
 
 .btn-danger {
     color: #fff;
-    background-color: #ee615ccb;
+    background-color: #e91919b2;
 }
 
 .btn-danger:hover {
@@ -68,6 +68,21 @@ body {
 .btn-danger:focus {
     color: #fff;
     outline-color: #c40c05;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #0081fa9a;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0004fa9c;
+}
+
+.btn-primary:focus {
+    color: #fff;
+    outline-color: #4c00ff;
 }
 
 #top-nav {
@@ -344,4 +359,8 @@ pre code {
 
 #right-tab-menu {
     display: inline;
+}
+
+#right-tab-menu {
+    padding-left: 8px;
 }

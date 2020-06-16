@@ -206,8 +206,8 @@
             <div id="preview-button" class="tab">Preview</div>
             <div id="editing-button" class="tab">Edit</div>
             <div id="right-tab-menu">
-              <button id="cancel-button" class="btn">Cancel</button>
-              <button id="save-button" class="btn">Save</button>
+              <button id="cancel-button" class="btn" onclick=restoreState()>Cancel</button>
+              <button id="save-button" class="btn btn-primary">Save</button>
             </div>
           </div>
           <div id="note-description-content">
@@ -233,8 +233,12 @@
         console.log(window.currentNote);
 
         if (window.currentNote) {
-          document.getElementById(window.currentNote).classList.remove('is--active');
-          document.getElementById(window.currentNote).classList.remove('hoverable');
+          try{
+            document.getElementById(window.currentNote).classList.remove('is--active');
+            document.getElementById(window.currentNote).classList.add('hoverable');
+          } catch(e) {
+            console.log("Error currentNote invalid!", e.toString());
+          }
         }
         // console.log(noteRow);
         console.log(noteRow.id);
@@ -343,11 +347,23 @@
 
     <!-- Script to cancel saving a note -->
     <script>
-
+      function restoreState() {
+        console.log(window.editor);
+        window.editor.description = window.notesData[window.currentNote].description;
+        makePreviewTabActive();
+      }
     </script>
 
     <!-- Script to update or say save a note -->
 
+
+    <!-- Sript to have the values updated -->
+    <script>
+    // window.onbeforeunload = function(event) {
+    //     // do stuff here
+    //     return "you have unsaved changes. Are you sure you want to navigate away?";
+    // };
+    </script>
 
     <!-- JQuery for resize -->
     <script src="js/before-body-jquery.js"></script>
