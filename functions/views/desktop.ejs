@@ -207,7 +207,7 @@
             <div id="editing-button" class="tab">Edit</div>
             <div id="right-tab-menu">
               <button id="cancel-button" class="btn" onclick=restoreState()>Cancel</button>
-              <button id="save-button" class="btn btn-primary">Save</button>
+              <button id="save-button" class="btn btn-primary" onclick=saveNote()>Save</button>
             </div>
           </div>
           <div id="note-description-content">
@@ -348,14 +348,23 @@
     <!-- Script to cancel saving a note -->
     <script>
       function restoreState() {
-        console.log(window.editor);
+        // console.log(window.editor);
         window.editor.description = window.notesData[window.currentNote].description;
         makePreviewTabActive();
       }
     </script>
 
     <!-- Script to update or say save a note -->
+    <script>
+      function saveNote() {
+        console.log(window.editor);
+        var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
+        console.log(promisedResult);
 
+        restoreState(); // This will be done after the update
+
+      }
+    </script>
 
     <!-- Sript to have the values updated -->
     <script>
