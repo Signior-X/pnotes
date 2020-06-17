@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+// To Make changes in the welcome page -> check admin-branch
+
 router.get('/', function(req, res, next){
     res.status(200);
 
