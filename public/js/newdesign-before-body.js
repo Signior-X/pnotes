@@ -60,6 +60,7 @@ function makeEditTabActive() {
     document.getElementById('note-description-content').classList.add('hidden');
     document.getElementById('note-description-preview').classList.remove('hidden');
 
+    $('#note-description-editor').focus();
 }
 
 
@@ -126,13 +127,13 @@ function newNoteWindow() {
     console.log(window.editor);
 
     document.getElementById('tab-nav').classList.remove('hidden');
-    makeEditTabActive();
+    makeEditTabActive();  // This sets focus to description editor
 
     // First show the buttons of top nav
     // Show the remove and edit title buttons
     document.getElementById('remove-note-button').classList.remove('hidden');
     document.getElementById('edit-title-button').classList.remove('hidden');
-    makeEditTitleBoxVisible();
+    makeEditTitleBoxVisible();  //This sets focus to note title editor
 }
 
 
@@ -213,9 +214,15 @@ function makeEditTitleBoxVisible() {
 
     editNoteTitleBox.getElementsByClassName('save')[0].onclick = function () {
         var editNoteTitleIinputValue = document.getElementById('edit-note-title-input').value;
-        updateNotefunction(window.currentNote, editNoteTitleIinputValue, window.notesData[window.currentNote].description);
-        window.editor['title'] = editNoteTitleIinputValue; // As editor needs also be updated
-        editNoteTitleBox.classList.add('hidden');
+        if(editNoteTitleIinputValue.toString().trim() === '') {
+            alert('Note Title Cannot be empty!');
+        } else {
+            updateNotefunction(window.currentNote, editNoteTitleIinputValue, window.notesData[window.currentNote].description);
+            window.editor['title'] = editNoteTitleIinputValue; // As editor needs also be updated
+            editNoteTitleBox.classList.add('hidden');
+        }
     }
 
+    // Make focus to the input!
+    $('#edit-note-title-input').focus();
 }
