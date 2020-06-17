@@ -550,7 +550,7 @@ pre code {
 }
 
 .dark #top-nav .btn {
-    background: #0d0d0d;
+    background: #191919;
     color: #798499;
 }
 
@@ -718,4 +718,17 @@ pre code {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
+}
+
+.dark .modal-content {
+    color: #fd3434;
+    background-color: #8a6d6d !important;
+}
+
+.dark .modal-footer .btn {
+    background: #202020;
+}
+
+.dark .modal-footer .btn:hover {
+    background: rgba(0,0,0,0.8);
 }
