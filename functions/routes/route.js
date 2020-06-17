@@ -72,4 +72,8 @@ router.post('/theme/set/:theme', function(req, res, next){
     res.json({success: 1});
 });
 
+router.get('/mobile', function(req, res, next) {
+    res.render('index.ejs');
+});
+
 module.exports = router;
