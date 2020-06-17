@@ -747,3 +747,8 @@ pre code {
 .dark #note-family {
     border-top: 1px #797979 solid;
 }
+
+#dark-switcher:hover {
+    background: rgba(0,0,0,0.8);
+    color: #6ab0f3;
+}

@@ -13,6 +13,7 @@ router.get('/', function(req, res, next){
         // Desktop site
         if(req.signedCookies.sessionEmail){
             console.log("User is signed in!");
+            console.log('Signed in cookie ',req.signedCookies.sessionEmail);
             res.render('desktop.ejs', { userEmail: req.signedCookies.sessionEmail, theme: req.cookies.themeData } );
         }
         console.log("Cookie ",req.signedCookies.sessionEmail);
@@ -21,7 +22,7 @@ router.get('/', function(req, res, next){
 
         // For not logined only allow to see my welcome notes
         // give option at login.ejs to have signed in as anonymous
-        res.render('login.ejs', {userEmail: 'anonymousUserPriyam', theme: req.cookies.themeData });
+        res.render('login.ejs', { theme: req.cookies.themeData });
     } else {
         // This is mobile or tablet site
         res.render('index.ejs');
@@ -31,10 +32,15 @@ router.get('/', function(req, res, next){
 // Make this set cookie
 router.post('/set', function(req, res, next){
     var userEmail = req.body.userEmail.toString();
+    if(userEmail === 'anonymousUserPriyam'){
+        res.cookie('sessionEmail', userEmail, { signed: true });
+        console.log("Cookie set");
+        res.json({success: 1})
+    }
     var len = userEmail.length;
     res.cookie('sessionEmail', userEmail.substr(0, len-10), { signed : true });
     console.log("Cookie set");
-    res.json({success: 1})
+    res.json({success: 1});
 });
 
 router.post('/clear', function(req, res, next){

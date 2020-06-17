@@ -155,6 +155,36 @@
             console.log("Failed to do");
           });
         }
+
+        $('#sign-in-anonymous').click(function() {
+          // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
+          var xhttp = new XMLHttpRequest();
+
+          xhttp.addEventListener("error", function (evt) {
+            console.log("Failed");
+            console.log(evt.toString());
+          });
+
+          xhttp.addEventListener("load", function (evt) {
+
+            // console.log(evt);
+            // console.log(evt.srcElement);
+            // console.log(evt.srcElement.response);
+            if (JSON.parse(evt.srcElement.response)['success'] == 1) {
+              console.log("Sign In Success!");
+            } else {
+              console.log("Failed to sign In");
+            }
+            location.reload();
+          });
+
+          // Defining parameters 
+          xhttp.open("POST", "/set", true);
+          //Send the proper header information along with the request
+          xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
+          xhttp.send(JSON.stringify({ userEmail: 'anonymousUserPriyam' }));
+
+        });
       });
     </script>
   
@@ -165,16 +195,16 @@
         <% } else { %>
           <div id="logo-header"><img src="pnotes-logo3.png"></img></div>
         <% } %>
-        
+        <button id="show-mobile-site" class="btn" onclick=viewMobileSite()>Mobile Site</button>
         <div class="right-menu">
           <!-- replace with icon -->
           <% if(theme === 'dark') { %>
-            <button id="dark-switcher" class="btn btn-primary">Switch to Light mode</button>
+            <button id="dark-switcher" class="btn">Switch to Light mode</button>
           <% } else { %>
-            <button id="dark-switcher" class="btn btn-primary">Switch to Dark mode</button>
+            <button id="dark-switcher" class="btn">Switch to Dark mode</button>
           <% } %>
-          <div id="user-email-heading">Anonymous Notes</div>
-          <button id="sign-in-button" class="btn" onclick=signInToGoogle()> <i class="fa fa-google" style="padding-right: 4px;"></i>Sign In with Google</button>
+          <button id="sign-in-anonymous" class="btn btn-primary">Sign in as anonymous</button>
+          <button id="sign-in-button" class="btn btn-primary" onclick=signInToGoogle()> <i class="fa fa-google" style="padding-right: 4px;"></i>Sign In with Google</button>
         </div>
       </div>
 

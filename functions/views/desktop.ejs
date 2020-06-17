@@ -224,7 +224,11 @@
           <% } else { %>
             <button id="dark-switcher" class="btn btn-primary">Switch to Dark mode</button>
           <% } %>
-          <div id="user-email-heading">Welcome <%= userEmail %></div>
+          <% if(userEmail === 'anonymousUserPriyam') { %>
+            <div id="user-email-heading">Welcome Anonymous</div>
+          <% } else { %>
+            <div id="user-email-heading">Welcome <%= userEmail %></div>
+          <% } %>
           <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
         </div>
       </div>
