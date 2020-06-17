@@ -11,10 +11,11 @@ router.get('/', function(req, res, next){
         // Desktop site
         if(req.signedCookies.sessionEmail){
             console.log("User is signed in!");
-            res.render('desktop.ejs', { userEmail: req.signedCookies.sessionEmail } );
+            res.render('desktop.ejs', { userEmail: req.signedCookies.sessionEmail, theme: req.cookies.themeData } );
         }
         console.log("Cookie ",req.signedCookies.sessionEmail);
-        res.render('login.ejs');
+        // anonymousUserPriyam -> Not logined
+        res.render('login.ejs', {userEmail: 'anonymousUserPriyam', theme: req.cookies.themeData });
     } else {
         // This is mobile or tablet site
         res.render('index.ejs');
@@ -33,6 +34,12 @@ router.post('/set', function(req, res, next){
 router.post('/clear', function(req, res, next){
     res.clearCookie('sessionEmail');
     console.log('Cookie cleared');
+    res.json({success: 1});
+});
+
+router.post('/theme/set/:theme', function(req, res, next){
+    var themeToSet = req.params.theme;
+    res.cookie('themeData', themeToSet);
     res.json({success: 1});
 });
 

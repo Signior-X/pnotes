@@ -52,7 +52,7 @@ body {
 
 .btn:hover {
     color: #111;
-    background: rgb(161, 161, 161);
+    background: rgb(209, 209, 209);
 }
 
 .btn-danger {
@@ -162,6 +162,7 @@ body {
 }
 
 #note-family {
+    border-top: 1px #e1e4e8 solid;
     overflow-y: auto;
     height: 100%;
 }
@@ -550,7 +551,7 @@ pre code {
 }
 
 .dark #top-nav .btn {
-    background: #191919;
+    background: #212121;
     color: #798499;
 }
 
@@ -721,14 +722,24 @@ pre code {
 }
 
 .dark .modal-content {
-    color: #fd3434;
-    background-color: #8a6d6d !important;
+    color: #f84e4e;
+    background-color: #090909 !important;
 }
 
 .dark .modal-footer .btn {
-    background: #202020;
+    background: #191919;
 }
 
 .dark .modal-footer .btn:hover {
     background: rgba(0,0,0,0.8);
+}
+
+.dark hr {
+    color: black;
+    border: 1px #797979 solid;
+    background: black;
+}
+
+.dark #note-family {
+    border-top: 1px #797979 solid;
 }

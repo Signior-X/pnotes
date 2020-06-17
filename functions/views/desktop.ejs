@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
     <script>hljs.initHighlightingOnLoad();</script>
   </head>
-  <body>
+  <body  class="<%= theme %>">
     
     <!-- Script Just After Body -->
     <script>
@@ -200,7 +200,11 @@
 
     <div id="main">
       <div id="top-nav">
-        <div id="logo-header"><img src="pnotes-logo3.png"></img></div>
+        <% if(theme === 'dark') { %>  
+          <div id="logo-header"><img src="pnotes-logo-dark.png"></img></div>
+        <% } else { %>
+          <div id="logo-header"><img src="pnotes-logo3.png"></img></div>
+        <% } %>
         <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
         <div id="edit-title-button-div">
           <button class="btn btn-primary hidden" id="edit-title-button" onclick=makeEditTitleBoxVisible()>Edit Title</button>
@@ -215,7 +219,11 @@
         <button class="btn btn-danger hidden" id="remove-note-button" onclick=openDeleteNoteModal()>Delete Note</button>
         <div class="right-menu">
           <!-- replace with icon -->
-          <button id="dark-switcher" class="btn btn-primary">Dark mode</button>
+          <% if(theme === 'dark') { %>
+            <button id="dark-switcher" class="btn btn-primary">Switch to Light mode</button>
+          <% } else { %>
+            <button id="dark-switcher" class="btn btn-primary">Switch to Dark mode</button>
+          <% } %>
           <div id="user-email-heading">Welcome <%= userEmail %></div>
           <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
         </div>
@@ -230,7 +238,6 @@
               <div class="search-input-container"><input id="search-input" placeholder="Search Notes" value=""></div>
             </div>
           </div>
-          <hr>
           <div id="note-family">
             <div id="startup">
               <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
@@ -242,7 +249,6 @@
             <div id="preview-button" class="tab">Preview</div>
             <div id="editing-button" class="tab">Edit</div>
             <div id="right-tab-menu">
-              <div id="alert-message" class="msg">Note Saved!</div>
               <button id="cancel-button" class="btn" onclick=restoreState()>Cancel</button>
               <button id="save-button" class="btn btn-primary" onclick=saveNote()>Save</button>
             </div>
