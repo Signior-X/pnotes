@@ -64,13 +64,16 @@ $(function() {
         }
     });
 
-    $('#note-description-editor').bind('keydown', function(event) {
+    $(window).bind('keydown', function(event) {
         if (event.ctrlKey || event.metaKey) {
             switch (String.fromCharCode(event.which).toLowerCase()) {
             case 's':
-                // This means save the note now
                 event.preventDefault();
-                saveNote();
+                // This means save the note now
+                if(window.currentNote) {
+                  console.log('Saving Note');
+                  saveNote();
+                }
                 break;
             }
         }
