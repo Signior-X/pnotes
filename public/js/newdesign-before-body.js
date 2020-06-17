@@ -110,12 +110,16 @@ function changeWindowEditorDescription(textArea) {
 // <!-- Sccript to open add a note create -->
 function newNoteWindow() {
 
-    var returened = addNotefunction('New Note', '# New Note')
+    // This creates a new note and also set the currentNote as the new key which is found
+    // The current Note is automatically selected and tasks are done in the ref method!!
+    var returened = addNotefunction('New Note Title', '# New Note')
     console.log(returened);
 
     // noteFamily.innerHTML = dataToAppend + presentData;
     console.log("Check Now if new note is created!");
     console.log("Now open the new note editor");
+
+    // Now open new edit title dialog
 
     // Move the values of current note to editor
     window.editor = { id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description };
@@ -124,6 +128,11 @@ function newNoteWindow() {
     document.getElementById('tab-nav').classList.remove('hidden');
     makeEditTabActive();
 
+    // First show the buttons of top nav
+    // Show the remove and edit title buttons
+    document.getElementById('remove-note-button').classList.remove('hidden');
+    document.getElementById('edit-title-button').classList.remove('hidden');
+    makeEditTitleBoxVisible();
 }
 
 

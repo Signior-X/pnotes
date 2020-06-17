@@ -31,7 +31,7 @@ $(function() {
                   console.log("Theme Change Failed");
                 }
               });
-  
+
               // Defining parameters 
               xhttp.open("POST", "/theme/set/light", true);
               //Send the proper header information along with the request
