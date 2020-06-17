@@ -172,6 +172,10 @@
       // Sign out Function
       signOutFromGoogle = () => {
           //Start the user delete or sign out activity
+        
+          // Save any unsaved changes present
+          saveForUnSavedChanges();
+
           console.log("Sign Out User!");
 
           var user = firebase.auth().signOut();

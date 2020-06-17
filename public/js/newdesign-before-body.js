@@ -3,8 +3,10 @@ function doOnNoteClick(noteRow) {
 
     // console.log(md.render('# Remarkable rulezz!'));
 
+    saveForUnSavedChanges();
+
     // First deselect the current selected Note
-    console.log(window.currentNote);
+    console.log("Current Note", window.currentNote);
 
     if (window.currentNote) {
         try {
@@ -28,7 +30,6 @@ function doOnNoteClick(noteRow) {
 
     // Show the tab-nav
     document.getElementById('tab-nav').classList.remove('hidden');
-
 
     // Store the values in editor
     window.editor['id'] = noteRow.id;
@@ -111,6 +112,9 @@ function changeWindowEditorDescription(textArea) {
 // <!-- Sccript to open add a note create -->
 function newNoteWindow() {
 
+    // Save the current note and editor values if changed!
+    saveForUnSavedChanges();
+
     // This creates a new note and also set the currentNote as the new key which is found
     // The current Note is automatically selected and tasks are done in the ref method!!
     var returened = addNotefunction('New Note Title', '# New Note')
@@ -119,8 +123,6 @@ function newNoteWindow() {
     // noteFamily.innerHTML = dataToAppend + presentData;
     console.log("Check Now if new note is created!");
     console.log("Now open the new note editor");
-
-    // Now open new edit title dialog
 
     // Move the values of current note to editor
     window.editor = { id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description };
@@ -133,19 +135,21 @@ function newNoteWindow() {
     // Show the remove and edit title buttons
     document.getElementById('remove-note-button').classList.remove('hidden');
     document.getElementById('edit-title-button').classList.remove('hidden');
+
+    // Now open new edit title dialog
     makeEditTitleBoxVisible();  //This sets focus to note title editor
 }
 
 
-// <!-- Script to cancel saving a note -->
+// <!-- Script to cancel saving a note or restore the state -->
 function restoreState() {
+    // Makes the description to open with the current Note values 
     // console.log(window.editor);
     window.editor.description = window.notesData[window.currentNote].description;
     makePreviewTabActive();
 }
 
-// <!-- Script to update or say save a note -->
-
+// <!-- Script to update or say save a note and remain at that note -->
 function saveNote() {
     console.log(window.editor);
     var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
@@ -225,4 +229,26 @@ function makeEditTitleBoxVisible() {
 
     // Make focus to the input!
     $('#edit-note-title-input').focus();
+}
+
+function saveForUnSavedChanges() {
+
+    console.log('Trying to save unsaved changes if present');
+    if(window.currentNote && window.currentNote !== '') {
+        // Current note is not empty
+        console.log('Current Note is not empty');
+        if(window.notesData[currentNote].description !== window.editor.description){
+            console.log('Unsaved changes found!');
+
+            // Right now the state is not restored, so no problem
+            // The firebase reference makes the current Note available
+
+            // Now save the note
+            // console.log(window.editor);
+            var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
+            console.log(promisedResult);
+
+            // No need for restore changes as that will be done by the function who called this function
+        }
+    }
 }
