@@ -16,7 +16,8 @@ router.get('/', function(req, res, next){
             res.render('desktop.ejs', { userEmail: req.signedCookies.sessionEmail, theme: req.cookies.themeData } );
         }
         console.log("Cookie ",req.signedCookies.sessionEmail);
-        // anonymousUserPriyam -> Not logined
+        // anonymousUserPriyam -> Anonymous user
+        // anonymousNotSigned -> Not Logined
 
         // For not logined only allow to see my welcome notes
         // give option at login.ejs to have signed in as anonymous

@@ -111,62 +111,7 @@
           // Here the firebase is correctly defined purely!
           //console.log(firebase.database.ServerValue.TIMESTAMP);
 
-          addNotefunction = (title, description) => {
-              //Start the add note function
-              console.log("Add Note");
-
-              var options = { month: 'short', day: 'numeric' };
-              var today = new Date();
-              // console.log(today.toLocaleDateString("en-US", options));
-
-              var newNote = {
-                  title: title,
-                  description: description,
-                  date: today.toLocaleDateString("en-US", options),
-                  timestamp: firebase.database.ServerValue.TIMESTAMP
-              }
-
-              // Get a key for a new Post.
-              var newPostKey = firebase.database().ref(signInUserEmail).push().key;
-
-              console.log(newPostKey);
-              // Now this is going to be the current value which we are editing
-              window.currentNote = newPostKey;
-
-              // Write the new post's data simultaneously in the posts list and the user's post list.
-              var updates = {};
-              updates[newPostKey] = newNote;
-
-              return firebase.database().ref(signInUserEmail).update(updates);
-          }
-
-          updateNotefunction = (noteId, title, description) => {
-
-              //Start the update note function
-              console.log("Update Note");
-
-              var options = { month: 'short', day: 'numeric' };
-              var today = new Date();
-              // console.log(today.toLocaleDateString("en-US", options));
-
-              var newNote = {
-                  title: title,
-                  description: description,
-                  date: today.toLocaleDateString("en-US", options),
-                  timestamp: firebase.database.ServerValue.TIMESTAMP
-              }
-
-              // Write the new post's data simultaneously in the posts list and the user's post list.
-              var updates = {};
-              updates[noteId] = newNote;
-
-              return firebase.database().ref(signInUserEmail).update(updates);
-          }
-
-          deleteNotefunction = (noteId) => {
-              return firebase.database().ref(signInUserEmail).child(noteId).remove();
-          }
-
+          // Removed the ones not needed here
 
         signInToGoogle = () => {
           // Start the sign in Activity!
@@ -220,19 +165,7 @@
         <% } else { %>
           <div id="logo-header"><img src="pnotes-logo3.png"></img></div>
         <% } %>
-        <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
-        <div id="edit-title-button-div">
-          <button class="btn btn-primary hidden" id="edit-title-button" onclick=makeEditTitleBoxVisible()>Edit Title</button>
-          <div id="edit-note-title-box" class="hidden">
-            <h3>Edit Note Title</h3>
-            <input id="edit-note-title-input" value="" placeholder="Enter Note Title">
-            <div class="buttons" style="display: flex;">
-              <button class="btn cancel">Cancel</button>
-              <button class="btn btn-primary save" style="margin-left: auto;">Done</button>
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-danger hidden" id="remove-note-button" onclick=openDeleteNoteModal()>Delete Note</button>
+        
         <div class="right-menu">
           <!-- replace with icon -->
           <% if(theme === 'dark') { %>
@@ -264,15 +197,11 @@
           <div id="tab-nav" class="hidden">
             <div id="preview-button" class="tab">Preview</div>
             <div id="editing-button" class="tab">Edit</div>
-            <div id="right-tab-menu">
-              <button id="cancel-button" class="btn" onclick=restoreState()>Cancel</button>
-              <button id="save-button" class="btn btn-primary" onclick=saveNote()>Save</button>
-            </div>
           </div>
           <div id="note-description-content">
             <div id="welcome-message">
-              <h1>Welcome</h1>
-              <p>Start by selecting a Note from the sidebar or create a new Note 😀!</p>
+              <h1>Welcome Page</h1>
+              <p>Start by selecting Welcome note from the sidebar or create a new Note 😀!</p>
             </div>
           </div>
           <div id="note-description-preview" class="hidden">

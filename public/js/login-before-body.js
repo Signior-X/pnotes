@@ -22,10 +22,6 @@ function doOnNoteClick(noteRow) {
     noteRow.classList.add("is--active");
     noteRow.classList.remove("hoverable");
 
-    // Show the remove and edit title buttons
-    document.getElementById('remove-note-button').classList.remove('hidden');
-    document.getElementById('edit-title-button').classList.remove('hidden');
-
     // Show the tab-nav
     document.getElementById('tab-nav').classList.remove('hidden');
 
@@ -107,122 +103,8 @@ function changeWindowEditorDescription(textArea) {
     window.editor.description = textArea.value;
 }
 
-
-// <!-- Sccript to open add a note create -->
-function newNoteWindow() {
-
-    // This creates a new note and also set the currentNote as the new key which is found
-    // The current Note is automatically selected and tasks are done in the ref method!!
-    var returened = addNotefunction('New Note Title', '# New Note')
-    console.log(returened);
-
-    // noteFamily.innerHTML = dataToAppend + presentData;
-    console.log("Check Now if new note is created!");
-    console.log("Now open the new note editor");
-
-    // Now open new edit title dialog
-
-    // Move the values of current note to editor
-    window.editor = { id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description };
-    console.log(window.editor);
-
-    document.getElementById('tab-nav').classList.remove('hidden');
-    makeEditTabActive();  // This sets focus to description editor
-
-    // First show the buttons of top nav
-    // Show the remove and edit title buttons
-    document.getElementById('remove-note-button').classList.remove('hidden');
-    document.getElementById('edit-title-button').classList.remove('hidden');
-    makeEditTitleBoxVisible();  //This sets focus to note title editor
-}
-
-
-// <!-- Script to cancel saving a note -->
-function restoreState() {
-    // console.log(window.editor);
-    window.editor.description = window.notesData[window.currentNote].description;
-    makePreviewTabActive();
-}
-
-// <!-- Script to update or say save a note -->
-
-function saveNote() {
-    console.log(window.editor);
-    var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
-    console.log(promisedResult);
-
-    restoreState(); // This will be done after the update
-
-}
-
-
-// <!-- Show delete note modal -->
-function openDeleteNoteModal() {
-    var deleteModal = document.getElementById("delete-modal");
-    deleteModal.classList.remove('hidden');
-
-    deleteModal.getElementsByClassName("close")[0].onclick = function () {
-        deleteModal.classList.add('hidden');
-    }
-
-    deleteModal.getElementsByClassName("cancel")[0].onclick = function () {
-        deleteModal.classList.add('hidden');
-    }
-
-    confirmDelete = deleteModal.getElementsByClassName("confirm-delete")[0];
-    confirmDelete.onclick = function () {
-        deleteCurrentNote();
-        deleteModal.classList.add('hidden');
-    }
-    document.getElementById('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
-
-}
-
-// This function deletes the current active note
-function deleteCurrentNote() {
-
-    console.log(window.currentNote);
-
-    // Make a confirm message for delete of a note
-    var onDeletePromise = deleteNotefunction(window.currentNote);
-    document.getElementById('note-description-content').innerHTML = '';
-    document.getElementById('note-description-editor').innerHTML = '';
-    document.getElementById('note-description-editor').value = '';
-    document.getElementById('remove-note-button').classList.add('hidden');
-    document.getElementById('edit-title-button').classList.add('hidden');
-    document.getElementById('tab-nav').classList.add('hidden');
-    window.currentNote = ''; // Now no note is in progress to be edited!
-}
-
 // <!-- Sript to have the values updated -->
 // window.onbeforeunload = function(event) {
 //     // do stuff here
 //     return "you have unsaved changes. Are you sure you want to navigate away?";
 // };
-
-// <!-- Script to show edit title box -->
-function makeEditTitleBoxVisible() {
-
-    console.log("Update title");
-    editNoteTitleBox = document.getElementById('edit-note-title-box');
-    editNoteTitleBox.classList.remove('hidden');
-    editNoteTitleBox.getElementsByTagName('input')[0].value = window.editor.title;
-
-    editNoteTitleBox.getElementsByClassName('cancel')[0].onclick = function () {
-        editNoteTitleBox.classList.add('hidden');
-    }
-
-    editNoteTitleBox.getElementsByClassName('save')[0].onclick = function () {
-        var editNoteTitleIinputValue = document.getElementById('edit-note-title-input').value;
-        if(editNoteTitleIinputValue.toString().trim() === '') {
-            alert('Note Title Cannot be empty!');
-        } else {
-            updateNotefunction(window.currentNote, editNoteTitleIinputValue, window.notesData[window.currentNote].description);
-            window.editor['title'] = editNoteTitleIinputValue; // As editor needs also be updated
-            editNoteTitleBox.classList.add('hidden');
-        }
-    }
-
-    // Make focus to the input!
-    $('#edit-note-title-input').focus();
-}
