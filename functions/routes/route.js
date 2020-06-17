@@ -15,6 +15,9 @@ router.get('/', function(req, res, next){
         }
         console.log("Cookie ",req.signedCookies.sessionEmail);
         // anonymousUserPriyam -> Not logined
+
+        // For not logined only allow to see my welcome notes
+        // give option at login.ejs to have signed in as anonymous
         res.render('login.ejs', {userEmail: 'anonymousUserPriyam', theme: req.cookies.themeData });
     } else {
         // This is mobile or tablet site
@@ -33,7 +36,7 @@ router.post('/set', function(req, res, next){
 
 router.post('/clear', function(req, res, next){
     res.clearCookie('sessionEmail');
-    console.log('Cookie cleared');
+    console.log('session Cookie cleared');
     res.json({success: 1});
 });
 
