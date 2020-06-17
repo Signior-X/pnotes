@@ -123,6 +123,9 @@
             // console.log(result.user.email);
             console.log("success, check now!");
 
+            console.log(result.user.displayName);
+            // console.log(result.user);
+
             // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
             var xhttp = new XMLHttpRequest();
 
@@ -148,7 +151,7 @@
             xhttp.open("POST", "/set", true);
             //Send the proper header information along with the request
             xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-            xhttp.send(JSON.stringify({ userEmail: result.user.email }));
+            xhttp.send(JSON.stringify({ userEmail: result.user.email, userDisplayName: result.user.displayName }));
 
           }).catch(function (err) {
             console.log(err);

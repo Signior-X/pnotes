@@ -231,7 +231,7 @@
           <% if(userEmail === 'anonymousUserPriyam') { %>
             <div id="user-email-heading">Welcome Anonymous</div>
           <% } else { %>
-            <div id="user-email-heading">Welcome <%= userEmail %></div>
+            <div id="user-email-heading">Welcome <%= displayName %></div>
           <% } %>
           <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
         </div>
