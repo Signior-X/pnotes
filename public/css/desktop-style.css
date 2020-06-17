@@ -550,7 +550,7 @@ pre code {
 }
 
 .dark #top-nav .btn {
-    background: #0f0f0f;
+    background: #0d0d0d;
     color: #798499;
 }
 
@@ -687,4 +687,35 @@ pre code {
 
 .dark #user-email-heading {
     color: #6ab0f3;
+}
+
+/* Code highlight style for dark mode */
+.dark .hljs-keyword {
+    color: #eb0f08;
+}
+
+.dark .hljs-value {
+    color: #bdf3ee;
+}
+
+
+/* For scrollbar for both the views */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }
