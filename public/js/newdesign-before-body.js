@@ -199,10 +199,15 @@ function deleteCurrentNote() {
 }
 
 // <!-- Sript to have the values updated -->
-// window.onbeforeunload = function(event) {
-//     // do stuff here
-//     return "you have unsaved changes. Are you sure you want to navigate away?";
-// };
+window.onbeforeunload = function(event) {
+    // do stuff here
+    if(window.notesData[window.currentNote].description !== window.editor.description) {
+        console.log('Unsaved Changes Found!');
+        return "you have unsaved changes. Are you sure you want to navigate away?";
+    } else {
+        console.log("No unsaved changes found");
+    }
+};
 
 // <!-- Script to show edit title box -->
 function makeEditTitleBoxVisible() {

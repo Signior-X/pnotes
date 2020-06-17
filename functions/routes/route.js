@@ -14,15 +14,18 @@ router.get('/', function(req, res, next){
         if(req.signedCookies.sessionEmail){
             console.log("User is signed in!");
             console.log('Signed in cookie ',req.signedCookies.sessionEmail);
+            res.status(200);
             res.render('desktop.ejs', { userEmail: req.signedCookies.sessionEmail, theme: req.cookies.themeData } );
+        } else {
+            console.log("Cookie ", req.signedCookies.sessionEmail);
+            // anonymousUserPriyam -> Anonymous user
+            // anonymousNotSigned -> Not Logined
+    
+            // For not logined only allow to see my welcome notes
+            // give option at login.ejs to have signed in as anonymous
+            res.status(200);
+            res.render('login.ejs', { theme: req.cookies.themeData });
         }
-        console.log("Cookie ",req.signedCookies.sessionEmail);
-        // anonymousUserPriyam -> Anonymous user
-        // anonymousNotSigned -> Not Logined
-
-        // For not logined only allow to see my welcome notes
-        // give option at login.ejs to have signed in as anonymous
-        res.render('login.ejs', { theme: req.cookies.themeData });
     } else {
         // This is mobile or tablet site
         res.render('index.ejs');
