@@ -18,6 +18,7 @@ $(function() {
             $('body').removeClass('dark');
             $('#dark-switcher').html('Switch to Dark Mode');
 
+            // Change this to do directly from js after words Important!!
             // make a request to the serve to change the theme
             var xhttp = new XMLHttpRequest();
             xhttp.addEventListener("load", function (evt) {

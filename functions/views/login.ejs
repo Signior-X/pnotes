@@ -45,14 +45,6 @@
     <script>
       var md = new Remarkable();
 
-      // Load the dark mode if present
-      var themeData = document.cookie.themeData;
-      if(themeData === 'dark') {
-        $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
-        $('body').addClass('dark');
-        $('#dark-switcher').html('Switch to Light Mode');
-      }
-
       document.addEventListener('DOMContentLoaded', function () {
 
         // Taken from desktop part
@@ -208,6 +200,8 @@
       }
     </script>
   
+    <script src="js/loadTheme.js"></script>
+
     <div id="main">
       <div id="top-nav">
         <% if(theme === 'dark') { %>  
