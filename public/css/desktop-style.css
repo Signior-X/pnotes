@@ -754,5 +754,11 @@ pre code {
 }
 
 img {
-    width: 100% !important;
+    max-width: 100% !important;
+}
+
+@media (max-width: 1000px) {
+    #user-email-heading {
+        display: none;
+    }
 }

@@ -1,157 +1,186 @@
 var md = new Remarkable();
 
-      document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-        // Taken from desktop part
-        window.signInEmail = 'anonymousNotSigned';
-          const signInUserEmail = 'anonymousNotSigned';
-          window.currentNote = '';
-          window.editor = { id: '', title: '', description: '' };
+  // Taken from desktop part
+  window.signInEmail = 'anonymousNotSigned';
+  const signInUserEmail = 'anonymousNotSigned';
+  window.currentNote = '';
+  window.editor = { id: '', title: '', description: '' };
 
-          console.log(signInUserEmail);
+  console.log(signInUserEmail);
 
-          // Now call the data extract for only once so as to get the list of datas
-          firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
+  // Now call the data extract for only once so as to get the list of datas
+  firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
 
-              //console.log(snapshot);
-              var descNoteList = [];
+    //console.log(snapshot);
+    var descNoteList = [];
 
-              snapshot.forEach(function (childSnapshot) {
-                  var childKey = childSnapshot.key;
-                  var childData = childSnapshot.val();
-                  //console.log("childkey", childKey);
-                  //console.log("childData", childData);
-                  // ...
-                  descNoteList.push({ childKey: childKey, childData: childData });
+    snapshot.forEach(function (childSnapshot) {
+      var childKey = childSnapshot.key;
+      var childData = childSnapshot.val();
+      //console.log("childkey", childKey);
+      //console.log("childData", childData);
+      // ...
+      descNoteList.push({ childKey: childKey, childData: childData });
 
-              });
+    });
 
-              // Reverse the array
-              descNoteList.reverse();
+    // Reverse the array
+    descNoteList.reverse();
 
-              // Empty the notes data
-              window.notesData = {};
+    // Empty the notes data
+    window.notesData = {};
 
-              var noteFamily = document.getElementById('note-family');
-              noteFamily.innerHTML = '';
-              noteFamilyString = '';
+    var noteFamily = document.getElementById('note-family');
+    noteFamily.innerHTML = '';
+    noteFamilyString = '';
 
-              descNoteList.forEach(function (childSnapshot) {
-                  var childKey = childSnapshot.childKey;
-                  var childData = childSnapshot.childData;
+    descNoteList.forEach(function (childSnapshot) {
+      var childKey = childSnapshot.childKey;
+      var childData = childSnapshot.childData;
 
-                  noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
-                      + '<div class="note-title">' + childData.title + '</div>'
-                      + '<div class="note-date">' + childData.date + '</div>'
-                      + '</div>';
+      noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
+        + '<div class="note-title">' + childData.title + '</div>'
+        + '<div class="note-date">' + childData.date + '</div>'
+        + '</div>';
 
-                  // Only storing notes description in it
-                  window.notesData[childKey] = { description: childData.description, title: childData.title };
-              });
+      // Only storing notes description in it
+      window.notesData[childKey] = { description: childData.description, title: childData.title };
+    });
 
-              noteFamily.innerHTML = noteFamilyString;
+    noteFamily.innerHTML = noteFamilyString;
 
-              // make the current note active if present
-              if (window.currentNote) {
-                try{
-                  document.getElementById(window.currentNote).classList.add('is--active');
-                  document.getElementById(window.currentNote).classList.remove('hoverable');
-                } catch(e) {
-                  console.log("Ignore this error, comes at time of delete",e.toString)
-                }
-              }
-          });
+    // make the current note active if present
+    if (window.currentNote) {
+      try {
+        document.getElementById(window.currentNote).classList.add('is--active');
+        document.getElementById(window.currentNote).classList.remove('hoverable');
+      } catch (e) {
+        console.log("Ignore this error, comes at time of delete", e.toString)
+      }
+    }
 
-          //list(family);
 
-          // Here the firebase is correctly defined purely!
-          //console.log(firebase.database.ServerValue.TIMESTAMP);
+    addNotefunction = (title, description) => {
+      //Start the add note function
+      console.log("Add Note");
 
-          // Removed the ones not needed here
+      var options = { month: 'short', day: 'numeric' };
+      var today = new Date();
+      // console.log(today.toLocaleDateString("en-US", options));
 
-        signInToGoogle = () => {
-          // Start the sign in Activity!
-          console.log("Sign In to Google!");
+      var newNote = {
+        title: title,
+        description: description,
+        date: today.toLocaleDateString("en-US", options),
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      }
 
-          // Google sign in
-          var provider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithPopup(provider).then(function (result) {
-            // console.log(result.user.email);
-            console.log("success, check now!");
+      // Get a key for a new Post.
+      var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
-            // console.log(result.user.displayName);
-            // console.log(result);
-            // console.log(result.user);
-            // console.log(result.user_id_token);
+      console.log(newPostKey);
+      // Now this is going to be the current value which we are editing
+      window.currentNote = newPostKey;
 
-            console.log(result.user);
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      var updates = {};
+      updates[newPostKey] = newNote;
 
-            // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
-            var xhttp = new XMLHttpRequest();
+      return firebase.database().ref(signInUserEmail).update(updates);
+    }
 
-            xhttp.addEventListener("error", function (evt) {
-              console.log("Failed");
-              console.log(evt.toString());
-            });
+    updateNotefunction = (noteId, title, description) => {
 
-            xhttp.addEventListener("load", function (evt) {
+      //Start the update note function
+      console.log("Update Note");
 
-              // console.log(evt);
-              // console.log(evt.srcElement);
-              // console.log(evt.srcElement.response);
-              if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-                console.log("Sign In Success!");
-              } else {
-                console.log("Failed to sign In");
-              }
-              location.reload();
-            });
+      var options = { month: 'short', day: 'numeric' };
+      var today = new Date();
+      // console.log(today.toLocaleDateString("en-US", options));
 
-            // Defining parameters 
-            xhttp.open("POST", "/set", true);
-            //Send the proper header information along with the request
-            xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-            xhttp.send(JSON.stringify({ userEmail: result.user.email, userDisplayName: result.user.displayName }));
+      var newNote = {
+        title: title,
+        description: description,
+        date: today.toLocaleDateString("en-US", options),
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      }
 
-          }).catch(function (err) {
-            console.log(err);
-            console.log("Failed to do");
-          });
-        }
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      var updates = {};
+      updates[noteId] = newNote;
 
-        $('#sign-in-anonymous').click(function() {
-          // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
-          var xhttp = new XMLHttpRequest();
+      return firebase.database().ref(signInUserEmail).update(updates);
+    }
 
-          xhttp.addEventListener("error", function (evt) {
-            console.log("Failed");
-            console.log(evt.toString());
-          });
+    deleteNotefunction = (noteId) => {
+      return firebase.database().ref(signInUserEmail).child(noteId).remove();
+    }
 
-          xhttp.addEventListener("load", function (evt) {
+  });
 
-            // console.log(evt);
-            // console.log(evt.srcElement);
-            // console.log(evt.srcElement.response);
-            if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-              console.log("Sign In Success!");
-            } else {
-              console.log("Failed to sign In");
-            }
-            location.reload();
-          });
+  //list(family);
 
-          // Defining parameters 
-          xhttp.open("POST", "/set", true);
-          //Send the proper header information along with the request
-          xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-          xhttp.send(JSON.stringify({ userEmail: 'anonymousUserPriyam', userDisplayName: 'Priyam' }));
+  // Here the firebase is correctly defined purely!
+  //console.log(firebase.database.ServerValue.TIMESTAMP);
 
-        });
+  // Removed the ones not needed here
+
+  signInToGoogle = () => {
+    // Start the sign in Activity!
+    console.log("Sign In to Google!");
+
+    // Google sign in
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+      // console.log(result.user.email);
+      console.log("success, check now!");
+
+      // console.log(result.user.displayName);
+      // console.log(result);
+      // console.log(result.user);
+      // console.log(result.user_id_token);
+
+      console.log(result.user);
+
+      // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.addEventListener("error", function (evt) {
+        console.log("Failed");
+        console.log(evt.toString());
       });
 
-      function viewMobileSite() {
-        window.location.href = "/mobile";
-      }
+      xhttp.addEventListener("load", function (evt) {
+
+        // console.log(evt);
+        // console.log(evt.srcElement);
+        // console.log(evt.srcElement.response);
+        if (JSON.parse(evt.srcElement.response)['success'] == 1) {
+          console.log("Sign In Success!");
+        } else {
+          console.log("Failed to sign In");
+        }
+        location.reload();
+      });
+
+      // Defining parameters 
+      xhttp.open("POST", "/set", true);
+      //Send the proper header information along with the request
+      xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
+      xhttp.send(JSON.stringify({ userEmail: result.user.email, userDisplayName: result.user.displayName }));
+
+    }).catch(function (err) {
+      console.log(err);
+      console.log("Failed to do");
+    });
+  }
+
+});
+
+function viewMobileSite() {
+  window.location.href = "/mobile";
+}
 
 // Add this sccript before the body to make this work
