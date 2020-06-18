@@ -44,6 +44,15 @@
   
     <script>
       var md = new Remarkable();
+
+      // Load the dark mode if present
+      var themeData = document.cookie.themeData;
+      if(themeData === 'dark') {
+        $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
+        $('body').addClass('dark');
+        $('#dark-switcher').html('Switch to Light Mode');
+      }
+
       document.addEventListener('DOMContentLoaded', function () {
 
         // Taken from desktop part
@@ -123,8 +132,12 @@
             // console.log(result.user.email);
             console.log("success, check now!");
 
-            console.log(result.user.displayName);
+            // console.log(result.user.displayName);
+            // console.log(result);
             // console.log(result.user);
+            // console.log(result.user_id_token);
+
+            console.log(result.user);
 
             // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
             var xhttp = new XMLHttpRequest();
@@ -185,7 +198,7 @@
           xhttp.open("POST", "/set", true);
           //Send the proper header information along with the request
           xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-          xhttp.send(JSON.stringify({ userEmail: 'anonymousUserPriyam' }));
+          xhttp.send(JSON.stringify({ userEmail: 'anonymousUserPriyam', userDisplayName: 'Priyam' }));
 
         });
       });

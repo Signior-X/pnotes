@@ -25,6 +25,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser('adjhhikeoapmkhfhionkfn'));  //Secret
 
+const isDevMode = process.env.NODE_ENV === 'development';
+
+// 1st change.
+if (!isDevMode) {
+  app.set('trust proxy', 1);
+}
+
 app.use(ua.is_mobile());
 app.use(ua.is_tablet());
 
