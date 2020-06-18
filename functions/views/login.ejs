@@ -25,7 +25,7 @@
     <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/css/desktop-style.css">
+    <link rel="stylesheet" href="/css/desktop-style.min.css">
 
     <!-- Latest compiled and minified CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
@@ -42,163 +42,8 @@
   </head>
   <body class="<%= theme %>">
   
-    <script>
-      var md = new Remarkable();
-
-      document.addEventListener('DOMContentLoaded', function () {
-
-        // Taken from desktop part
-        window.signInEmail = 'anonymousNotSigned';
-          const signInUserEmail = 'anonymousNotSigned';
-          window.currentNote = '';
-          window.editor = { id: '', title: '', description: '' };
-
-          console.log(signInUserEmail);
-
-          // Now call the data extract for only once so as to get the list of datas
-          firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
-
-              //console.log(snapshot);
-              var descNoteList = [];
-
-              snapshot.forEach(function (childSnapshot) {
-                  var childKey = childSnapshot.key;
-                  var childData = childSnapshot.val();
-                  //console.log("childkey", childKey);
-                  //console.log("childData", childData);
-                  // ...
-                  descNoteList.push({ childKey: childKey, childData: childData });
-
-              });
-
-              // Reverse the array
-              descNoteList.reverse();
-
-              // Empty the notes data
-              window.notesData = {};
-
-              var noteFamily = document.getElementById('note-family');
-              noteFamily.innerHTML = '';
-              noteFamilyString = '';
-
-              descNoteList.forEach(function (childSnapshot) {
-                  var childKey = childSnapshot.childKey;
-                  var childData = childSnapshot.childData;
-
-                  noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
-                      + '<div class="note-title">' + childData.title + '</div>'
-                      + '<div class="note-date">' + childData.date + '</div>'
-                      + '</div>';
-
-                  // Only storing notes description in it
-                  window.notesData[childKey] = { description: childData.description, title: childData.title };
-              });
-
-              noteFamily.innerHTML = noteFamilyString;
-
-              // make the current note active if present
-              if (window.currentNote) {
-                try{
-                  document.getElementById(window.currentNote).classList.add('is--active');
-                  document.getElementById(window.currentNote).classList.remove('hoverable');
-                } catch(e) {
-                  console.log("Ignore this error, comes at time of delete",e.toString)
-                }
-              }
-          });
-
-          //list(family);
-
-          // Here the firebase is correctly defined purely!
-          //console.log(firebase.database.ServerValue.TIMESTAMP);
-
-          // Removed the ones not needed here
-
-        signInToGoogle = () => {
-          // Start the sign in Activity!
-          console.log("Sign In to Google!");
-
-          // Google sign in
-          var provider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithPopup(provider).then(function (result) {
-            // console.log(result.user.email);
-            console.log("success, check now!");
-
-            // console.log(result.user.displayName);
-            // console.log(result);
-            // console.log(result.user);
-            // console.log(result.user_id_token);
-
-            console.log(result.user);
-
-            // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
-            var xhttp = new XMLHttpRequest();
-
-            xhttp.addEventListener("error", function (evt) {
-              console.log("Failed");
-              console.log(evt.toString());
-            });
-
-            xhttp.addEventListener("load", function (evt) {
-
-              // console.log(evt);
-              // console.log(evt.srcElement);
-              // console.log(evt.srcElement.response);
-              if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-                console.log("Sign In Success!");
-              } else {
-                console.log("Failed to sign In");
-              }
-              location.reload();
-            });
-
-            // Defining parameters 
-            xhttp.open("POST", "/set", true);
-            //Send the proper header information along with the request
-            xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-            xhttp.send(JSON.stringify({ userEmail: result.user.email, userDisplayName: result.user.displayName }));
-
-          }).catch(function (err) {
-            console.log(err);
-            console.log("Failed to do");
-          });
-        }
-
-        $('#sign-in-anonymous').click(function() {
-          // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
-          var xhttp = new XMLHttpRequest();
-
-          xhttp.addEventListener("error", function (evt) {
-            console.log("Failed");
-            console.log(evt.toString());
-          });
-
-          xhttp.addEventListener("load", function (evt) {
-
-            // console.log(evt);
-            // console.log(evt.srcElement);
-            // console.log(evt.srcElement.response);
-            if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-              console.log("Sign In Success!");
-            } else {
-              console.log("Failed to sign In");
-            }
-            location.reload();
-          });
-
-          // Defining parameters 
-          xhttp.open("POST", "/set", true);
-          //Send the proper header information along with the request
-          xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-          xhttp.send(JSON.stringify({ userEmail: 'anonymousUserPriyam', userDisplayName: 'Priyam' }));
-
-        });
-      });
-
-      function viewMobileSite() {
-        window.location.href = "/mobile";
-      }
-    </script>
+    <script>var md=new Remarkable;function viewMobileSite(){window.location.href="/mobile"}document.addEventListener("DOMContentLoaded",function(){window.signInEmail="anonymousNotSigned";window.currentNote="",window.editor={id:"",title:"",description:""},console.log("anonymousNotSigned"),firebase.database().ref("anonymousNotSigned").orderByChild("timestamp").on("value",function(e){var o=[];e.forEach(function(e){var n=e.key,t=e.val();o.push({childKey:n,childData:t})}),o.reverse(),window.notesData={};var n=document.getElementById("note-family");if(n.innerHTML="",noteFamilyString="",o.forEach(function(e){var o=e.childKey,n=e.childData;noteFamilyString+='<div id="'+o+'" class="note-row hoverable" onclick=doOnNoteClick(this) ><div class="note-title">'+n.title+'</div><div class="note-date">'+n.date+"</div></div>",window.notesData[o]={description:n.description,title:n.title}}),n.innerHTML=noteFamilyString,window.currentNote)try{document.getElementById(window.currentNote).classList.add("is--active"),document.getElementById(window.currentNote).classList.remove("hoverable")}catch(e){console.log("Ignore this error, comes at time of delete",e.toString)}}),signInToGoogle=(()=>{console.log("Sign In to Google!");var e=new firebase.auth.GoogleAuthProvider;firebase.auth().signInWithPopup(e).then(function(e){console.log("success, check now!"),console.log(e.user);var o=new XMLHttpRequest;o.addEventListener("error",function(e){console.log("Failed"),console.log(e.toString())}),o.addEventListener("load",function(e){1==JSON.parse(e.srcElement.response).success?console.log("Sign In Success!"):console.log("Failed to sign In"),location.reload()}),o.open("POST","/set",!0),o.setRequestHeader("Content-Type","application/json"),o.send(JSON.stringify({userEmail:e.user.email,userDisplayName:e.user.displayName}))}).catch(function(e){console.log(e),console.log("Failed to do")})}),$("#sign-in-anonymous").click(function(){var e=new XMLHttpRequest;e.addEventListener("error",function(e){console.log("Failed"),console.log(e.toString())}),e.addEventListener("load",function(e){1==JSON.parse(e.srcElement.response).success?console.log("Sign In Success!"):console.log("Failed to sign In"),location.reload()}),e.open("POST","/set",!0),e.setRequestHeader("Content-Type","application/json"),e.send(JSON.stringify({userEmail:"anonymousUserPriyam",userDisplayName:"Priyam"}))})});</script>
+    <script></script>
   
     <script src="js/loadTheme.js"></script>
 
@@ -258,9 +103,9 @@
       <!-- No Delete modal for not login -->
 
     <!-- Scripts needed to do the tasks -->
-    <script src="js/login-before-body.js"></script>
+    <script src="js/login-before-body.min.js"></script>
 
     <!-- JQuery for resize -->
-    <script src="js/before-body-jquery.js"></script>
+    <script src="js/before-body-jquery.min.js"></script>
   </body>
 </html>
