@@ -238,8 +238,6 @@
 
     </script>
 
-    <script src="js/loadTheme.js"></script>
-
     <div id="main">
       <div id="top-nav">
         <% if(theme === 'dark') { %>  
@@ -431,6 +429,9 @@
 
     <!-- Scripts needed to do the tasks -->
     <script src="js/newdesign-before-body.js"></script>
+
+    <!-- To choose theme at starting added after main as not working on serve -->
+    <script src="js/loadTheme.js"></script>
 
     <!-- JQuery for resize -->
     <script src="js/before-body-jquery.min.js"></script>
