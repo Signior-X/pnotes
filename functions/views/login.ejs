@@ -46,7 +46,10 @@
     <script></script> -->
   
     <script>
-    var md = new Remarkable();
+      var md = new Remarkable({
+        html: true,
+        xhtmlOut: true
+      });
 
     document.addEventListener('DOMContentLoaded', function () {
 
