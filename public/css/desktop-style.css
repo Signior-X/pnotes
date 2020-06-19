@@ -354,6 +354,7 @@ pre code {
 
 #note-description-editor:focus {
     border-radius: 4px;
+    outline: none;
 }
 
 #right-tab-menu {
@@ -761,4 +762,8 @@ img {
     #user-email-heading {
         display: none;
     }
+}
+
+.dark #note-description-editor:focus {
+    outline: 1px solid rgba(0,0,0,.6) !important;
 }
