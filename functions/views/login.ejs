@@ -243,6 +243,16 @@
     <!-- To choose theme at starting added after main as not working on serve -->
     <script src="js/loadTheme.js"></script>
 
+    <script>// Load the dark mode if present
+      var themeData = getCookie('themeData');
+      
+      console.log("themeData" , themeData);
+      if(themeData === 'dark') {
+        $('body').addClass('dark');
+        $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
+        $('#dark-switcher').html('Switch to Light Mode');
+      }
+    </script>
     <!-- JQuery for resize -->
     <script src="js/before-body-jquery.min.js"></script>
   </body>
