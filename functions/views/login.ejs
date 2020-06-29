@@ -1,53 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Meta tags and title -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pnotes</title>
-
-    <link rel="icon" href="article-24px.svg" type="image/svg+xml">
-    <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
-
-    <link rel="icon" href="article-24px.svg" type="image/svg+xml">
-    <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
-
-    <!-- Firebase Scripts, currently using app, auth and database for right now! -->
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.14.4/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
-    <!-- <script defer src="/__/firebase/7.14.4/firebase-messaging.js"></script> -->
-    <!-- <script defer src="/__/firebase/7.14.4/firebase-storage.js"></script> -->
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-    <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/css/desktop-style.min.css">
-
-    <!-- Latest compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-    <!-- <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> -->
-    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-    <!-- Highlight js-->
-    <script src="https://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
-    <script>hljs.initHighlightingOnLoad();</script>
+    <%- include('include/desktop-header'); %>
   </head>
   <body class="<%= theme %>">
-  
-    <!-- <script>var md=new Remarkable;function viewMobileSite(){window.location.href="/mobile"}document.addEventListener("DOMContentLoaded",function(){window.signInEmail="anonymousNotSigned";window.currentNote="",window.editor={id:"",title:"",description:""},console.log("anonymousNotSigned"),firebase.database().ref("anonymousNotSigned").orderByChild("timestamp").on("value",function(e){var o=[];e.forEach(function(e){var n=e.key,t=e.val();o.push({childKey:n,childData:t})}),o.reverse(),window.notesData={};var n=document.getElementById("note-family");if(n.innerHTML="",noteFamilyString="",o.forEach(function(e){var o=e.childKey,n=e.childData;noteFamilyString+='<div id="'+o+'" class="note-row hoverable" onclick=doOnNoteClick(this) ><div class="note-title">'+n.title+'</div><div class="note-date">'+n.date+"</div></div>",window.notesData[o]={description:n.description,title:n.title}}),n.innerHTML=noteFamilyString,window.currentNote)try{document.getElementById(window.currentNote).classList.add("is--active"),document.getElementById(window.currentNote).classList.remove("hoverable")}catch(e){console.log("Ignore this error, comes at time of delete",e.toString)}}),signInToGoogle=(()=>{console.log("Sign In to Google!");var e=new firebase.auth.GoogleAuthProvider;firebase.auth().signInWithPopup(e).then(function(e){console.log("success, check now!"),console.log(e.user);var o=new XMLHttpRequest;o.addEventListener("error",function(e){console.log("Failed"),console.log(e.toString())}),o.addEventListener("load",function(e){1==JSON.parse(e.srcElement.response).success?console.log("Sign In Success!"):console.log("Failed to sign In"),location.reload()}),o.open("POST","/set",!0),o.setRequestHeader("Content-Type","application/json"),o.send(JSON.stringify({userEmail:e.user.email,userDisplayName:e.user.displayName}))}).catch(function(e){console.log(e),console.log("Failed to do")})}),$("#sign-in-anonymous").click(function(){var e=new XMLHttpRequest;e.addEventListener("error",function(e){console.log("Failed"),console.log(e.toString())}),e.addEventListener("load",function(e){1==JSON.parse(e.srcElement.response).success?console.log("Sign In Success!"):console.log("Failed to sign In"),location.reload()}),e.open("POST","/set",!0),e.setRequestHeader("Content-Type","application/json"),e.send(JSON.stringify({userEmail:"anonymousUserPriyam",userDisplayName:"Priyam"}))})});</script>
-    <script></script> -->
-  
+
     <!-- Script just after body -->
     <script>var md=new Remarkable({html:!0,xhtmlOut:!0});function viewMobileSite(){window.location.href="/mobile"}document.addEventListener("DOMContentLoaded",function(){window.signInEmail="anonymousNotSigned";window.currentNote="",window.editor={id:"",title:"",description:""},console.log("anonymousNotSigned"),firebase.database().ref("anonymousNotSigned").orderByChild("timestamp").on("value",function(e){var o=[];e.forEach(function(e){var t=e.key,n=e.val();o.push({childKey:t,childData:n})}),o.reverse(),window.notesData={};var t=document.getElementById("note-family");if(t.innerHTML="",noteFamilyString="",o.forEach(function(e){var o=e.childKey,t=e.childData;noteFamilyString+='<div id="'+o+'" class="note-row hoverable" onclick=doOnNoteClick(this) ><div class="note-title">'+t.title+'</div><div class="note-date">'+t.date+"</div></div>",window.notesData[o]={description:t.description,title:t.title}}),t.innerHTML=noteFamilyString,window.currentNote)try{document.getElementById(window.currentNote).classList.add("is--active"),document.getElementById(window.currentNote).classList.remove("hoverable")}catch(e){console.log("Ignore this error, comes at time of delete",e.toString)}addNotefunction=((e,o)=>{console.log("Add Note");var t={title:e,description:o,date:(new Date).toLocaleDateString("en-US",{month:"short",day:"numeric"}),timestamp:firebase.database.ServerValue.TIMESTAMP},n=firebase.database().ref("anonymousNotSigned").push().key;console.log(n),window.currentNote=n;var i={};return i[n]=t,firebase.database().ref("anonymousNotSigned").update(i)}),updateNotefunction=((e,o,t)=>{console.log("Update Note");var n={title:o,description:t,date:(new Date).toLocaleDateString("en-US",{month:"short",day:"numeric"}),timestamp:firebase.database.ServerValue.TIMESTAMP},i={};return i[e]=n,firebase.database().ref("anonymousNotSigned").update(i)}),deleteNotefunction=(e=>firebase.database().ref("anonymousNotSigned").child(e).remove())}),signInToGoogle=(()=>{console.log("Sign In to Google!");var e=new firebase.auth.GoogleAuthProvider;firebase.auth().signInWithPopup(e).then(function(e){console.log("success, check now!"),console.log(e.user);var o=new XMLHttpRequest;o.addEventListener("error",function(e){console.log("Failed"),console.log(e.toString())}),o.addEventListener("load",function(e){1==JSON.parse(e.srcElement.response).success?console.log("Sign In Success!"):console.log("Failed to sign In"),location.reload()}),o.open("POST","/set",!0),o.setRequestHeader("Content-Type","application/json"),o.send(JSON.stringify({userEmail:e.user.email,userDisplayName:e.user.displayName}))}).catch(function(e){console.log(e),console.log("Failed to do")})})});</script>
 
+    <!-- Login Page main is different -->
+    <!-- The Main -->
     <div id="main">
       <div id="top-nav">
         <% if(theme === 'dark') { %>  
@@ -103,114 +65,7 @@
           </div>
           <div id="note-description-content">
             <div id="welcome-message">
-              <h1>Welcome</h1>
-              <p>Glad to see you here! 😀</p>
-              <p>This is just a glimpse of all the features currently present.</p>
-              <h1>Startup guide!</h1>
-              <p>Click on <code>Sign in as anonymous</code> at the top. It is a community to have notes available to everyone! Add, update and try the features. If you want to have your personal notes, click on <code>sign in with Google</code> to have your private notes. These notes are only available to you, no one else can view them without your Google Id.</p>
-              <p>A window has two panes <strong>Preview</strong> and <strong>Edit</strong> which can be navigated by the tab buttons given above. You can view the source of this page by clicking on the Edit Button above. Don't forget to save after doing or making any changes. Press <code>ctrl+s</code> in the <code>Edit tab</code>, to save the changes or click the above cancel or save button.</p>
-              <h1>Features at a glimpse</h1>
-              <h4>Dark Mode</h4>
-              <blockquote>
-              <p><em>click on <code>switch to dark mode</code> to have the new awesome look</em></p>
-              </blockquote>
-              <h4>Cloud Notes</h4>
-              <blockquote>
-              <p>Note are stored in cloud
-              <code>Add notes and view them from anywhere.</code></p>
-              </blockquote>
-              <h4>Code Highlighter</h4>
-              <p>This can have the code highlighted and support most of the popular languages.</p>
-              <p><em>Select</em> <code>Code Highlights</code> to get more details about it.</p>
-              <h3>Format options</h3>
-              <p>You can create table or lists of data and also have highlighter, bold, italic and various other formatting features.</p>
-              <p>Click on the sidebar on <code>Format styles</code> to have a glimpse of this.</p>
-              <h1>Code Highlighter</h1>
-              <p>Highlight words by enclosing them within `.</p>
-              <p>Highlight multi line codes by, enclose the code withing ```</p>
-              <p>Click on the <code>edit tab</code> to view the source of this file and make changes to see how it will look.</p>
-              <h2>Example</h2>
-              <p>Javascript code</p>
-              <pre><code class="language-js hljs javascript"><span class="hljs-keyword">var</span> foo = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(bar)</span> </span>{
-                <span class="hljs-keyword">return</span> bar++;
-              };
-              </code></pre>
-              <p>Tip: View the code in Dark Mode!! 😁</p>
-              <h2>One more example</h2>
-              <p>Bash scripts</p>
-              <pre><code class="language-bash hljs"><span class="hljs-shebang">#!/bin/bash
-              </span>
-              <span class="hljs-comment">###### CONFIG</span>
-              ACCEPTED_HOSTS=<span class="hljs-string">"/root/.hag_accepted.conf"</span>
-              BE_VERBOSE=<span class="hljs-literal">false</span>
-
-              <span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$UID</span>"</span> <span class="hljs-operator">-ne</span> <span class="hljs-number">0</span> ]
-              <span class="hljs-keyword">then</span>
-              <span class="hljs-built_in">echo</span> <span class="hljs-string">"Superuser rights required"</span>
-              <span class="hljs-built_in">exit</span> <span class="hljs-number">2</span>
-              <span class="hljs-keyword">fi</span>
-
-              <span class="hljs-function"><span class="hljs-title">genApacheConf</span></span>(){
-              <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-string">"# Host <span class="hljs-variable">${HOME_DIR}</span><span class="hljs-variable">$1</span>/<span class="hljs-variable">$2</span> :"</span>
-              }
-
-              <span class="hljs-built_in">echo</span> <span class="hljs-string">'"quoted"'</span> | tr <span class="hljs-operator">-d</span> \<span class="hljs-string">" &gt; text.txt
-              </span></code></pre>
-              <h2>Main Highlighter and Formatting</h2>
-              <p>For code specific highlight, click on <code>Code Highlight</code> on the side bar.</p>
-              <p>Examples of markdown text with tags repeated, escaped the second time, to clarify their function:</p>
-              <h5>##### This text is treated as an &lt;h5&gt; because it has five hashes at the beginning</h5>
-              <p>*<em>italics</em>* and _<em>italics</em>_</p>
-              <p><strong>**bold**</strong></p>
-              <p>`<code>monospace</code>`</p>
-              <p>No indent</p>
-              <blockquote>
-              <p>&gt;One level of indentation</p>
-              <blockquote>
-              <p>&gt;&gt;Two levels of indentation</p>
-              </blockquote>
-              </blockquote>
-              <p>An ordered list:</p>
-              <ol>
-              <li>1. One</li>
-              <li>1. Two</li>
-              <li>1. Three</li>
-              </ol>
-              <p>An unordered list:</p>
-              <ul>
-              <li>* One</li>
-              <li>* Two</li>
-              <li>* Three</li>
-              </ul>
-              <p>A naked URL: &lt;<a href="https://google.com" target="_blank">https://google.com</a>&gt;</p>
-              <p>Linked URL: [<a href="https://research.google.com/colaboratory" target="_blank">Colaboratory</a>](https://research.google.com/colaboratory)</p>
-              <p>An inline image: ![Google's logo](https://www.google.com/images/logos/google_logo_41.png)</p>
-              <blockquote>
-              <p><img src="https://www.google.com/images/logos/google_logo_41.png" alt="Google's logo"></p>
-              </blockquote>
-              <p>View the page source to understand</p>
-              <p><strong>Bold</strong>
-              <em>Italic</em></p>
-              <h2>h2</h2>
-              <h5>h5</h5>
-              <p><code>Highlight</code></p>
-              <p><a href="https://www.google.com" target="_blank">Link</a></p>
-              <p>Hope you find this use ful.</p>
-              <ul>
-              <li>Adieu</li>
-              <li>Good Bye</li>
-              <li>Tata</li>
-              <li>See You!</li>
-              </ul>
-              <h1>This app is still under development.</h1>
-              <p><strong>You can also view the Mobile site of this app by clicking on the button <code>Mobile View</code> on the top right corner</strong></p>
-              <p>Still Under development <em>Search box will not work</em> as it is still under development.
-              If you find any errors, feel free to contact at</p>
-              <ul>
-              <li><a href="https://facebook.com/priyam.seth.336" target="_blank">Facebook</a></li>
-              <li><a href="https://github.com/Signior-X" target="_blank">Github</a></li>
-              </ul>
-              <h3>That All For Now!</h3>
+              <%- include('include/welcome-message'); %>
             </div>
           </div>
           <div id="note-description-preview" class="hidden">
@@ -237,46 +92,7 @@
       </div>
     </div>
 
-    <!-- Scripts needed to do the tasks -->
-    <script src="js/newdesign-before-body.js"></script>
-
-    <!-- To choose theme at starting added after main as not working on serve -->
-    <script src="js/loadTheme.js"></script>
-
-    <script>// Load the dark mode if present
-      var themeData = getCookie('themeData');
-      
-      console.log("themeData" , themeData);
-      if(themeData === 'dark') {
-        $('body').addClass('dark');
-        $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
-        $('#dark-switcher').html('Switch to Light Mode');
-      }
-      HTMLTextAreaElement.prototype.getCaretPosition = function () { //return the caret position of the textarea
-        return this.selectionStart;
-      };
-      HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change the caret position of the textarea
-          this.selectionStart = position;
-          this.selectionEnd = position;
-          this.focus();
-      };
-
-      var textarea = document.getElementById('note-description-editor'); 
-      console.log(textarea)
-      textarea.onkeydown = function(event) {
-          
-          //support tab on textarea
-          if (event.keyCode == 9) { //tab was pressed
-              var newCaretPosition;
-              newCaretPosition = textarea.getCaretPosition() + "    ".length;
-              textarea.value = textarea.value.substring(0, textarea.getCaretPosition()) + "    " + textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
-              textarea.setCaretPosition(newCaretPosition);
-              return false;
-          }
-      };
-
-    </script>
-    <!-- JQuery for resize -->
-    <script src="js/before-body-jquery.js"></script>
+    <!-- Change this line while development for sure -->
+    <%- include('include/desktop-end-scripts'); %>
   </body>
 </html>

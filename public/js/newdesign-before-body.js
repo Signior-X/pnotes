@@ -257,3 +257,29 @@ function saveForUnSavedChanges() {
         }
     }
 }
+
+// The work for tabs done by Prashant
+HTMLTextAreaElement.prototype.getCaretPosition = function () { //return the caret position of the textarea
+    return this.selectionStart;
+};
+
+HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change the caret position of the textarea
+    this.selectionStart = position;
+    this.selectionEnd = position;
+    this.focus();
+};
+
+var textarea = document.getElementById('note-description-editor');
+// console.log(textarea)
+textarea.onkeydown = function (event) {
+
+    // support tab on textarea
+    if (event.keyCode == 9) { // tab was pressed
+        var newCaretPosition;
+        newCaretPosition = textarea.getCaretPosition() + "    ".length;
+        textarea.value = textarea.value.substring(0, textarea.getCaretPosition()) + "    " + textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
+        textarea.setCaretPosition(newCaretPosition);
+        return false;
+    }
+};
+// End of Tabs work
