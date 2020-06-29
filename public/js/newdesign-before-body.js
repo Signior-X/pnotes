@@ -221,7 +221,7 @@ function makeEditTitleBoxVisible() {
         editNoteTitleBox.classList.add('hidden');
     }
 
-    editNoteTitleBox.getElementsByClassName('save')[0].onclick = function () {
+    function NotePageVisible () { //Due to repetion of code i created this function
         var editNoteTitleIinputValue = document.getElementById('edit-note-title-input').value;
         if(editNoteTitleIinputValue.toString().trim() === '') {
             alert('Note Title Cannot be empty!');
@@ -231,6 +231,13 @@ function makeEditTitleBoxVisible() {
             editNoteTitleBox.classList.add('hidden');
         }
     }
+    editNoteTitleBox.getElementsByClassName('save')[0].addEventListener("click", NotePageVisible); 
+    editNoteTitleBox.addEventListener("keypress",(event) => {
+        console.log(event.keyCode)
+        if (event.keyCode === 13){
+            NotePageVisible();    
+        }    
+    });
 
     // Make focus to the input!
     $('#edit-note-title-input').focus();
