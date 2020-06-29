@@ -17,7 +17,7 @@ function getCookie(cname) {
 // Load the dark mode if present
 var themeData = getCookie('themeData');
 
-console.log("themeData" , themeData);
+// console.log("themeData" , themeData);
 if(themeData === 'dark') {
   $('body').addClass('dark');
   $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
