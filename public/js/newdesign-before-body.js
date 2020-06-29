@@ -171,7 +171,6 @@ function openDeleteNoteModal() {
 
     deleteModal.getElementsByClassName("cancel")[0].onclick = function () {
         deleteModal.classList.add('hidden');
-        
     }
 
     confirmDelete = deleteModal.getElementsByClassName("confirm-delete")[0];
@@ -179,9 +178,9 @@ function openDeleteNoteModal() {
         deleteCurrentNote();
         deleteModal.classList.add('hidden');
     }
-    
-}
+    document.getElementById('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
 
+}
 
 // This function deletes the current active note
 function deleteCurrentNote() {
