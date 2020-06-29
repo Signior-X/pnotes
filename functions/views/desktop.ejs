@@ -1,53 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Meta tags and title -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pnotes</title>
-
-    <link rel="icon" href="article-24px.svg" type="image/svg+xml">
-    <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
-
-    <!-- Firebase Scripts, currently using app, auth and database for right now! -->
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.14.4/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
-    <!-- <script defer src="/__/firebase/7.14.4/firebase-messaging.js"></script> -->
-    <!-- <script defer src="/__/firebase/7.14.4/firebase-storage.js"></script> -->
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-    <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/css/desktop-style.min.css">
-
-    <!-- Latest compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-    <!-- <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> -->
-    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-    <!-- Highlight js-->
-    <script src="https://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
-    <script>hljs.initHighlightingOnLoad();</script>
+    <%- include('include/desktop-header'); %>
   </head>
   <body  class="<%= theme %>">
     
     <!-- Script Just After Body -->
-    <script>
-      var md = new Remarkable({
-        html: true,
-        xhtmlOut: true
-      });
-    </script>
+    <script>var md=new Remarkable({html:true,xhtmlOut:true});</script>
     <script>document.addEventListener("DOMContentLoaded",function(){window.signInEmail="<%= userEmail %>";window.currentNote="",window.editor={id:"",title:"",description:""},console.log("<%= userEmail %>"),firebase.database().ref("<%= userEmail %>").orderByChild("timestamp").on("value",function(e){var t=[];e.forEach(function(e){var o=e.key,a=e.val();t.push({childKey:o,childData:a})}),t.reverse(),window.notesData={};var o=document.getElementById("note-family");if(o.innerHTML="",noteFamilyString="",t.forEach(function(e){var t=e.childKey,o=e.childData;noteFamilyString+='<div id="'+t+'" class="note-row hoverable" onclick=doOnNoteClick(this) ><div class="note-title">'+o.title+'</div><div class="note-date">'+o.date+"</div></div>",window.notesData[t]={description:o.description,title:o.title}}),o.innerHTML=noteFamilyString,window.currentNote)try{document.getElementById(window.currentNote).classList.add("is--active"),document.getElementById(window.currentNote).classList.remove("hoverable")}catch(e){console.log("Ignore this error, comes at time of delete",e.toString)}}),addNotefunction=((e,t)=>{console.log("Add Note");var o={title:e,description:t,date:(new Date).toLocaleDateString("en-US",{month:"short",day:"numeric"}),timestamp:firebase.database.ServerValue.TIMESTAMP},a=firebase.database().ref("<%= userEmail %>").push().key;console.log(a),window.currentNote=a;var n={};return n[a]=o,firebase.database().ref("<%= userEmail %>").update(n)}),updateNotefunction=((e,t,o)=>{console.log("Update Note");var a={title:t,description:o,date:(new Date).toLocaleDateString("en-US",{month:"short",day:"numeric"}),timestamp:firebase.database.ServerValue.TIMESTAMP},n={};return n[e]=a,firebase.database().ref("<%= userEmail %>").update(n)}),deleteNotefunction=(e=>firebase.database().ref("<%= userEmail %>").child(e).remove())}),signOutFromGoogle=(()=>{saveForUnSavedChanges(),console.log("Sign Out User!");firebase.auth().signOut();var e=new XMLHttpRequest;e.addEventListener("error",function(e){console.log("Failed"),console.log(e.toString())}),e.addEventListener("load",function(e){console.log("Sign Out Success!"),location.reload()}),e.open("POST","/clear",!0),e.setRequestHeader("Content-Type","application/json"),e.send()});</script>
 
+    <!-- The Main -->
     <div id="main">
       <div id="top-nav">
         <% if(theme === 'dark') { %>  
@@ -120,7 +82,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- The delete Modal -->
     <div id="delete-modal" class="modal hidden" style="padding-top: 200px;">
     
@@ -138,35 +100,6 @@
       </div>
     </div>
     
-    <script src="js/newdesign-before-body.js"></script>
-
-    <!-- To choose theme at starting added after main as not working on serve -->
-    <script src="js/loadTheme.js"></script>
-    <script>
-      HTMLTextAreaElement.prototype.getCaretPosition = function () { //return the caret position of the textarea
-        return this.selectionStart;
-      };
-      HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change the caret position of the textarea
-          this.selectionStart = position;
-          this.selectionEnd = position;
-          this.focus();
-      };
-
-      var textarea = document.getElementById('note-description-editor'); 
-      console.log(textarea)
-      textarea.onkeydown = function(event) {
-          
-          //support tab on textarea
-          if (event.keyCode == 9) { //tab was pressed
-              var newCaretPosition;
-              newCaretPosition = textarea.getCaretPosition() + "    ".length;
-              textarea.value = textarea.value.substring(0, textarea.getCaretPosition()) + "    " + textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
-              textarea.setCaretPosition(newCaretPosition);
-              return false;
-          }
-      };
-    </script>
-    <!-- JQuery for resize -->
-    <script src="js/before-body-jquery.js"></script>
+    <%- include('include/desktop-end-scripts'); %>
   </body>
 </html>
