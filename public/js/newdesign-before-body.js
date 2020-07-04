@@ -193,8 +193,10 @@ function deleteCurrentNote() {
     document.getElementById('note-description-editor').innerHTML = '';
     document.getElementById('note-description-editor').value = '';
     document.getElementById('remove-note-button').classList.add('hidden');
+    document.getElementById('edit-note-title-box').classList.add('hidden');
     document.getElementById('edit-title-button').classList.add('hidden');
     document.getElementById('tab-nav').classList.add('hidden');
+
     window.currentNote = ''; // Now no note is in progress to be edited!
 }
 
