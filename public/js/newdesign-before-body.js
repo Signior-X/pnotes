@@ -30,7 +30,8 @@ function doOnNoteClick(noteRow) {
 
     // Show the tab-nav
     document.getElementById('tab-nav').classList.remove('hidden');
-
+    document.getElementById("search-input").value="";
+    ForSearchingNote();
     // Store the values in editor
     window.editor['id'] = noteRow.id;
     window.editor['title'] = window.notesData[noteRow.id].title;
@@ -193,8 +194,10 @@ function deleteCurrentNote() {
     document.getElementById('note-description-editor').innerHTML = '';
     document.getElementById('note-description-editor').value = '';
     document.getElementById('remove-note-button').classList.add('hidden');
+    document.getElementById('edit-note-title-box').classList.add('hidden');
     document.getElementById('edit-title-button').classList.add('hidden');
     document.getElementById('tab-nav').classList.add('hidden');
+
     window.currentNote = ''; // Now no note is in progress to be edited!
 }
 
@@ -290,3 +293,26 @@ textarea.onkeydown = function (event) {
     }
 };
 // End of Tabs work
+
+ // const serachValue = document.getElementById("search-input");
+ // serachValue.addEventListener("input",() => {
+ //    console.log(serachValue.value)
+ // })
+const noteFamily = document.getElementById("note-family").childNodes;
+
+
+const  ForSearchingNote = () => {
+    const searchValue = document.getElementById("search-input");
+    for (let i = 0; i < noteFamily.length; i++) { 
+        if(noteFamily[i].childNodes[0].textContent.toLowerCase().includes(searchValue.value.toLowerCase())){
+            if(noteFamily[i].classList.value.includes("hidden")){
+                noteFamily[i].classList.remove("hidden");
+            }
+        }else{
+            noteFamily[i].classList.add("hidden");
+        }
+    }
+
+   
+   
+};
