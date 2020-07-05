@@ -767,3 +767,23 @@ img {
 .dark #note-description-editor:focus {
     outline: 1px solid rgba(0,0,0,.6) !important;
 }
+
+.dark strong {
+    color:#e0c6c6;
+}
+
+red {
+    color: #eb0f08; 
+}
+
+blue {
+    color:#6ab0f3;
+}
+
+yellow {
+    color: #fed356;
+}
+
+green {
+    color: #00ffaa;
+}
