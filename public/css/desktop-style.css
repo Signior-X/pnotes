@@ -212,7 +212,7 @@ body {
     height: 100%;
     padding: 16px;
     padding-top: 0px;
-    border: 1px solid #e1e4e8!important;
+    border: 1px solid #010813!important;
     border-radius: 4px;
 }
 
@@ -220,7 +220,7 @@ body {
     overflow-y: hidden;
     height: 100%;
     padding-top: 0px;
-    border: 1px solid #e1e4e8;
+    border: 1px solid #03080f;
     border-radius: 4px;
 }
 
@@ -798,12 +798,12 @@ table {
  
 /* Zebra striping */
 tr:nth-of-type(odd) {
-  background: rgb(239, 241, 122);
+  background: rgb(230, 231, 148);
 }
  
 th {
   background: #0b19968f;
-  color: white;
+  color: #c596c7;
   font-weight: bold;
 }
  
