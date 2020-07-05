@@ -30,7 +30,8 @@ function doOnNoteClick(noteRow) {
 
     // Show the tab-nav
     document.getElementById('tab-nav').classList.remove('hidden');
-
+    document.getElementById("search-input").value="";
+    ForSearchingNote();
     // Store the values in editor
     window.editor['id'] = noteRow.id;
     window.editor['title'] = window.notesData[noteRow.id].title;
