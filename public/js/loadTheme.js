@@ -18,7 +18,7 @@ function getCookie(cname) {
 var themeData = getCookie('themeData');
 
 // console.log("themeData" , themeData);
-if(themeData === 'dark') {
+if( (!themeData) || (themeData === 'dark')) {
   $('body').addClass('dark');
   $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
   $('#dark-switcher').html('Switch to Light Mode');
