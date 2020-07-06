@@ -6,7 +6,7 @@ function doOnNoteClick(noteRow) {
     saveForUnSavedChanges();
 
     // First deselect the current selected Note
-    console.log("Current Note", window.currentNote);
+    // console.log("Current Note", window.currentNote);
 
     if (window.currentNote) {
         try {
@@ -17,7 +17,7 @@ function doOnNoteClick(noteRow) {
         }
     }
     // console.log(noteRow);
-    console.log(noteRow.id);
+    // console.log(noteRow.id);
 
     // Select the note
     window.currentNote = noteRow.id;
@@ -36,8 +36,8 @@ function doOnNoteClick(noteRow) {
     window.editor['id'] = noteRow.id;
     window.editor['title'] = window.notesData[noteRow.id].title;
     window.editor['description'] = window.notesData[noteRow.id].description;
-    console.log("Editor changed success!");
-    console.log(window.editor);
+    // console.log("Editor changed success!");
+    // console.log(window.editor);
     // Making the preview tab active
     makePreviewTabActive();
 }
@@ -119,7 +119,7 @@ function newNoteWindow() {
     // This creates a new note and also set the currentNote as the new key which is found
     // The current Note is automatically selected and tasks are done in the ref method!!
     var returened = addNotefunction('New Note Title', '# New Note')
-    console.log(returened);
+    // console.log(returened);
 
     // noteFamily.innerHTML = dataToAppend + presentData;
     console.log("Check Now if new note is created!");
@@ -127,7 +127,7 @@ function newNoteWindow() {
 
     // Move the values of current note to editor
     window.editor = { id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description };
-    console.log(window.editor);
+    // console.log(window.editor);
 
     document.getElementById('tab-nav').classList.remove('hidden');
     makeEditTabActive();  // This sets focus to description editor
@@ -152,9 +152,9 @@ function restoreState() {
 
 // <!-- Script to update or say save a note and remain at that note -->
 function saveNote() {
-    console.log(window.editor);
+    // console.log(window.editor);
     var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
-    console.log(promisedResult);
+    // console.log(promisedResult);
 
     restoreState(); // This will be done after the update
 
@@ -186,7 +186,7 @@ function openDeleteNoteModal() {
 // This function deletes the current active note
 function deleteCurrentNote() {
 
-    console.log(window.currentNote);
+    // console.log(window.currentNote);
 
     // Make a confirm message for delete of a note
     var onDeletePromise = deleteNotefunction(window.currentNote);
@@ -205,17 +205,17 @@ function deleteCurrentNote() {
 window.onbeforeunload = function(event) {
     // do stuff here
     if(window.notesData[window.currentNote].description !== window.editor.description) {
-        console.log('Unsaved Changes Found!');
+        // console.log('Unsaved Changes Found!');
         return "you have unsaved changes. Are you sure you want to navigate away?";
     } else {
-        console.log("No unsaved changes found");
+        // console.log("No unsaved changes found");
     }
 };
 
 // <!-- Script to show edit title box -->
 function makeEditTitleBoxVisible() {
 
-    console.log("Update title");
+    // console.log("Update title");
     editNoteTitleBox = document.getElementById('edit-note-title-box');
     editNoteTitleBox.classList.remove('hidden');
     editNoteTitleBox.getElementsByTagName('input')[0].value = window.editor.title;
@@ -236,7 +236,7 @@ function makeEditTitleBoxVisible() {
     }
     editNoteTitleBox.getElementsByClassName('save')[0].addEventListener("click", NotePageVisible); 
     editNoteTitleBox.addEventListener("keypress",(event) => {
-        console.log(event.keyCode)
+        // console.log(event.keyCode)
         if (event.keyCode === 13){
             NotePageVisible();    
         }    
@@ -248,12 +248,12 @@ function makeEditTitleBoxVisible() {
 
 function saveForUnSavedChanges() {
 
-    console.log('Trying to save unsaved changes if present');
+    // console.log('Trying to save unsaved changes if present');
     if(window.currentNote && window.currentNote !== '') {
         // Current note is not empty
-        console.log('Current Note is not empty');
+        // console.log('Current Note is not empty');
         if(window.notesData[currentNote].description !== window.editor.description){
-            console.log('Unsaved changes found!');
+            // console.log('Unsaved changes found!');
 
             // Right now the state is not restored, so no problem
             // The firebase reference makes the current Note available
@@ -261,7 +261,7 @@ function saveForUnSavedChanges() {
             // Now save the note
             // console.log(window.editor);
             var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
-            console.log(promisedResult);
+            // console.log(promisedResult);
 
             // No need for restore changes as that will be done by the function who called this function
         }
@@ -300,7 +300,6 @@ textarea.onkeydown = function (event) {
  // })
 const noteFamily = document.getElementById("note-family").childNodes;
 
-
 const  ForSearchingNote = () => {
     const searchValue = document.getElementById("search-input");
     for (let i = 0; i < noteFamily.length; i++) { 
@@ -312,7 +311,4 @@ const  ForSearchingNote = () => {
             noteFamily[i].classList.add("hidden");
         }
     }
-
-   
-   
 };
