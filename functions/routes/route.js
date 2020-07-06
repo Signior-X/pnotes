@@ -9,7 +9,8 @@ router.get('/', function(req, res, next){
     // Check if the site is mobile, tablet or desktop
     // console.log(req.is_mobile);
     // console.log(req.is_tablet);
-    if (!req.is_mobile && !req.is_tablet) {
+    // if (!req.is_mobile && !req.is_tablet) {
+    if (true) {
         // Desktop site
 
         // Don't change here, as the themeData will not come in case of firebase here
