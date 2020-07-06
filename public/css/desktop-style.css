@@ -212,7 +212,7 @@ body {
     height: 100%;
     padding: 16px;
     padding-top: 0px;
-    border: 1px solid #010813!important;
+    border: 1px solid #e1e4e8!important;
     border-radius: 4px;
 }
 
@@ -220,7 +220,7 @@ body {
     overflow-y: hidden;
     height: 100%;
     padding-top: 0px;
-    border: 1px solid #03080f;
+    border: 1px solid #e1e4e8;
     border-radius: 4px;
 }
 
@@ -638,11 +638,11 @@ pre code {
 
 .dark #note-description-content {
     background: rgba(0,0,0,.2);
-    border: 1px solid #b8b2b2 !important;
+    border: 1px solid #2b2b2b !important;
 }
 
 .dark #note-description-preview {
-    border: 1px solid #b6b1b1 !important;
+    border: 1px solid #2b2b2b !important;
 }
 
 .dark #note-description-editor {
@@ -787,164 +787,3 @@ yellow {
 green {
     color: #00ffaa;
 }
-
-/* Adding Table css  */
-/* 1> Table for Light mode */
-table {
-  width: 750px;
-  border-collapse: collapse;
-  margin: 50px auto;
-}
- 
-/* Zebra striping */
-tr:nth-of-type(odd) {
-  background: rgb(230, 231, 148);
-}
- 
-th {
-  background: #0b19968f;
-  color: #c596c7;
-  font-weight: bold;
-}
- 
-td,
-th {
-  padding: 10px;
-  border: 1px solid #ccc;
-  text-align: left;
-  font-size: 18px;
-}
- 
-/*
-When view width gets very small,
-Making each row of table data as one block,which contains all the info of that particular entery.
-*/
-@media only screen and (max-width: 760px),
-  (min-device-width: 768px) and (max-device-width: 1024px) {
-  table {
-    width: 100%;
-  }
- 
-  /* Force table to not be like tables anymore */
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
- 
-  /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
- 
-  tr {
-    border: 1px solid #ccc;
-  }
- 
-  td {
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
-  }
- 
-  td:before {
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    /* Label the data */
-    content: attr(data-column);
-    color: #000;
-    font-weight: bold;
-  }
-}
- 
-/* 2> Table for dark mode */
- 
-/* Zebra striping */
-.dark tr {
-  background: #8181818f;
-}
- 
-.dark th {
-  background: rgb(56, 56, 55);
-  color: rgb(3, 129, 35);
-}
- 
-.dark td,
-th {
-  padding: 10px;
-  border: 1px solid rgb(73, 75, 75);
-  text-align: left;
-  font-size: 18px;
-  color: rgb(123, 199, 218);
-}
- 
-/*
-When view width gets very small,
-Making each row of table data as one block,which contains all the info of that particular entery.
-*/
-@media only screen and (max-width: 760px),
-  (min-device-width: 768px) and (max-device-width: 1024px) {
-  table {
-    width: 100%;
-  }
- 
-  /* Force table to not be like tables anymore */
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
- 
-  /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
- 
-  tr {
-    border: 1px solid #ccc;
-  }
- 
-  td {
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
-  }
- 
-  td:before {
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    /* Label the data */
-    content: attr(data-column);
-    color: #000;
-    font-weight: bold;
-  }
-}
- 
-/* Table CSS done! */
-
