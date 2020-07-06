@@ -11,6 +11,17 @@ router.get('/', function(req, res, next){
     // console.log(req.is_tablet);
     if (!req.is_mobile && !req.is_tablet) {
         // Desktop site
+
+        // Don't change here, as the themeData will not come in case of firebase here
+        // Instead make changes in the javascript of the client side for making the necessary changes
+        // if(!(req.cookies.themeData)){
+        //     console.log("Themedata not present");
+        //     console.log("Sessthemdata", req.cookies.themeData);
+        // } else {
+        //     console.log("Themedata is present");
+        //     console.log(req.cookies.themeData);
+        // }
+
         if(req.signedCookies.__session){
             console.log("User is signed in!");
             console.log(req.signedCookies.__session);
