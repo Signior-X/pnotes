@@ -787,3 +787,7 @@ yellow {
 green {
     color: #00ffaa;
 }
+#main-content
+{
+    background-color: whitesmoke;
+}
