@@ -7,7 +7,10 @@ Check out the Android app at https://github.com/Signior-X/Pnotes
 - Then install the firebase tools and cli needed to run this. For that visit https://firebase.google.com/docs/cli
 - Login with your id which has access to the project.
 
-# Install dependencies using npm
+# All the below tasks are in the new_site
+So first go into new_site directory by `cd new_site`
+
+## Install dependencies using npm
 Open the folder and move into function folder using 
 ```
 cd functions
@@ -18,7 +21,7 @@ npm install
 ```
 This will install all node packages
 
-# To run the server
+## To run the server
 Open the root directory and then for running the local server
 ```
 firebase serve
