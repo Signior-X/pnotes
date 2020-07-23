@@ -1,12 +1,14 @@
-var md = new Remarkable();
+var md=new Remarkable({html:!0,xhtmlOut:!0});
+
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Here add using the const variable
     window.signInEmail = '<%= userEmail %>';
     const signInUserEmail = '<%= userEmail %>';
     window.currentNote = '';
     window.editor = { id: '', title: '', description: '' };
 
-    console.log(signInUserEmail);
+    console.log("Email using:", signInUserEmail);
 
     // Now call the data extract for only once so as to get the list of datas
     firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
@@ -59,11 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }
     });
-
-    //list(family);
-
-    // Here the firebase is correctly defined purely!
-    //console.log(firebase.database.ServerValue.TIMESTAMP);
 
     addNotefunction = (title, description) => {
         //Start the add note function

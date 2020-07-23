@@ -1,4 +1,4 @@
-var md = new Remarkable();
+var md=new Remarkable({html:!0,xhtmlOut:!0});
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.currentNote = '';
   window.editor = { id: '', title: '', description: '' };
 
-  console.log(signInUserEmail);
+  console.log("Email using:", signInUserEmail);
 
   // Now call the data extract for only once so as to get the list of datas
   firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+    // they are inside the firebase instance thing
     addNotefunction = (title, description) => {
       //Start the add note function
       console.log("Add Note");
