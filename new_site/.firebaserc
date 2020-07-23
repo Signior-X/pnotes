@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "notesapp-09"
+  },
+  "targets": {
+    "notesapp-09": {
+      "hosting": {
+        "pnotes": [
+          "public"
+        ]
+      }
+    }
+  }
+}
