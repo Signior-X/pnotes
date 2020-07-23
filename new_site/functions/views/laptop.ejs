@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
@@ -23,149 +23,14 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/laptop-style.css">
 
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-  <!-- Highlight js-->
-  <script src="https://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
-  <script>hljs.initHighlightingOnLoad();</script>
-
 </head>
 
 <body>
 
-  <!-- scripts needed for both of them -->
-
-  <!-- Remarkable and all -->
-  <script>var md=new Remarkable({html:!0,xhtmlOut:!0});
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-      // Here add using the const variable
-      window.signInEmail = '<%= userEmail %>';
-      const signInUserEmail = '<%= userEmail %>';
-      window.currentNote = '';
-      window.editor = { id: '', title: '', description: '' };
-
-      console.log("Email using:", signInUserEmail);
-
-      // Now call the data extract for only once so as to get the list of datas
-      firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
-
-        //console.log(snapshot);
-        var descNoteList = [];
-
-        snapshot.forEach(function (childSnapshot) {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-          //console.log("childkey", childKey);
-          //console.log("childData", childData);
-          // ...
-          descNoteList.push({ childKey: childKey, childData: childData });
-
-        });
-
-        // Reverse the array
-        descNoteList.reverse();
-
-        // Empty the notes data
-        window.notesData = {};
-
-        var noteFamily = document.getElementById('note-family');
-        noteFamily.innerHTML = '';
-        noteFamilyString = '';
-
-        descNoteList.forEach(function (childSnapshot) {
-          var childKey = childSnapshot.childKey;
-          var childData = childSnapshot.childData;
-
-          noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
-            + '<div class="note-title">' + childData.title + '</div>'
-            + '<div class="note-date">' + childData.date + '</div>'
-            + '</div>';
-
-          // Only storing notes description in it
-          window.notesData[childKey] = { description: childData.description, title: childData.title };
-        });
-
-        noteFamily.innerHTML = noteFamilyString;
-
-        // make the current note active if present
-        if (window.currentNote) {
-          try {
-            document.getElementById(window.currentNote).classList.add('is--active');
-            document.getElementById(window.currentNote).classList.remove('hoverable');
-          } catch (e) {
-            console.log("Ignore this error, comes at time of delete", e.toString)
-          }
-        }
-      });
-
-      addNotefunction = (title, description) => {
-        //Start the add note function
-        console.log("Add Note");
-
-        var options = { month: 'short', day: 'numeric' };
-        var today = new Date();
-        // console.log(today.toLocaleDateString("en-US", options));
-
-        var newNote = {
-          title: title,
-          description: description,
-          date: today.toLocaleDateString("en-US", options),
-          timestamp: firebase.database.ServerValue.TIMESTAMP
-        }
-
-        // Get a key for a new Post.
-        var newPostKey = firebase.database().ref(signInUserEmail).push().key;
-
-        console.log(newPostKey);
-        // Now this is going to be the current value which we are editing
-        window.currentNote = newPostKey;
-
-        // Write the new post's data simultaneously in the posts list and the user's post list.
-        var updates = {};
-        updates[newPostKey] = newNote;
-
-        return firebase.database().ref(signInUserEmail).update(updates);
-      }
-
-      updateNotefunction = (noteId, title, description) => {
-
-        //Start the update note function
-        console.log("Update Note");
-
-        var options = { month: 'short', day: 'numeric' };
-        var today = new Date();
-        // console.log(today.toLocaleDateString("en-US", options));
-
-        var newNote = {
-          title: title,
-          description: description,
-          date: today.toLocaleDateString("en-US", options),
-          timestamp: firebase.database.ServerValue.TIMESTAMP
-        }
-
-        // Write the new post's data simultaneously in the posts list and the user's post list.
-        var updates = {};
-        updates[noteId] = newNote;
-
-        return firebase.database().ref(signInUserEmail).update(updates);
-      }
-
-      deleteNotefunction = (noteId) => {
-        return firebase.database().ref(signInUserEmail).child(noteId).remove();
-      }
-    });
-  </script>
-
   <!-- The Main -->
   <div id="main">
     <div id="top-nav">
-      <div id="logo-header"><img src="pnotes-logo-dark.png"></img></div>
+      <div id="logo-header"><img src="pnotes-logo-dark.png" alt="pnotes-logo"></img></div>
       <!-- <button id="show-mobile-site" class="btn" onclick=viewMobileSite()>Mobile Site</button> -->
       <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
       <div id="edit-title-button-div">
@@ -250,6 +115,139 @@
       </div>
     </div>
   </div>
+
+    <!-- scripts needed for both of them -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+  
+        // Here add using the const variable
+        window.signInEmail = '<%= userEmail %>';
+        const signInUserEmail = '<%= userEmail %>';
+        window.currentNote = '';
+        window.editor = { id: '', title: '', description: '' };
+  
+        console.log("Email using:", signInUserEmail);
+  
+        // Now call the data extract for only once so as to get the list of datas
+        firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
+  
+          //console.log(snapshot);
+          var descNoteList = [];
+  
+          snapshot.forEach(function (childSnapshot) {
+            var childKey = childSnapshot.key;
+            var childData = childSnapshot.val();
+            //console.log("childkey", childKey);
+            //console.log("childData", childData);
+            // ...
+            descNoteList.push({ childKey: childKey, childData: childData });
+  
+          });
+  
+          // Reverse the array
+          descNoteList.reverse();
+  
+          // Empty the notes data
+          window.notesData = {};
+  
+          var noteFamily = document.getElementById('note-family');
+          noteFamily.innerHTML = '';
+          noteFamilyString = '';
+  
+          descNoteList.forEach(function (childSnapshot) {
+            var childKey = childSnapshot.childKey;
+            var childData = childSnapshot.childData;
+  
+            noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
+              + '<div class="note-title">' + childData.title + '</div>'
+              + '<div class="note-date">' + childData.date + '</div>'
+              + '</div>';
+  
+            // Only storing notes description in it
+            window.notesData[childKey] = { description: childData.description, title: childData.title };
+          });
+  
+          noteFamily.innerHTML = noteFamilyString;
+  
+          // make the current note active if present
+          if (window.currentNote) {
+            try {
+              document.getElementById(window.currentNote).classList.add('is--active');
+              document.getElementById(window.currentNote).classList.remove('hoverable');
+            } catch (e) {
+              console.log("Ignore this error, comes at time of delete", e.toString)
+            }
+          }
+        });
+  
+        addNotefunction = (title, description) => {
+          //Start the add note function
+          console.log("Add Note");
+  
+          var options = { month: 'short', day: 'numeric' };
+          var today = new Date();
+          // console.log(today.toLocaleDateString("en-US", options));
+  
+          var newNote = {
+            title: title,
+            description: description,
+            date: today.toLocaleDateString("en-US", options),
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+          }
+  
+          // Get a key for a new Post.
+          var newPostKey = firebase.database().ref(signInUserEmail).push().key;
+  
+          console.log(newPostKey);
+          // Now this is going to be the current value which we are editing
+          window.currentNote = newPostKey;
+  
+          // Write the new post's data simultaneously in the posts list and the user's post list.
+          var updates = {};
+          updates[newPostKey] = newNote;
+  
+          return firebase.database().ref(signInUserEmail).update(updates);
+        }
+  
+        updateNotefunction = (noteId, title, description) => {
+  
+          //Start the update note function
+          console.log("Update Note");
+  
+          var options = { month: 'short', day: 'numeric' };
+          var today = new Date();
+          // console.log(today.toLocaleDateString("en-US", options));
+  
+          var newNote = {
+            title: title,
+            description: description,
+            date: today.toLocaleDateString("en-US", options),
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+          }
+  
+          // Write the new post's data simultaneously in the posts list and the user's post list.
+          var updates = {};
+          updates[noteId] = newNote;
+  
+          return firebase.database().ref(signInUserEmail).update(updates);
+        }
+  
+        deleteNotefunction = (noteId) => {
+          return firebase.database().ref(signInUserEmail).child(noteId).remove();
+        }
+      });
+    </script>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <!-- Remarkable and all -->
+  <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+  <!-- Highlight js-->
+  <script src="https://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>var md=new Remarkable({html:!0,xhtmlOut:!0});</script>
 
   <% if(islogin) { %>
     <script>
@@ -425,6 +423,7 @@ descriptionWindow.innerHTML = md.render(window.editor.description);
 var anchors = descriptionWindow.getElementsByTagName('a');
 for (var i = 0; i < anchors.length; i++) {
     anchors[i].setAttribute('target', '_blank');
+    anchors[i].setAttribute('rel', "noopener");
 }
 
 // Change from document to desccription window
