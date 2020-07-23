@@ -4,42 +4,42 @@ var router = express.Router();
 router.get('/', (req, res, next) => {
     res.status(200);
 
-    // // eslint-disable-next-line no-constant-condition
-    // if (true) {
-    //     // Desktop site
+    // eslint-disable-next-line no-constant-condition
+    if (true) {
+        // Desktop site
 
-    //     if(req.signedCookies.__session){
-    //         console.log("User is signed in!");
-    //         console.log(req.signedCookies.__session);
-    //         var sessionInString = req.signedCookies.__session.toString();
-    //         try {
-    //             var parsedResult = JSON.parse(sessionInString);
-    //             // console.log('Signed in cookie ',req.signedCookies.session);
-    //             // console.log('Signed in Name ', req.signedCookies.__session);
-    //             console.log("Parsed DisplayName ", parsedResult.userDisplayName);
-    //             console.log("Parsed Email ", parsedResult.userEmail);
+        if(req.signedCookies.__session){
+            console.log("User is signed in!");
+            console.log(req.signedCookies.__session);
+            var sessionInString = req.signedCookies.__session.toString();
+            try {
+                var parsedResult = JSON.parse(sessionInString);
+                // console.log('Signed in cookie ',req.signedCookies.session);
+                // console.log('Signed in Name ', req.signedCookies.__session);
+                console.log("Parsed DisplayName ", parsedResult.userDisplayName);
+                console.log("Parsed Email ", parsedResult.userEmail);
     
-    //             res.status(200);
-    //             res.render('desktop.ejs', { userEmail: parsedResult.userEmail, theme: req.cookies.themeData, displayName: parsedResult.userDisplayName } );
-    //         } catch(e) {
-    //             res.end(e.toString());
-    //         }
-    //     } else {
-    //         console.log("User Not Signed In!");
-    //         // console.log("Cookie ", req.signedCookies.session);
-    //         console.log("Cookie Name ", req.signedCookies.__session);
-    //         // anonymousUserPriyam -> Anonymous user
-    //         // anonymousNotSigned -> Not Logined
+                res.status(200);
+                res.render('laptop.ejs', { userEmail: parsedResult.userEmail, theme: req.cookies.themeData, displayName: parsedResult.userDisplayName, islogin: true } );
+            } catch(e) {
+                res.end(e.toString());
+            }
+        } else {
+            console.log("User Not Signed In!");
+            // console.log("Cookie ", req.signedCookies.session);
+            console.log("Cookie Name ", req.signedCookies.__session);
+            // anonymousUserPriyam -> Anonymous user
+            // anonymousNotSigned -> Not Logined
     
-    //         // For not logined only allow to see my welcome notes
-    //         // give option at login.ejs to have signed in as anonymous
-    //         res.status(200);
-    //         res.render('login.ejs', { theme: req.cookies.themeData });
-    //     }
-    // } else {
+            // For not logined only allow to see my welcome notes
+            // give option at login.ejs to have signed in as anonymous
+            res.status(200);
+            res.render('laptop.ejs', { theme: req.cookies.themeData, userEmail: 'anonymousNotSigned', displayName: 'Anonymous', islogin: false });
+        }
+    } else {
         // This is mobile or tablet site
         res.render('index.ejs');
-    // }
+    }
 });
 
 // For cookies session is one thing for firebase cloud functions so check that and node js 8 should be used
