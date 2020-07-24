@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('include/desktop-header'); %>
+  </head>
+  <body  class="<%= theme %>">
+    
+    <!-- Script Just After Body -->
+    <script>var md=new Remarkable({html:true,xhtmlOut:true});</script>
+    <script>document.addEventListener("DOMContentLoaded",function(){window.signInEmail="<%= userEmail %>";window.currentNote="",window.editor={id:"",title:"",description:""},console.log("<%= userEmail %>"),firebase.database().ref("<%= userEmail %>").orderByChild("timestamp").on("value",function(e){var t=[];e.forEach(function(e){var o=e.key,a=e.val();t.push({childKey:o,childData:a})}),t.reverse(),window.notesData={};var o=document.getElementById("note-family");if(o.innerHTML="",noteFamilyString="",t.forEach(function(e){var t=e.childKey,o=e.childData;noteFamilyString+='<div id="'+t+'" class="note-row hoverable" onclick=doOnNoteClick(this) ><div class="note-title">'+o.title+'</div><div class="note-date">'+o.date+"</div></div>",window.notesData[t]={description:o.description,title:o.title}}),o.innerHTML=noteFamilyString,window.currentNote)try{document.getElementById(window.currentNote).classList.add("is--active"),document.getElementById(window.currentNote).classList.remove("hoverable")}catch(e){console.log("Ignore this error, comes at time of delete",e.toString)}}),addNotefunction=((e,t)=>{console.log("Add Note");var o={title:e,description:t,date:(new Date).toLocaleDateString("en-US",{month:"short",day:"numeric"}),timestamp:firebase.database.ServerValue.TIMESTAMP},a=firebase.database().ref("<%= userEmail %>").push().key;console.log(a),window.currentNote=a;var n={};return n[a]=o,firebase.database().ref("<%= userEmail %>").update(n)}),updateNotefunction=((e,t,o)=>{console.log("Update Note");var a={title:t,description:o,date:(new Date).toLocaleDateString("en-US",{month:"short",day:"numeric"}),timestamp:firebase.database.ServerValue.TIMESTAMP},n={};return n[e]=a,firebase.database().ref("<%= userEmail %>").update(n)}),deleteNotefunction=(e=>firebase.database().ref("<%= userEmail %>").child(e).remove())}),signOutFromGoogle=(()=>{saveForUnSavedChanges(),console.log("Sign Out User!");firebase.auth().signOut();var e=new XMLHttpRequest;e.addEventListener("error",function(e){console.log("Failed"),console.log(e.toString())}),e.addEventListener("load",function(e){console.log("Sign Out Success!"),location.reload()}),e.open("POST","/clear",!0),e.setRequestHeader("Content-Type","application/json"),e.send()});</script>
+
+    <!-- The Main -->
+    <div id="main">
+      <div id="top-nav">
+        <% if(theme === 'dark') { %>  
+          <div id="logo-header"><img src="pnotes-logo-dark.png"></img></div>
+        <% } else { %>
+          <div id="logo-header"><img src="pnotes-logo3.png"></img></div>
+        <% } %>
+        <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
+        <div id="edit-title-button-div">
+          <button class="btn btn-primary hidden" id="edit-title-button" onclick=makeEditTitleBoxVisible()>Edit Title</button>
+          <div id="edit-note-title-box" class="hidden">
+            <h3>Edit Note Title</h3>
+            <input id="edit-note-title-input" value="" placeholder="Enter Note Title">
+            <div class="buttons" style="display: flex;">
+              <button class="btn cancel">Cancel</button>
+              <button class="btn btn-primary save" style="margin-left: auto;">Done</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-danger hidden" id="remove-note-button" onclick=openDeleteNoteModal()>Delete Note</button>
+        <div class="right-menu">
+          <!-- replace with icon -->
+          <% if(theme === 'dark') { %>
+            <button id="dark-switcher" class="btn btn-primary">Switch to Light mode</button>
+          <% } else { %>
+            <button id="dark-switcher" class="btn btn-primary">Switch to Dark mode</button>
+          <% } %>
+          <% if(userEmail === 'anonymousUserPriyam') { %>
+            <div id="user-email-heading">Welcome Anonymous</div>
+          <% } else { %>
+            <div id="user-email-heading">Welcome <%= displayName %></div>
+          <% } %>
+          <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
+        </div>
+      </div>
+
+      <!-- Main content contains the title and description -->
+      <div id="main-content">
+        <div id="sidebar">
+          <div id="search-notes-box-container">
+            <div id="search-notes-box">
+              <span class="search-icon"><i class="fa fa-search"></i></span>
+              <div class="search-input-container"><input id="search-input" placeholder="Search Notes" value="" oninput=ForSearchingNote(this)></div>
+            </div>
+          </div>
+          <div id="note-family">
+            <div id="startup">
+              <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            </div>
+          </div>
+        </div>
+        <div id="main-content-main">
+          <div id="tab-nav" class="hidden">
+            <div id="preview-button" class="tab">Preview</div>
+            <div id="editing-button" class="tab">Edit</div>
+            <div id="right-tab-menu">
+              <button id="cancel-button" class="btn" onclick=restoreState()>Cancel</button>
+              <button id="save-button" class="btn btn-primary" onclick=saveNote()>Save</button>
+            </div>
+          </div>
+          <div id="note-description-content">
+            <div id="welcome-message">
+              <h1>Welcome</h1>
+              <p>Start by selecting a Note from the sidebar or create a new Note 😀!</p>
+            </div>
+          </div>
+          <div id="note-description-preview" class="hidden">
+            <textarea id="note-description-editor" oninput=changeWindowEditorDescription(this) placeholder="Add Note description here.."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The delete Modal -->
+    <div id="delete-modal" class="modal hidden" style="padding-top: 200px;">
+    
+      <!-- Modal content -->
+      <div class="modal-content" style="max-width: 400px;">
+        <!-- Heading and close button -->
+        <span class="close">&times;</span>
+        <h3 style="margin-top: 5px !important;">Delete Note Warning</h3>
+        <p id="modal-message-p">Are You Sure You want to Delete this Note?<p>
+        <hr>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary cancel">Close</button>
+          <button type="button" class="btn btn-primary confirm-delete">Delete Note</button>
+        </div>
+      </div>
+    </div>
+    
+    <%- include('include/desktop-end-scripts'); %>
+  </body>
+</html>
