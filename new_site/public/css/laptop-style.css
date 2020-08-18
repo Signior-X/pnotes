@@ -20,6 +20,10 @@ body {
     cursor: auto;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, arial, sans-serif;
+}
+
 #main-content {
     height: calc(100vh - 48px);
     display: flex;
@@ -205,6 +209,8 @@ body {
     flex-direction: column;
     flex-flow: column;
     overflow-y: hidden;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 20px;
 }
 
 #note-description-content {

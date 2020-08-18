@@ -23,6 +23,9 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/laptop-style.min.css">
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap" rel="stylesheet">
+
   <link rel="preload" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css"></noscript>
 
@@ -89,6 +92,10 @@
         <div id="tab-nav" class="hidden">
           <div id="preview-button" class="tab">Preview</div>
           <div id="editing-button" class="tab">Edit</div>
+          <div id="right-tab-menu">
+            <button id="cancel-button" class="btn" onclick=restoreState()>Cancel</button>
+            <button id="save-button" class="btn btn-primary" onclick=saveNote()>Save</button>
+          </div>
         </div>
         <div id="note-description-content">
           <div id="welcome-message">
