@@ -455,7 +455,7 @@ $(function () {
       console.log('Already in Dark mode, switching to light');
       $('#logo-header').html('<img src="pnotes-logo3.png"></img>');
       $('body').removeClass('dark');
-      $('#dark-switcher').html('Switch to Dark Mode');
+      $('#dark-switcher').html('Dark Mode');
 
       // Change this to do directly from js after words Important!!
       // make a request to the serve to change the theme
@@ -481,7 +481,7 @@ $(function () {
     } else {
       $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
       $('body').addClass('dark');
-      $('#dark-switcher').html('Switch to Light Mode');
+      $('#dark-switcher').html('Light Mode');
 
       var xhttp = new XMLHttpRequest();
       xhttp.addEventListener("load", function (evt) {
