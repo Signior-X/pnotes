@@ -4,6 +4,10 @@
     overflow: hidden;
 }
 
+a {
+    text-decoration : none !important
+}
+
 html {
     box-sizing: border-box;
     height: 100%;
