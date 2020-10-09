@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Meta tags and title -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Pnotes | Share Notes Easily</title>
+
+  <!--  Icons -->
+  <link rel="icon" href="article-24px.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
+
+  <!-- Firebase Scripts, currently using app, auth and database for right now! -->
+  <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
+  <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/laptop-style.css">
+
+</head>
+
+<body class="dark">
+
+  <div id="main">
+    <div id="top-nav">
+      <div id="logo-header" style="cursor: pointer;"><img src="pnotes-logo-dark.png" alt="pnotes-logo"></img></div>
+      <div id="top-nav-wrap">
+
+        <div class="right-menu">
+          <!-- replace with icon -->
+          <div id="user-email-heading"></div>
+          <button id="dark-switcher" class="btn">Light mode</button>
+        </div>
+
+      </div>
+    </div>
+    <div id="main-content">
+      <div id="main-content-main">
+
+        <div id="note-description-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+  <script>var md = new Remarkable({ html: !0, breaks: true, linkify: true });</script>
+
+  <!-- Highlight js-->
+  <script src="https://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
+
+  <script src="js/theme.js"></script>
+  <script src="js/share.js"></script>
+
+</body>
+
+</html>
