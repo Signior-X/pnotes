@@ -452,19 +452,6 @@ $(function () {
     makeEditTabActive();
   });
 
-  $('#dark-switcher').click(function () {
-    if ($('body').hasClass('dark')) {
-      console.log('Already in Dark mode, switching to light');
-      $('#logo-header').html('<img src="pnotes-logo3.png"></img>');
-      $('body').removeClass('dark');
-      $('#dark-switcher').html('Dark Mode');
-    } else {
-      $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
-      $('body').addClass('dark');
-      $('#dark-switcher').html('Light Mode');
-    }
-  });
-
   $(window).bind('keydown', function (event) {
     if (event.ctrlKey || event.metaKey) {
       switch (String.fromCharCode(event.which).toLowerCase()) {
@@ -480,22 +467,6 @@ $(function () {
     }
   });
 });
-
-function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
 
 
 /////// This file has been already added to the main ejs file of laptop 
@@ -585,13 +556,6 @@ signInToGoogle = () => {
     console.log(err);
     console.log("Failed to do");
   });
-}
-
-/** Mobile Toggler */
-console.log("y")
-document.getElementById('top-nav-toggler').onclick = function() {
-  console.log("Togller")
-  document.getElementById('top-nav-items').classList.toggle('top-nav-hide');
 }
 
 document.getElementById('logo-header').onclick = function() {
