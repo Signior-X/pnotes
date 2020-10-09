@@ -52,14 +52,17 @@ if __name__ == '__main__':
     except:
         print("Build not found, automatically will be created.")
     shutil.copytree(os.getcwd() + "/public", os.getcwd() + "/build")
-    for subdir, dirs, files in os.walk(os.getcwd() + "/build/static"):
+    for subdir, dirs, files in os.walk(os.getcwd() + "/build/css"):
+        for file in files:
+            filepath = subdir + os.sep + file
+            if filepath.split(".")[-1] == "css":
+                createCSSMain(inputFile=filepath, outputFile=filepath)
+    for subdir, dirs, files in os.walk(os.getcwd() + "/build/js"):
         for file in files:
             filepath = subdir + os.sep + file
             if filepath.split(".")[-1] == "js":
                 createJSFile(inputFile=filepath, outputFile=filepath)
 
-            elif filepath.split(".")[-1] == "css":
-                createCSSMain(inputFile=filepath, outputFile=filepath)
 
     # firebase_file = os.getcwd() + "/firebase.json"
     # json_data = open(firebase_file).read()
