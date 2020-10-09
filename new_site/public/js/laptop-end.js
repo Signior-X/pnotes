@@ -593,3 +593,13 @@ document.getElementById('top-nav-toggler').onclick = function() {
   console.log("Togller")
   document.getElementById('top-nav-items').classList.toggle('top-nav-hide');
 }
+
+document.getElementById('logo-header').onclick = function() {
+  console.log("Side Toggler");
+  var sidbar = document.getElementById('sidebar');
+  sidbar.classList.add('sidebar-animate');
+  sidbar.classList.toggle('hide-sidebar');
+  setTimeout(function() {
+    sidbar.classList.remove('sidebar-animate');
+  }, 1500);
+}
