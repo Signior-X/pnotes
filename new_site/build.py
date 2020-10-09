@@ -64,16 +64,16 @@ if __name__ == '__main__':
                 createJSFile(inputFile=filepath, outputFile=filepath)
 
 
-    # firebase_file = os.getcwd() + "/firebase.json"
-    # json_data = open(firebase_file).read()
-    # json_data = json_data.replace('"public": "public"', '"public": "build"')
-    # open(firebase_file, 'w').write(json_data)
-    # print("Destination changed to build")
+    firebase_file = os.getcwd() + "/firebase.json"
+    json_data = open(firebase_file).read()
+    json_data = json_data.replace('"public": "public"', '"public": "build"')
+    open(firebase_file, 'w').write(json_data)
+    print("Destination changed to build")
 
-    # print("Running firebase deploy!")
-    # os.system("firebase deploy")
+    print("Running firebase deploy!")
+    os.system("firebase deploy --only=hosting")
 
-    # json_data = open(firebase_file).read()
-    # json_data = json_data.replace('"public": "build"', '"public": "public"')
-    # open(firebase_file, 'w').write(json_data)
-    # print("Destination changed back to public")
+    json_data = open(firebase_file).read()
+    json_data = json_data.replace('"public": "build"', '"public": "public"')
+    open(firebase_file, 'w').write(json_data)
+    print("Destination changed back to public")
