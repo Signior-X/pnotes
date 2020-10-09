@@ -184,8 +184,8 @@ function makeEditTabActive() {
   document.getElementById('note-description-content').classList.add('hidden');
   document.getElementById('note-description-preview').classList.remove('hidden');
 
-  // REMOVED focus using jquery
-  // $('#note-description-editor').focus();
+  // REMOVED focus
+  document.getElementById('note-description-editor').focus();
 }
 
 
@@ -368,7 +368,7 @@ function makeEditTitleBoxVisible() {
 
   // Make focus to the input!
   // TOCHECK
-  $('#edit-note-title-input').focus();
+  document.getElementById('edit-note-title-input').focus();
 }
 
 function saveForUnSavedChanges() {
@@ -458,51 +458,10 @@ $(function () {
       $('#logo-header').html('<img src="pnotes-logo3.png"></img>');
       $('body').removeClass('dark');
       $('#dark-switcher').html('Dark Mode');
-
-      // Change this to do directly from js after words Important!!
-      // make a request to the serve to change the theme
-      var xhttp = new XMLHttpRequest();
-      xhttp.addEventListener("load", function (evt) {
-
-        // console.log(evt);
-        // console.log(evt.srcElement);
-        // console.log(evt.srcElement.response);
-        if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-          console.log("Theme change success!");
-        } else {
-          console.log("Theme Change Failed");
-        }
-      });
-
-      // Defining parameters 
-      xhttp.open("POST", "/theme/set/light", true);
-      //Send the proper header information along with the request
-      xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-      xhttp.send(JSON.stringify({ userEmail: 'priyam' }));
-
     } else {
       $('#logo-header').html('<img src="pnotes-logo-dark.png"></img>');
       $('body').addClass('dark');
       $('#dark-switcher').html('Light Mode');
-
-      var xhttp = new XMLHttpRequest();
-      xhttp.addEventListener("load", function (evt) {
-
-        // console.log(evt);
-        // console.log(evt.srcElement);
-        // console.log(evt.srcElement.response);
-        if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-          console.log("Theme change success!");
-        } else {
-          console.log("Theme Change Failed");
-        }
-      });
-
-      // Defining parameters 
-      xhttp.open("POST", "/theme/set/dark", true);
-      //Send the proper header information along with the request
-      xhttp.setRequestHeader("Content-Type", "application/json"); // Necessary for POST
-      xhttp.send(JSON.stringify({ userEmail: 'priyam' }));
     }
   });
 
@@ -628,6 +587,7 @@ signInToGoogle = () => {
   });
 }
 
+/** Mobile Toggler */
 console.log("y")
 document.getElementById('top-nav-toggler').onclick = function() {
   console.log("Togller")
