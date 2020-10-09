@@ -184,7 +184,8 @@ function makeEditTabActive() {
   document.getElementById('note-description-content').classList.add('hidden');
   document.getElementById('note-description-preview').classList.remove('hidden');
 
-  $('#note-description-editor').focus();
+  // REMOVED focus using jquery
+  // $('#note-description-editor').focus();
 }
 
 
@@ -366,6 +367,7 @@ function makeEditTitleBoxVisible() {
   });
 
   // Make focus to the input!
+  // TOCHECK
   $('#edit-note-title-input').focus();
 }
 
