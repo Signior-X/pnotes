@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Firebase Scripts, currently using app, auth and database for right now! -->
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/7.14.4/firebase-auth.js"></script>
+  <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
+  <title>Org</title>
+</head>
+
+<body>
+  <label id="msg">enter organization name</label>
+  <input type="text" id="nameOfOrg">
+  <input type="password" id="passwordEnter" style="display: none;">
+  <button id="checknameBtn" onclick=checkName()>Submit</button>
+  <button id="addPwdBtn" onclick=passwordBtn() style="display: none;">Submit</button>
+
+  <!-- scripts -->
+  <script>
+
+    checkName = () => {
+      var name_org = document.getElementById("nameOfOrg").value
+      console.log(name_org)
+      firebase.firestore().collection("names").doc(name_org).get().then((doc) => {
+        if (doc.exists) {
+          console.log("org exists")
+          var password = doc.data()["password"]
+          document.getElementById("nameOfOrg").style.display = "none"
+          document.getElementById("checknameBtn").style.display = "none"
+          document.getElementById("passwordEnter").style.display = "block"
+          document.getElementById("addPwdBtn").style.display = "block"
+          document.getElementById("msg").innerHTML = "org already exists; enter password"
+
+          passwordBtn = (doc) => {
+            var passwordEntered = document.getElementById("passwordEnter").value
+            if (passwordEntered === password) {
+              document.getElementById("msg").innerHTML = "password correct, welcome!"
+              document.getElementById("nameOfOrg").style.display = "none"
+              document.getElementById("checknameBtn").style.display = "none"
+              document.getElementById("passwordEnter").style.display = "none"
+              document.getElementById("addPwdBtn").style.display = "none"
+            }
+
+          }
+
+        } else {
+          console.log("org created")
+          document.getElementById("nameOfOrg").style.display = "none"
+          document.getElementById("checknameBtn").style.display = "none"
+          document.getElementById("passwordEnter").style.display = "block"
+          document.getElementById("addPwdBtn").style.display = "block"
+          document.getElementById("msg").innerHTML = "org not found, creating a new one; set your password"
+
+          passwordBtn = () => {
+            var password = document.getElementById("passwordEnter").value
+            firebase.firestore().collection("names").doc(name_org).set({
+              "password": password
+            })
+            document.getElementById("msg").innerHTML = "password set, org has been created!"
+            document.getElementById("nameOfOrg").style.display = "none"
+            document.getElementById("checknameBtn").style.display = "none"
+            document.getElementById("passwordEnter").style.display = "none"
+            document.getElementById("addPwdBtn").style.display = "none"
+          }
+        }
+
+
+        document.getElementById("nameOfOrg").value = ""
+      })
+    }
+
+
+
+  </script>
+
+</body>
+
+</html>
