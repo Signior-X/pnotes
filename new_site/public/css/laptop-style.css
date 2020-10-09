@@ -729,28 +729,6 @@ pre code {
     color: #bdf3ee;
 }
 
-
-/* For scrollbar for both the views */
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
-  
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-}
-   
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #888; 
-}
-  
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-}
-
 .dark .modal-content {
     color: #f84e4e;
     background-color: #090909 !important;
@@ -838,6 +816,29 @@ green {
     }
 
 } /* // End of mobile one */
+
+@media (min-width: 720px) {
+    /* For scrollbar for both the views */
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888; 
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+}
 
 .hide-sidebar {
     min-width: 0 !important;
