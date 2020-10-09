@@ -1,7 +1,12 @@
 #main {
     display: block;
     height: 100%;
-    overflow: hidden;
+}
+
+@media(min-width: 720px) {
+    #main {
+        overflow: hidden;
+    }
 }
 
 a {
