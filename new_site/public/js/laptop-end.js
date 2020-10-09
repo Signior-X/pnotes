@@ -1,4 +1,4 @@
-
+console.log("What??????????")
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -626,4 +626,10 @@ signInToGoogle = () => {
     console.log(err);
     console.log("Failed to do");
   });
+}
+
+console.log("y")
+document.getElementById('top-nav-toggler').onclick = function() {
+  console.log("Togller")
+  document.getElementById('top-nav-items').classList.toggle('top-nav-hide');
 }

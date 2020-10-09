@@ -26,45 +26,55 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap" rel="stylesheet">
 
-  <link rel="preload" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css"></noscript>
+  <link rel="preload" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css"></noscript>
 
 </head>
 
 <body>
 
-  <script>const cuserEmail='<%= userEmail %>';</script>
+  <script>const cuserEmail = '<%= userEmail %>';</script>
 
   <!-- The Main -->
   <div id="main">
     <div id="top-nav">
       <div id="logo-header"><img src="pnotes-logo-dark.png" alt="pnotes-logo"></img></div>
-      <!-- <button id="show-mobile-site" class="btn" onclick=viewMobileSite()>Mobile Site</button> -->
-      <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
-      <div id="edit-title-button-div">
-        <button class="btn btn-primary hidden" id="edit-title-button" onclick=makeEditTitleBoxVisible()>Edit
-          Title</button>
-        <div id="edit-note-title-box" class="hidden">
-          <h3>Edit Note Title</h3>
-          <input id="edit-note-title-input" value="" placeholder="Enter Note Title">
-          <div class="buttons" style="display: flex;">
-            <button class="btn cancel">Cancel</button>
-            <button class="btn btn-primary save" style="margin-left: auto;">Done</button>
+      <div id="top-nav-wrap">
+        <div id="top-nav-toggler"><button class="btn">Toggle</button></div>
+        <div id="top-nav-items" class="top-nav-hide">
+          <!-- <button id="show-mobile-site" class="btn" onclick=viewMobileSite()>Mobile Site</button> -->
+          <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
+          <div id="edit-title-button-div">
+            <button class="btn btn-primary hidden" id="edit-title-button" onclick=makeEditTitleBoxVisible()>Edit
+              Title</button>
+            <div id="edit-note-title-box" class="hidden">
+              <h3>Edit Note Title</h3>
+              <input id="edit-note-title-input" value="" placeholder="Enter Note Title">
+              <div class="buttons" style="display: flex;">
+                <button class="btn cancel">Cancel</button>
+                <button class="btn btn-primary save" style="margin-left: auto;">Done</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-danger hidden" id="remove-note-button" onclick=openDeleteNoteModal()>Delete
+            Note</button>
+          <div class="right-menu">
+            <!-- replace with icon -->
+            <button id="dark-switcher" class="btn">Light mode</button>
+            <div id="user-email-heading"><%= displayName %></div>
+            <% if(islogin) { %>
+            <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
+            <% } else { %>
+            <button id="sign-in-button" class="btn btn-primary" onclick=signInToGoogle()> <i class="fa fa-google"
+                style="padding-right: 4px;"></i><img src="/images/google.svg" height="15px" width="20px"> SIGN
+              IN</button>
+            <% } %>
           </div>
         </div>
       </div>
-      <button class="btn btn-danger hidden" id="remove-note-button" onclick=openDeleteNoteModal()>Delete Note</button>
-      <div class="right-menu">
-        <!-- replace with icon -->
-        <button id="dark-switcher" class="btn">Light mode</button>
-        <div id="user-email-heading"><%= displayName %></div>
-        <% if(islogin) { %>
-          <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
-        <% } else { %>
-          <button id="sign-in-button" class="btn btn-primary" onclick=signInToGoogle()> <i class="fa fa-google"
-            style="padding-right: 4px;"></i><img src="/images/google.svg" height="15px" width="20px">     SIGN IN</button>
-        <% } %>
-      </div>
+
     </div>
 
     <!-- Main content contains the title and description -->
@@ -129,7 +139,8 @@
   </div>
 
   <!-- Jquery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
   <script src="js/laptop-end.js"></script>
 
@@ -150,8 +161,8 @@
 
   <!-- Remarkable and all -->
   <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-  <script>var md=new Remarkable({html:!0,xhtmlOut:!0});</script>
-  
+  <script>var md = new Remarkable({ html: !0, xhtmlOut: !0 });</script>
+
   <!-- Highlight js-->
   <script src="https://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
