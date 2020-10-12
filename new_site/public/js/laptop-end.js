@@ -439,37 +439,6 @@ const ForSearchingNote = () => {
   }
 };
 
-
-$(function () {
-  $("#sidebar").resizable();
-
-  $('#preview-button').click(function () {
-    // Make edit button as deactivated
-    makePreviewTabActive();
-  });
-
-  $('#editing-button').click(function () {
-    // Make edit button as deactivated
-    makeEditTabActive();
-  });
-
-  $(window).bind('keydown', function (event) {
-    if (event.ctrlKey || event.metaKey) {
-      switch (String.fromCharCode(event.which).toLowerCase()) {
-        case 's':
-          event.preventDefault();
-          // This means save the note now
-          if (window.currentNote) {
-            // console.log('Saving Note');
-            saveNote();
-          }
-          break;
-      }
-    }
-  });
-});
-
-
 /////// This file has been already added to the main ejs file of laptop 
 // This is stored here just for reference
 
@@ -567,4 +536,30 @@ byId('logo-header').onclick = function() {
   setTimeout(function() {
     sidbar.classList.remove('sidebar-animate');
   }, 1500);
+}
+
+byId('preview-button').onclick = function () {
+  // Make edit button as deactivated
+  makePreviewTabActive();
+}
+
+byId('editing-button').onclick = function () {
+  // Make edit button as deactivated
+  makeEditTabActive();
+};
+
+window.onkeydown = function(event) {
+  if (event.ctrlKey || event.metaKey) {
+    switch (String.fromCharCode(event.which).toLowerCase()) {
+      case 's':
+        event.preventDefault();
+        // console.log("Trigger key press saved");
+        // This means save the note now
+        if (window.currentNote) {
+          // console.log('Saving Note');
+          saveNote();
+        }
+        break;
+    }
+  }
 }
