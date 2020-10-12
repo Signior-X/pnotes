@@ -1,4 +1,5 @@
-console.log("What??????????")
+// console.log("What??????????")
+const byId = function( id ) { return document.getElementById( id ); };
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.currentNote = '';
   window.editor = { id: '', title: '', description: '' };
 
-  console.log("Email using:", signInUserEmail);
+  // console.log("Email using:", signInUserEmail);
 
   // Now call the data extract for only once so as to get the list of datas
   firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Empty the notes data
     window.notesData = {};
 
-    var noteFamily = document.getElementById('note-family');
+    var noteFamily = byId('note-family');
     noteFamily.innerHTML = '';
     noteFamilyString = '';
 
@@ -54,17 +55,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // make the current note active if present
     if (window.currentNote) {
       try {
-        document.getElementById(window.currentNote).classList.add('is--active');
-        document.getElementById(window.currentNote).classList.remove('hoverable');
+        byId(window.currentNote).classList.add('is--active');
+        byId(window.currentNote).classList.remove('hoverable');
       } catch (e) {
-        console.log("Ignore this error, comes at time of delete", e.toString)
+        // console.log("Ignore this error, comes at time of delete", e.toString)
       }
     }
   });
 
   addNotefunction = (title, description) => {
     //Start the add note function
-    console.log("Add Note");
+    // console.log("Add Note");
 
     var options = { month: 'short', day: 'numeric' };
     var today = new Date();
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get a key for a new Post.
     var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
-    console.log(newPostKey);
+    // console.log(newPostKey);
     // Now this is going to be the current value which we are editing
     window.currentNote = newPostKey;
 
@@ -94,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
   updateNotefunction = (noteId, title, description) => {
 
     //Start the update note function
-    console.log("Update Note");
+    // console.log("Update Note");
 
     var options = { month: 'short', day: 'numeric' };
     var today = new Date();
@@ -132,10 +133,10 @@ function doOnNoteClick(noteRow) {
 
   if (window.currentNote) {
     try {
-      document.getElementById(window.currentNote).classList.remove('is--active');
-      document.getElementById(window.currentNote).classList.add('hoverable');
+      byId(window.currentNote).classList.remove('is--active');
+      byId(window.currentNote).classList.add('hoverable');
     } catch (e) {
-      console.log("Error currentNote invalid!", e.toString());
+      // console.log("Error currentNote invalid!", e.toString());
     }
   }
   // console.log(noteRow);
@@ -147,12 +148,12 @@ function doOnNoteClick(noteRow) {
   noteRow.classList.remove("hoverable");
 
   // Show the remove and edit title buttons
-  document.getElementById('remove-note-button').classList.remove('hidden');
-  document.getElementById('edit-title-button').classList.remove('hidden');
+  byId('remove-note-button').classList.remove('hidden');
+  byId('edit-title-button').classList.remove('hidden');
 
   // Show the tab-nav
-  document.getElementById('tab-nav').classList.remove('hidden');
-  document.getElementById("search-input").value = "";
+  byId('tab-nav').classList.remove('hidden');
+  byId("search-input").value = "";
   ForSearchingNote();
   // Store the values in editor
   window.editor['id'] = noteRow.id;
@@ -174,18 +175,18 @@ function makeEditTabActive() {
   // console.log(window.editor);
 
   // Now add the description
-  var editorWindowTextArea = document.getElementById('note-description-editor');
+  var editorWindowTextArea = byId('note-description-editor');
   editorWindowTextArea.innerHTML = window.editor.description;
   editorWindowTextArea.value = window.editor.description;
 
-  document.getElementById('editing-button').classList.add('tab-active');
-  document.getElementById('preview-button').classList.remove('tab-active');
+  byId('editing-button').classList.add('tab-active');
+  byId('preview-button').classList.remove('tab-active');
 
-  document.getElementById('note-description-content').classList.add('hidden');
-  document.getElementById('note-description-preview').classList.remove('hidden');
+  byId('note-description-content').classList.add('hidden');
+  byId('note-description-preview').classList.remove('hidden');
 
   // REMOVED focus
-  document.getElementById('note-description-editor').focus();
+  byId('note-description-editor').focus();
 }
 
 
@@ -198,7 +199,7 @@ function makePreviewTabActive() {
   // Now update the preview with the editor values
 
   // Now add the description
-  var descriptionWindow = document.getElementById('note-description-content');
+  var descriptionWindow = byId('note-description-content');
   descriptionWindow.innerHTML = md.render(window.editor.description);
 
   // now change all a tags to have target="_none" in note-description-content
@@ -213,17 +214,17 @@ function makePreviewTabActive() {
     hljs.highlightBlock(block);
   });
 
-  document.getElementById('preview-button').classList.add('tab-active');
-  document.getElementById('editing-button').classList.remove('tab-active');
+  byId('preview-button').classList.add('tab-active');
+  byId('editing-button').classList.remove('tab-active');
 
-  document.getElementById('note-description-preview').classList.add('hidden');
-  document.getElementById('note-description-content').classList.remove('hidden');
+  byId('note-description-preview').classList.add('hidden');
+  byId('note-description-content').classList.remove('hidden');
 }
 
 
 // <!-- Script to change the editor values on textarea change -->
 function changeWindowEditorDescription(textArea) {
-  console.log("Text Area changed!");
+  // console.log("Text Area changed!");
 
   // Choose which is better value comes as the real time parameter
   // console.log(textArea.innerHTML);
@@ -246,20 +247,20 @@ function newNoteWindow() {
   // console.log(returened);
 
   // noteFamily.innerHTML = dataToAppend + presentData;
-  console.log("Check Now if new note is created!");
-  console.log("Now open the new note editor");
+  // console.log("Check Now if new note is created!");
+  // console.log("Now open the new note editor");
 
   // Move the values of current note to editor
   window.editor = { id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description };
   // console.log(window.editor);
 
-  document.getElementById('tab-nav').classList.remove('hidden');
+  byId('tab-nav').classList.remove('hidden');
   makeEditTabActive();  // This sets focus to description editor
 
   // First show the buttons of top nav
   // Show the remove and edit title buttons
-  document.getElementById('remove-note-button').classList.remove('hidden');
-  document.getElementById('edit-title-button').classList.remove('hidden');
+  byId('remove-note-button').classList.remove('hidden');
+  byId('edit-title-button').classList.remove('hidden');
 
   // Now open new edit title dialog
   makeEditTitleBoxVisible();  //This sets focus to note title editor
@@ -287,7 +288,7 @@ function saveNote() {
 
 // <!-- Show delete note modal -->
 function openDeleteNoteModal() {
-  var deleteModal = document.getElementById("delete-modal");
+  var deleteModal = byId("delete-modal");
   deleteModal.classList.remove('hidden');
 
   deleteModal.getElementsByClassName("close")[0].onclick = function () {
@@ -303,7 +304,7 @@ function openDeleteNoteModal() {
     deleteCurrentNote();
     deleteModal.classList.add('hidden');
   }
-  document.getElementById('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
+  byId('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
 
 }
 
@@ -314,13 +315,13 @@ function deleteCurrentNote() {
 
   // Make a confirm message for delete of a note
   var onDeletePromise = deleteNotefunction(window.currentNote);
-  document.getElementById('note-description-content').innerHTML = '';
-  document.getElementById('note-description-editor').innerHTML = '';
-  document.getElementById('note-description-editor').value = '';
-  document.getElementById('remove-note-button').classList.add('hidden');
-  document.getElementById('edit-note-title-box').classList.add('hidden');
-  document.getElementById('edit-title-button').classList.add('hidden');
-  document.getElementById('tab-nav').classList.add('hidden');
+  byId('note-description-content').innerHTML = '';
+  byId('note-description-editor').innerHTML = '';
+  byId('note-description-editor').value = '';
+  byId('remove-note-button').classList.add('hidden');
+  byId('edit-note-title-box').classList.add('hidden');
+  byId('edit-title-button').classList.add('hidden');
+  byId('tab-nav').classList.add('hidden');
 
   window.currentNote = ''; // Now no note is in progress to be edited!
 }
@@ -340,7 +341,7 @@ window.onbeforeunload = function (event) {
 function makeEditTitleBoxVisible() {
 
   // console.log("Update title");
-  editNoteTitleBox = document.getElementById('edit-note-title-box');
+  editNoteTitleBox = byId('edit-note-title-box');
   editNoteTitleBox.classList.remove('hidden');
   editNoteTitleBox.getElementsByTagName('input')[0].value = window.editor.title;
 
@@ -349,7 +350,7 @@ function makeEditTitleBoxVisible() {
   }
 
   function NotePageVisible() { //Due to repetion of code i created this function
-    var editNoteTitleIinputValue = document.getElementById('edit-note-title-input').value;
+    var editNoteTitleIinputValue = byId('edit-note-title-input').value;
     if (editNoteTitleIinputValue.toString().trim() === '') {
       alert('Note Title Cannot be empty!');
     } else {
@@ -368,7 +369,7 @@ function makeEditTitleBoxVisible() {
 
   // Make focus to the input!
   // TOCHECK
-  document.getElementById('edit-note-title-input').focus();
+  byId('edit-note-title-input').focus();
 }
 
 function saveForUnSavedChanges() {
@@ -404,7 +405,7 @@ HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change 
   this.focus();
 };
 
-var textarea = document.getElementById('note-description-editor');
+var textarea = byId('note-description-editor');
 // console.log(textarea)
 textarea.onkeydown = function (event) {
 
@@ -419,14 +420,14 @@ textarea.onkeydown = function (event) {
 };
 // End of Tabs work
 
-// const serachValue = document.getElementById("search-input");
+// const serachValue = byId("search-input");
 // serachValue.addEventListener("input",() => {
 //    console.log(serachValue.value)
 // })
-const noteFamily = document.getElementById("note-family").childNodes;
+const noteFamily = byId("note-family").childNodes;
 
 const ForSearchingNote = () => {
-  const searchValue = document.getElementById("search-input");
+  const searchValue = byId("search-input");
   for (let i = 0; i < noteFamily.length; i++) {
     if (noteFamily[i].childNodes[0].textContent.toLowerCase().includes(searchValue.value.toLowerCase())) {
       if (noteFamily[i].classList.value.includes("hidden")) {
@@ -459,7 +460,7 @@ $(function () {
           event.preventDefault();
           // This means save the note now
           if (window.currentNote) {
-            console.log('Saving Note');
+            // console.log('Saving Note');
             saveNote();
           }
           break;
@@ -480,20 +481,20 @@ signOutFromGoogle = () => {
   // Save any unsaved changes present
   saveForUnSavedChanges();
 
-  console.log("Sign Out User!");
+  // console.log("Sign Out User!");
 
   var user = firebase.auth().signOut();
 
   var xhttp = new XMLHttpRequest();
 
   xhttp.addEventListener("error", function (evt) {
-    console.log("Failed");
-    console.log(evt.toString());
+    // console.log("Failed");
+    // console.log(evt.toString());
   });
 
   xhttp.addEventListener("load", function (evt) {
-    console.log("Sign Out Success!");
-    location.reload();
+    // console.log("Sign Out Success!");
+    // location.reload();
   });
 
   // Defining parameters 
@@ -510,27 +511,27 @@ signOutFromGoogle = () => {
 // Sign in function
 signInToGoogle = () => {
   // Start the sign in Activity!
-  console.log("Sign In to Google!");
+  // console.log("Sign In to Google!");
 
   // Google sign in
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function (result) {
     // console.log(result.user.email);
-    console.log("success, check now!");
+    // console.log("success, check now!");
 
     // console.log(result.user.displayName);
     // console.log(result);
     // console.log(result.user);
     // console.log(result.user_id_token);
 
-    console.log(result.user);
+    // console.log(result.user);
 
     // Add the cookie so that this can be also cleared whether to check wheather user is sign in or not
     var xhttp = new XMLHttpRequest();
 
     xhttp.addEventListener("error", function (evt) {
-      console.log("Failed");
-      console.log(evt.toString());
+      // console.log("Failed");
+      // console.log(evt.toString());
     });
 
     xhttp.addEventListener("load", function (evt) {
@@ -539,9 +540,9 @@ signInToGoogle = () => {
       // console.log(evt.srcElement);
       // console.log(evt.srcElement.response);
       if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-        console.log("Sign In Success!");
+        // console.log("Sign In Success!");
       } else {
-        console.log("Failed to sign In");
+        // console.log("Failed to sign In");
       }
       location.reload();
     });
@@ -553,14 +554,14 @@ signInToGoogle = () => {
     xhttp.send(JSON.stringify({ userEmail: result.user.email, userDisplayName: result.user.displayName }));
 
   }).catch(function (err) {
-    console.log(err);
-    console.log("Failed to do");
+    // console.log(err);
+    // console.log("Failed to do");
   });
 }
 
-document.getElementById('logo-header').onclick = function() {
-  console.log("Side Toggler");
-  var sidbar = document.getElementById('sidebar');
+byId('logo-header').onclick = function() {
+  // console.log("Side Toggler");
+  var sidbar = byId('sidebar');
   sidbar.classList.add('sidebar-animate');
   sidbar.classList.toggle('hide-sidebar');
   setTimeout(function() {
