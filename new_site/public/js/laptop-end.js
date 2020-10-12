@@ -329,11 +329,15 @@ function deleteCurrentNote() {
 // <!-- Sript to have the values updated -->
 window.onbeforeunload = function (event) {
   // do stuff here
-  if (window.notesData[window.currentNote].description !== window.editor.description) {
-    // console.log('Unsaved Changes Found!');
-    return "you have unsaved changes. Are you sure you want to navigate away?";
-  } else {
-    // console.log("No unsaved changes found");
+  try {
+    if (window.notesData[window.currentNote].description !== window.editor.description) {
+      // console.log('Unsaved Changes Found!');
+      return "you have unsaved changes. Are you sure you want to navigate away?";
+    } else {
+      // console.log("No unsaved changes found");
+    }
+  } catch (error) {
+    // console.log("No unsaved changes as no note selected");
   }
 };
 
@@ -562,4 +566,11 @@ window.onkeydown = function(event) {
         break;
     }
   }
+}
+
+/** Mobile Toggler */
+// console.log("y")
+byId('top-nav-toggler').onclick = function() {
+  // console.log("Togller")
+  byId('top-nav-items').classList.toggle('top-nav-hide');
 }

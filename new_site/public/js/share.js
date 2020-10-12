@@ -16,7 +16,7 @@ var getParams = function (url) {
 document.addEventListener('DOMContentLoaded', function () {
 
   const params = getParams(window.location.href);
-  console.log("Dom loaded", params);
+  // console.log("Dom loaded", params);
 
   var descriptionWindow = byId('note-description-content');
 
@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
     firebase.database().ref(user).child(id).on('value', function (snapshot) {
       // Check if it exists or not
       if (snapshot.exists()) {
-        console.log("snaphost exists");
-        console.log(snapshot.key);
-        console.log(snapshot.val());
+        // console.log("snaphost exists");
+        // console.log(snapshot.key);
+        // console.log(snapshot.val());
 
         // Now add the description
         descriptionWindow.innerHTML = md.render(snapshot.val()['description']);
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
       } else {
-        console.log("Does not exists!");
+        // console.log("Does not exists!");
         descriptionWindow.innerHTML = 'Does Not Exist';
       }
 
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   } else {
     // This means empty params
-    console.log("Id Parameter not provided!");
+    // console.log("Id Parameter not provided!");
     descriptionWindow.innerHTML = 'Id Parameter Not Provided!';
   }
 });

@@ -45,10 +45,3 @@ if ((!themeData) || (themeData === 'dark')) {
 } else {
   changeToLight();
 }
-
-/** Mobile Toggler */
-// console.log("y")
-byId('top-nav-toggler').onclick = function() {
-  // console.log("Togller")
-  byId('top-nav-items').classList.toggle('top-nav-hide');
-}
