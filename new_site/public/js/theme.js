@@ -1,4 +1,5 @@
 /* Not only for theme, can be used where needed many pages scripts */
+// Take care to load shortcuts.js file first
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -17,20 +18,20 @@ function getCookie(cname) {
 }
 
 function changeToDark() {
-  document.getElementById('logo-header').innerHTML = '<img src="pnotes-logo-dark.png"></img>';
+  byId('logo-header').innerHTML = '<img src="pnotes-logo-dark.png"></img>';
   document.getElementsByTagName('body')[0].classList.add('dark');
-  document.getElementById('dark-switcher').innerHTML = 'Light Mode';
+  byId('dark-switcher').innerHTML = 'Light Mode';
 }
 
 function changeToLight() {
-  document.getElementById('logo-header').innerHTML = '<img src="pnotes-logo3.png"></img>';
+  byId('logo-header').innerHTML = '<img src="pnotes-logo3.png"></img>';
   document.getElementsByTagName('body')[0].classList.remove('dark');
-  document.getElementById('dark-switcher').innerHTML = 'Dark Mode';
+  byId('dark-switcher').innerHTML = 'Dark Mode';
 }
 
-document.getElementById('dark-switcher').onclick = function () {
+byId('dark-switcher').onclick = function () {
   if (document.getElementsByTagName('body')[0].classList.contains('dark')) {
-    console.log('Already in Dark mode, switching to light');
+    // console.log('Already in Dark mode, switching to light');
     changeToLight();
   } else {
     changeToDark();
@@ -38,7 +39,7 @@ document.getElementById('dark-switcher').onclick = function () {
 };
 
 var themeData = getCookie('themeData');
-console.log("themeData", themeData);
+// console.log("themeData", themeData);
 if ((!themeData) || (themeData === 'dark')) {
   changeToDark();
 } else {
@@ -46,8 +47,8 @@ if ((!themeData) || (themeData === 'dark')) {
 }
 
 /** Mobile Toggler */
-console.log("y")
-document.getElementById('top-nav-toggler').onclick = function() {
-  console.log("Togller")
-  document.getElementById('top-nav-items').classList.toggle('top-nav-hide');
+// console.log("y")
+byId('top-nav-toggler').onclick = function() {
+  // console.log("Togller")
+  byId('top-nav-items').classList.toggle('top-nav-hide');
 }

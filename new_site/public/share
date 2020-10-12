@@ -58,6 +58,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
 
+  <script src="js/shortcuts.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/share.js"></script>
 

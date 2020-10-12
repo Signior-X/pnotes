@@ -1,0 +1,1 @@
+const byId = function( id ) { return document.getElementById( id ); };

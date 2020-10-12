@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const params = getParams(window.location.href);
   console.log("Dom loaded", params);
 
-  var descriptionWindow = document.getElementById('note-description-content');
+  var descriptionWindow = byId('note-description-content');
 
   if ("id" in params) {
     let user = 'anonymousNotSigned';
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Now add the description
         descriptionWindow.innerHTML = md.render(snapshot.val()['description']);
-        document.getElementById('user-email-heading').innerHTML = snapshot.val()['title'];
+        byId('user-email-heading').innerHTML = snapshot.val()['title'];
 
         // now change all a tags to have target="_none" in note-description-content
         var anchors = descriptionWindow.getElementsByTagName('a');

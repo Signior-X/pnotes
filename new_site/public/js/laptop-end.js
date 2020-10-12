@@ -1,5 +1,5 @@
 // console.log("What??????????")
-const byId = function( id ) { return document.getElementById( id ); };
+// Take care to load shortcuts.js file first
 
 document.addEventListener('DOMContentLoaded', function () {
 
