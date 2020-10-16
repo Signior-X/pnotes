@@ -558,7 +558,7 @@ pre code {
 /* For the dark theme */
 /* Add the dark class to the body and and then define for each of them here */
 .dark #top-nav {
-    background: #131313;
+    background: #1b1a1a;
     border-color: #131313;
     color: #ffffff;
     box-shadow: 1px 2px 18px rgba(0,0,0,.1);
@@ -581,8 +581,12 @@ pre code {
 }
 
 .dark #top-nav .btn {
-    background: #212121;
-    color: #798499;
+    background: transparent;
+    color: #59acbf;
+}
+
+.dark #top-nav .btn-danger {
+    color: #f36a6a;
 }
 
 .dark #top-nav .btn:hover {
@@ -597,7 +601,7 @@ pre code {
 }
 
 .dark .hoverable:hover {
-    background: #303030!important;
+    background: #303100!important;
     border-color: #303030;
 }
 
