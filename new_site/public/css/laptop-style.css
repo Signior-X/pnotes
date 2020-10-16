@@ -206,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: auto;
     font-size: smaller;
     min-width: 48px;
-    color: #00000077;
+    color: #00c0ff;
 }
 
 .note-title {
@@ -601,7 +601,7 @@ pre code {
 }
 
 .dark .hoverable:hover {
-    background: #303100!important;
+    background: #303030!important;
     border-color: #303030;
 }
 
@@ -614,6 +614,10 @@ pre code {
     color: #fed356;
 }
 
+
+.dark #search-input {
+    color:white:
+}
 .dark #search-notes-box {
     color: #b3b9c5;
     border: 2px solid #444;
