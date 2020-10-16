@@ -206,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: auto;
     font-size: smaller;
     min-width: 48px;
-    color: #00000077;
+    color: #00c0ff;
 }
 
 .note-title {
@@ -616,7 +616,7 @@ pre code {
 
 
 .dark #search-input {
-    color:white;
+    color:white:
 }
 .dark #search-notes-box {
     color: #b3b9c5;
