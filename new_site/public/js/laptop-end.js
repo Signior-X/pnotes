@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var noteFamily = byId('note-family');
     noteFamily.innerHTML = '';
-    noteFamilyString = '';
+    let noteFamilyString = '';
 
     descNoteList.forEach(function (childSnapshot) {
       var childKey = childSnapshot.childKey;
@@ -243,8 +243,7 @@ function newNoteWindow() {
 
   // This creates a new note and also set the currentNote as the new key which is found
   // The current Note is automatically selected and tasks are done in the ref method!!
-  var returened = addNotefunction('New Note Title', '# New Note')
-  // console.log(returened);
+  addNotefunction('New Note Title', '# New Note')
 
   // noteFamily.innerHTML = dataToAppend + presentData;
   // console.log("Check Now if new note is created!");
@@ -278,7 +277,7 @@ function restoreState() {
 // <!-- Script to update or say save a note and remain at that note -->
 function saveNote() {
   // console.log(window.editor);
-  var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
+  updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
   // console.log(promisedResult);
 
   restoreState(); // This will be done after the update
@@ -299,7 +298,7 @@ function openDeleteNoteModal() {
     deleteModal.classList.add('hidden');
   }
 
-  confirmDelete = deleteModal.getElementsByClassName("confirm-delete")[0];
+  let confirmDelete = deleteModal.getElementsByClassName("confirm-delete")[0];
   confirmDelete.onclick = function () {
     deleteCurrentNote();
     deleteModal.classList.add('hidden');
@@ -314,7 +313,7 @@ function deleteCurrentNote() {
   // console.log(window.currentNote);
 
   // Make a confirm message for delete of a note
-  var onDeletePromise = deleteNotefunction(window.currentNote);
+  deleteNotefunction(window.currentNote);
   byId('note-description-content').innerHTML = '';
   byId('note-description-editor').innerHTML = '';
   byId('note-description-editor').value = '';
@@ -345,7 +344,7 @@ window.onbeforeunload = function (event) {
 function makeEditTitleBoxVisible() {
 
   // console.log("Update title");
-  editNoteTitleBox = byId('edit-note-title-box');
+  let editNoteTitleBox = byId('edit-note-title-box');
   editNoteTitleBox.classList.remove('hidden');
   editNoteTitleBox.getElementsByTagName('input')[0].value = window.editor.title;
 
@@ -390,8 +389,7 @@ function saveForUnSavedChanges() {
 
       // Now save the note
       // console.log(window.editor);
-      var promisedResult = updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
-      // console.log(promisedResult);
+      updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
 
       // No need for restore changes as that will be done by the function who called this function
     }
@@ -428,17 +426,17 @@ textarea.onkeydown = function (event) {
 // serachValue.addEventListener("input",() => {
 //    console.log(serachValue.value)
 // })
-const noteFamily = byId("note-family").childNodes;
+const noteFamilyNodes = byId("note-family").childNodes;
 
 const ForSearchingNote = () => {
   const searchValue = byId("search-input");
-  for (let i = 0; i < noteFamily.length; i++) {
-    if (noteFamily[i].childNodes[0].textContent.toLowerCase().includes(searchValue.value.toLowerCase())) {
-      if (noteFamily[i].classList.value.includes("hidden")) {
-        noteFamily[i].classList.remove("hidden");
+  for (let i = 0; i < noteFamilyNodes.length; i++) {
+    if (noteFamilyNodes[i].childNodes[0].textContent.toLowerCase().includes(searchValue.value.toLowerCase())) {
+      if (noteFamilyNodes[i].classList.value.includes("hidden")) {
+        noteFamilyNodes[i].classList.remove("hidden");
       }
     } else {
-      noteFamily[i].classList.add("hidden");
+      noteFamilyNodes[i].classList.add("hidden");
     }
   }
 };
