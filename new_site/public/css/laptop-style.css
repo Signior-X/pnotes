@@ -135,8 +135,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #sidebar {
     width: 26%;
-    min-width: 300px;
-    max-width: 550px;
+    min-width: 15vw;
     flex: none;
     float: left;
     height: 100%;
@@ -146,6 +145,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #search-notes-box-container {
+    display:flex;
     margin-bottom: 12px;
     margin-top: 12px;
     margin-left: 8px;
@@ -285,50 +285,6 @@ pre code {
     border-radius: 0;
 }
 
-/* For resizable sidebar */
-.ui-resizable {
-    position: relative;
-}
-
-.ui-resizable-e {
-    cursor: e-resize;
-    width: 7px;
-    right: -5px;
-    top: 0;
-    height: 100%;
-}
-
-.ui-resizable-handle {
-    position: absolute;
-    font-size: 0.1px;
-    display: block;
-}
-
-.ui-resizable-s {
-    cursor: s-resize;
-    height: 7px;
-    width: 100%;
-    bottom: -5px;
-    left: 0;
-}
-
-.ui-icon-gripsmall-diagonal-se {
-    background-position: -64px -224px;
-}
-.ui-icon, .ui-widget-content .ui-icon {
-    background-image: url(https://code.jquery.com/ui/1.10.4/themes/ui-lightness/images/ui-icons_222222_256x240.png);
-}
-.ui-icon {
-    width: 16px;
-    height: 16px;
-}
-.ui-resizable-se {
-    cursor: se-resize;
-    width: 12px;
-    height: 12px;
-    right: 1px;
-    bottom: 1px;
-}
 
 #logo-header {
     margin-top: -16px;
@@ -614,10 +570,10 @@ pre code {
     color: #fed356;
 }
 
-
 .dark #search-input {
-    color:white:
+    color:white;
 }
+
 .dark #search-notes-box {
     color: #b3b9c5;
     border: 2px solid #444;
@@ -855,4 +811,11 @@ green {
 
 .sidebar-animate {
     transition: all 1s;
+}
+
+.split, .gutter.gutter-horizontal {
+    float: left;
+}
+.gutter.gutter-horizontal {
+    cursor: ew-resize;
 }

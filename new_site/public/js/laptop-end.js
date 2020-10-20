@@ -512,11 +512,11 @@ signInToGoogle = () => {
       // console.log(evt);
       // console.log(evt.srcElement);
       // console.log(evt.srcElement.response);
-      if (JSON.parse(evt.srcElement.response)['success'] == 1) {
-        // console.log("Sign In Success!");
-      } else {
-        // console.log("Failed to sign In");
-      }
+      // if (JSON.parse(evt.srcElement.response)['success'] == 1) {
+      //   // console.log("Sign In Success!");
+      // } else {
+      //   // console.log("Failed to sign In");
+      // }
       location.reload();
     });
 
@@ -574,3 +574,8 @@ byId('top-nav-toggler').onclick = function() {
   // console.log("Togller")
   byId('top-nav-items').classList.toggle('top-nav-hide');
 }
+
+Split(['#sidebar', '#main-content-main'], {
+  sizes: [25, 75],
+});
+
