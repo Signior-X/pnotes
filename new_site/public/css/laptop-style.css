@@ -245,6 +245,7 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: 0px;
     border: 1px solid #e1e4e8!important;
     border-radius: 4px;
+    word-break: break-all;
 }
 
 #note-description-preview {
@@ -797,6 +798,10 @@ green {
         display: block;
     }
 
+    .gutter-horizontal {
+        width: 0 !important;
+    }
+
 } /* // End of mobile one */
 
 @media (min-width: 720px) {
@@ -828,7 +833,7 @@ green {
 }
 
 .sidebar-animate {
-    transition: all 1s;
+    transition: all 0.5s;
 }
 
 .split, .gutter.gutter-horizontal {
