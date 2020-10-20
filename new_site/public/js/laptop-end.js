@@ -163,6 +163,11 @@ function doOnNoteClick(noteRow) {
   // console.log(window.editor);
   // Making the preview tab active
   makePreviewTabActive();
+
+  if(screen.width <= 720) {
+    byId('sidebar-toggler').click();
+  }
+  
 }
 
 
@@ -530,18 +535,22 @@ signInToGoogle = () => {
   });
 }
 
-byId('sidebar-toggler').onclick = function() {
+byId('sidebar-toggler').onclick = function () {
   // console.log("Side Toggler");
   var sidbar = byId('sidebar');
+  
+  if(screen.width <=720) {
+    sidbar.style.width = "100vw";   
+  }
   sidbar.classList.add('sidebar-animate');
   sidbar.classList.toggle('hide-sidebar');
-  setTimeout(function() {
+  setTimeout(function () {
     sidbar.classList.remove('sidebar-animate');
-  }, 1000);
-  
+  }, 500);
+
   let curImg = byId('side-img').src.split('/');
 
-  if(curImg[curImg.length - 1] === "top.svg") {
+  if (curImg[curImg.length - 1] === "top.svg") {
     byId('side-img').src = "/images/object.svg";
     byId('search-notes-box').classList.remove('hidden');
   } else {
@@ -560,7 +569,7 @@ byId('editing-button').onclick = function () {
   makeEditTabActive();
 };
 
-window.onkeydown = function(event) {
+window.onkeydown = function (event) {
   if (event.ctrlKey || event.metaKey) {
     switch (String.fromCharCode(event.which).toLowerCase()) {
       case 's':
@@ -578,7 +587,7 @@ window.onkeydown = function(event) {
 
 /** Mobile Toggler */
 // console.log("y")
-byId('top-nav-toggler').onclick = function() {
+byId('top-nav-toggler').onclick = function () {
   // console.log("Togller")
   byId('top-nav-items').classList.toggle('top-nav-hide');
 }
@@ -587,7 +596,11 @@ Split(['#sidebar', '#main-content-main'], {
   sizes: [25, 75],
 });
 
-byId('share-img').onclick = function() {
+if (screen.width <= 720) {
+  byId('sidebar').style.width = "100vw";
+}
+
+byId('share-img').onclick = function () {
   let url = "/share?id=" + window.currentNote + "&user=" + cuserEmail
   location.href = url;
 }
