@@ -43,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     padding: 5px 12px;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.42857143;
     text-align: center;
@@ -52,10 +52,6 @@ h1, h2, h3, h4, h5, h6 {
     -ms-touch-action: manipulation;
     touch-action: manipulation;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
