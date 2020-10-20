@@ -1,3 +1,5 @@
+![Pnotes Banner](https://i.imgur.com/o8ETSv3.png)  
+
 # pnotesapp
 The Web app to store notes and have them sync with the Pnotes Android App.
 Check out the Android app at https://github.com/Signior-X/Pnotes
