@@ -129,6 +129,16 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
 }
 
+#sidebar-toggler {
+    margin: 0px 15px -8px 2px;
+}
+
+#sidebar-toggler img {
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
+}
+
 #sidebar {
     width: 26%;
     min-width: 15vw;

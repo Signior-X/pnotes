@@ -530,14 +530,24 @@ signInToGoogle = () => {
   });
 }
 
-byId('logo-header').onclick = function() {
+byId('sidebar-toggler').onclick = function() {
   // console.log("Side Toggler");
   var sidbar = byId('sidebar');
   sidbar.classList.add('sidebar-animate');
   sidbar.classList.toggle('hide-sidebar');
   setTimeout(function() {
     sidbar.classList.remove('sidebar-animate');
-  }, 1500);
+  }, 1000);
+  
+  let curImg = byId('side-img').src.split('/');
+
+  if(curImg[curImg.length - 1] === "top.svg") {
+    byId('side-img').src = "/images/object.svg";
+    byId('search-notes-box').classList.remove('hidden');
+  } else {
+    byId('side-img').src = "/images/top.svg";
+    byId('search-notes-box').classList.add('hidden');
+  }
 }
 
 byId('preview-button').onclick = function () {
