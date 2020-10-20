@@ -44,7 +44,6 @@
       <div id="top-nav-wrap">
         <div id="top-nav-toggler"><button class="btn">Toggle</button></div>
         <div id="top-nav-items" class="top-nav-hide">
-          <!-- <button id="show-mobile-site" class="btn" onclick=viewMobileSite()>Mobile Site</button> -->
           <button class="btn" id="create-note-button" onclick=newNoteWindow()>Add Note</button>
           <div id="edit-title-button-div">
             <button class="btn btn-primary hidden" id="edit-title-button" onclick=makeEditTitleBoxVisible()>Edit
@@ -67,8 +66,8 @@
             <% if(islogin) { %>
             <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
             <% } else { %>
-            <button id="sign-in-button" class="btn btn-primary" onclick=signInToGoogle()> <i class="fa fa-google"
-                style="padding-right: 4px;"></i><img src="/images/google.svg" height="15px" width="20px"> SIGN
+            <button id="sign-in-button" class="btn btn-primary" onclick=signInToGoogle()><em 
+                style="padding-right: 4px;"></em><img alt="google-sign-in" src="/images/google.svg" height="15px" width="20px"> SIGN
               IN</button>
             <% } %>
           </div>
@@ -79,7 +78,7 @@
 
     <!-- Main content contains the title and description -->
     <div id="main-content">
-      <div id="sidebar">
+      <div  class = "split" id="sidebar">
         <div id="search-notes-box-container">
           <div id="search-notes-box">
             <span class="search-icon"><i class="fa fa-search"></i></span>
@@ -98,7 +97,8 @@
           </div>
         </div>
       </div>
-      <div id="main-content-main">
+
+      <div class = "split" id="main-content-main">
         <div id="tab-nav" class="hidden">
           <div id="preview-button" class="tab">Preview</div>
           <div id="editing-button" class="tab">Edit</div>
@@ -137,6 +137,10 @@
       </div>
     </div>
   </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.0/split.min.js"></script>
 
   <script src="js/shortcuts.js"></script>
   <script src="js/theme.js"></script>
