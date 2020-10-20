@@ -331,6 +331,18 @@ pre code {
     border-radius: 3px 3px 0 0;
 }
 
+#share-img-c {
+    display: inline-block;
+    margin: 0 8px;
+}
+
+#share-img {
+    cursor: pointer;
+    margin-bottom: -6px;
+    width: 28px;
+    height: 28px;
+}
+
 #note-description-editor {
     resize: none;
     height: 95%;
