@@ -61,7 +61,7 @@ firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', f
   }
 });
 
-addNotefunction = (title, description) => {
+const addNotefunction = (title, description) => {
   //Start the add note function
   // console.log("Add Note");
 
@@ -90,7 +90,7 @@ addNotefunction = (title, description) => {
   return firebase.database().ref(signInUserEmail).update(updates);
 }
 
-updateNotefunction = (noteId, title, description) => {
+const updateNotefunction = (noteId, title, description) => {
 
   //Start the update note function
   // console.log("Update Note");
@@ -113,10 +113,9 @@ updateNotefunction = (noteId, title, description) => {
   return firebase.database().ref(signInUserEmail).update(updates);
 }
 
-deleteNotefunction = (noteId) => {
+const deleteNotefunction = (noteId) => {
   return firebase.database().ref(signInUserEmail).child(noteId).remove();
 }
-
 
 
 // <!-- Script to add the data of the currentNote to description on button click -->
@@ -466,7 +465,7 @@ const ForSearchingNote = () => {
 
 
 // Sign out Function
-signOutFromGoogle = () => {
+const signOutFromGoogle = () => {
   //Start the user delete or sign out activity
 
   // Save any unsaved changes present
@@ -474,7 +473,7 @@ signOutFromGoogle = () => {
 
   // console.log("Sign Out User!");
 
-  var user = firebase.auth().signOut();
+  firebase.auth().signOut();
 
   var xhttp = new XMLHttpRequest();
 
@@ -496,11 +495,8 @@ signOutFromGoogle = () => {
 }
 
 
-
-
-
 // Sign in function
-signInToGoogle = () => {
+const signInToGoogle = () => {
   // Start the sign in Activity!
   // console.log("Sign In to Google!");
 
