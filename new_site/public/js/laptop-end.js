@@ -7,7 +7,7 @@ const signInUserEmail = cuserEmail;
 window.currentNote = '';
 window.editor = { id: '', title: '', description: '' };
 
-window.splitView = true;
+window.splitView = false;
 
 // console.log("Email using:", signInUserEmail);
 
@@ -54,6 +54,11 @@ firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', f
 
   // make the current note active if present
   if (window.currentNote) {
+
+    if(window.splitView) {
+      makePreviewTabActive();
+    }
+
     try {
       byId(window.currentNote).classList.add('is--active');
       byId(window.currentNote).classList.remove('hoverable');
@@ -650,3 +655,16 @@ byId('download-img').onclick = function () {
   download(window.editor.title + ".html", file)
 }
 
+byId('split-btn').onclick = function () {
+  if(window.splitView) {
+    window.splitView = false;
+    byId('split-view-holder').classList.remove('flex-view');
+  }
+  else {
+    window.splitView = true;
+    byId('split-view-holder').classList.add('flex-view');
+    saveForUnSavedChanges();
+    makeEditTabActive();
+    // Save the current note and editor values if changed!
+  }
+}

@@ -310,6 +310,14 @@ pre code {
     display: flex;
 }
 
+#split-btn {
+    height: 20px;
+    width: 20px;
+    padding: 10px;
+    margin-bottom: -12px;
+    cursor: pointer;
+}
+
 #right-tab-menu div {
     display: inline-block;
     margin: 0 8px;
