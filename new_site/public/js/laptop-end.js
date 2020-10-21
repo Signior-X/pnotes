@@ -602,5 +602,5 @@ if (screen.width <= 720) {
 
 byId('share-img').onclick = function () {
   let url = "/share?id=" + window.currentNote + "&user=" + cuserEmail
-  location.href = url;
+  window.open(url);
 }
