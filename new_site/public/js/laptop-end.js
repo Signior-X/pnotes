@@ -164,10 +164,10 @@ function doOnNoteClick(noteRow) {
   // Making the preview tab active
   makePreviewTabActive();
 
-  if(screen.width <= 720) {
+  if (screen.width <= 720) {
     byId('sidebar-toggler').click();
   }
-  
+
 }
 
 
@@ -285,8 +285,8 @@ function saveNote() {
   updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
   // console.log(promisedResult);
 
-  restoreState(); // This will be done after the update
-
+  // restoreState(); // This will be done after the update
+  window.editor.description = window.notesData[window.currentNote].description;
 }
 
 
@@ -310,6 +310,7 @@ function openDeleteNoteModal() {
   }
   byId('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
 
+  confirmDelete.focus();
 }
 
 // This function deletes the current active note
@@ -412,6 +413,8 @@ HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change 
   this.focus();
 };
 
+var saveTimer = null;
+
 var textarea = byId('note-description-editor');
 // console.log(textarea)
 textarea.onkeydown = function (event) {
@@ -424,6 +427,20 @@ textarea.onkeydown = function (event) {
     textarea.setCaretPosition(newCaretPosition);
     return false;
   }
+
+  // Start a timer for 3000 ms
+
+  clearTimeout(saveTimer);
+  byId('saved-img-c').classList.add('hidden');
+  byId('typing-img-c').classList.remove('hidden');
+
+  saveTimer = setTimeout(function () {
+    console.log("Hello work");
+    byId('saved-img-c').classList.remove('hidden');
+    byId('typing-img-c').classList.add('hidden');
+    saveNote();
+  }, 800);
+
 };
 // End of Tabs work
 
@@ -538,15 +555,16 @@ signInToGoogle = () => {
 byId('sidebar-toggler').onclick = function () {
   // console.log("Side Toggler");
   var sidbar = byId('sidebar');
-  
-  if(screen.width <=720) {
-    sidbar.style.width = "100vw";   
+
+  if (screen.width <= 720) {
+    sidbar.style.width = "100vw";
   }
   sidbar.classList.add('sidebar-animate');
   sidbar.classList.toggle('hide-sidebar');
   setTimeout(function () {
     sidbar.classList.remove('sidebar-animate');
   }, 500);
+
 
   let curImg = byId('side-img').src.split('/');
 
@@ -560,6 +578,7 @@ byId('sidebar-toggler').onclick = function () {
     byId('side-img').title = "Show Sidebar";
   }
 }
+
 
 byId('preview-button').onclick = function () {
   // Make edit button as deactivated
@@ -581,15 +600,22 @@ window.onkeydown = function (event) {
         if (window.currentNote) {
           // console.log('Saving Note');
           saveNote();
+          makePreviewTabActive();
         }
         break;
     }
   }
 }
 
-document.onkeyup = function(e) {
-  if(e.shiftKey && e.which ==  46) {
+document.onkeyup = function (e) {
+  if (e.shiftKey && e.which == 46) {
     openDeleteNoteModal()
+  }
+
+  else if (e.shiftKey && e.which == 37) {
+    byId('side-img').click();
+  } else if (e.shiftKey && e.which == 39) {
+    byId('side-img').click();
   }
 };
 
@@ -626,9 +652,9 @@ function download(filename, text) {
   document.body.removeChild(element);
 }
 
-byId('download-img').onclick = function() {
+byId('download-img').onclick = function () {
   let file = md.render(window.editor.description);
-  console.log (file);
+  console.log(file);
   download(window.editor.title + ".html", file)
 }
 

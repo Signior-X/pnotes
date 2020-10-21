@@ -105,18 +105,21 @@
         <div id="tab-nav" class="hidden">
           <div id="preview-button" class="tab">Preview</div>
           <div id="editing-button" class="tab">Edit</div>
-          <div id="right-tab-menu">
 
-            <div id = "download-img-c">
+          <div id="right-tab-menu">
+            <div id="typing-img-c" class="hidden">
+              Typing 
+              <img title = "Saved" id = "typing-img" src = "images/typing.svg" alt = "Typing">
+            </div>
+            <div id="saved-img-c">
+              <img title = "Saved" id = "saved-img" src = "images/saved.svg" alt = "Note is Saved">
+            </div>
+            <div id = "download-img-c"> 
               <img title="Download HTML" id = "download-img" src = "images/download.svg" alt = "Download Button">
             </div>
-
             <div id="share-img-c">
               <img title=" Share Note" id="share-img" src="images/share.svg" alt = "Share Button">
             </div>
-            
-            <button id="cancel-button" class="btn" onclick=restoreState()>Cancel</button>
-            <button id="save-button" class="btn btn-primary" onclick=saveNote()>Save</button>
           </div>
         </div>
         <div id="note-description-content">

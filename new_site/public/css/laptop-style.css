@@ -311,6 +311,11 @@ pre code {
     display: flex;
 }
 
+#right-tab-menu div {
+    display: inline-block;
+    margin: 0 8px;
+}
+
 .tab {
     display: inline-block;
     padding: 8px 12px;
@@ -332,9 +337,16 @@ pre code {
     border-radius: 3px 3px 0 0;
 }
 
-#share-img-c {
-    display: inline-block;
-    margin: 0 8px;
+#typing-img {
+    width: 54px;
+    height: 33px;
+    margin-bottom: -8px;
+}
+
+#saved-img {
+    width: 33px;
+    height: 33px;
+    margin-bottom: -8px;
 }
 
 #share-img {
@@ -342,10 +354,6 @@ pre code {
     margin-bottom: -6px;
     width: 28px;
     height: 28px;
-}
-
-#download-img-c {
-    display: inline-block;
 }
 
 #download-img {
