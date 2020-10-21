@@ -587,6 +587,12 @@ window.onkeydown = function (event) {
   }
 }
 
+document.onkeyup = function(e) {
+  if(e.shiftKey && e.which ==  46) {
+    openDeleteNoteModal()
+  }
+};
+
 /** Mobile Toggler */
 // console.log("y")
 byId('top-nav-toggler').onclick = function () {
