@@ -36,7 +36,11 @@
     <div id="main-content">
       <div id="main-content-main">
 
-        <div id="note-description-content"></div>
+        <div id="note-description-content">
+          <div style="display: flex; justify-content: center;">
+            <img width="500px" height="400px" src="/images/typing.svg" alt="Loading ...">
+          </div>
+        </div>
       </div>
     </div>
   </div>
