@@ -130,7 +130,8 @@ function doOnNoteClick(noteRow) {
 
   // console.log(md.render('# Remarkable rulezz!'));
 
-  saveForUnSavedChanges();
+  // To be removed after autosave, as no longer needed plus, it gives more error and problems than needed
+  // saveForUnSavedChanges();
 
   // First deselect the current selected Note
   // console.log("Current Note", window.currentNote);
