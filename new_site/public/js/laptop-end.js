@@ -1,124 +1,122 @@
 // console.log("What??????????")
 // Take care to load shortcuts.js file first
 
-document.addEventListener('DOMContentLoaded', function () {
+// Here add using the const variable
+window.signInEmail = cuserEmail;
+const signInUserEmail = cuserEmail;
+window.currentNote = '';
+window.editor = { id: '', title: '', description: '' };
 
-  // Here add using the const variable
-  window.signInEmail = cuserEmail;
-  const signInUserEmail = cuserEmail;
-  window.currentNote = '';
-  window.editor = { id: '', title: '', description: '' };
+// console.log("Email using:", signInUserEmail);
 
-  // console.log("Email using:", signInUserEmail);
+// Now call the data extract for only once so as to get the list of datas
+firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
 
-  // Now call the data extract for only once so as to get the list of datas
-  firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
+  //console.log(snapshot);
+  var descNoteList = [];
 
-    //console.log(snapshot);
-    var descNoteList = [];
+  snapshot.forEach(function (childSnapshot) {
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+    //console.log("childkey", childKey);
+    //console.log("childData", childData);
+    // ...
+    descNoteList.push({ childKey: childKey, childData: childData });
 
-    snapshot.forEach(function (childSnapshot) {
-      var childKey = childSnapshot.key;
-      var childData = childSnapshot.val();
-      //console.log("childkey", childKey);
-      //console.log("childData", childData);
-      // ...
-      descNoteList.push({ childKey: childKey, childData: childData });
-
-    });
-
-    // Reverse the array
-    descNoteList.reverse();
-
-    // Empty the notes data
-    window.notesData = {};
-
-    var noteFamily = byId('note-family');
-    noteFamily.innerHTML = '';
-    let noteFamilyString = '';
-
-    descNoteList.forEach(function (childSnapshot) {
-      var childKey = childSnapshot.childKey;
-      var childData = childSnapshot.childData;
-
-      noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
-        + '<div class="note-title">' + childData.title + '</div>'
-        + '<div class="note-date">' + childData.date + '</div>'
-        + '</div>';
-
-      // Only storing notes description in it
-      window.notesData[childKey] = { description: childData.description, title: childData.title };
-    });
-
-    noteFamily.innerHTML = noteFamilyString;
-
-    // make the current note active if present
-    if (window.currentNote) {
-      try {
-        byId(window.currentNote).classList.add('is--active');
-        byId(window.currentNote).classList.remove('hoverable');
-      } catch (e) {
-        // console.log("Ignore this error, comes at time of delete", e.toString)
-      }
-    }
   });
 
-  addNotefunction = (title, description) => {
-    //Start the add note function
-    // console.log("Add Note");
+  // Reverse the array
+  descNoteList.reverse();
 
-    var options = { month: 'short', day: 'numeric' };
-    var today = new Date();
-    // console.log(today.toLocaleDateString("en-US", options));
+  // Empty the notes data
+  window.notesData = {};
 
-    var newNote = {
-      title: title,
-      description: description,
-      date: today.toLocaleDateString("en-US", options),
-      timestamp: firebase.database.ServerValue.TIMESTAMP
+  var noteFamily = byId('note-family');
+  noteFamily.innerHTML = '';
+  let noteFamilyString = '';
+
+  descNoteList.forEach(function (childSnapshot) {
+    var childKey = childSnapshot.childKey;
+    var childData = childSnapshot.childData;
+
+    noteFamilyString += '<div id="' + childKey + '" class="note-row hoverable" onclick=doOnNoteClick(this) >'
+      + '<div class="note-title">' + childData.title + '</div>'
+      + '<div class="note-date">' + childData.date + '</div>'
+      + '</div>';
+
+    // Only storing notes description in it
+    window.notesData[childKey] = { description: childData.description, title: childData.title };
+  });
+
+  noteFamily.innerHTML = noteFamilyString;
+
+  // make the current note active if present
+  if (window.currentNote) {
+    try {
+      byId(window.currentNote).classList.add('is--active');
+      byId(window.currentNote).classList.remove('hoverable');
+    } catch (e) {
+      // console.log("Ignore this error, comes at time of delete", e.toString)
     }
-
-    // Get a key for a new Post.
-    var newPostKey = firebase.database().ref(signInUserEmail).push().key;
-
-    // console.log(newPostKey);
-    // Now this is going to be the current value which we are editing
-    window.currentNote = newPostKey;
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates[newPostKey] = newNote;
-
-    return firebase.database().ref(signInUserEmail).update(updates);
-  }
-
-  updateNotefunction = (noteId, title, description) => {
-
-    //Start the update note function
-    // console.log("Update Note");
-
-    var options = { month: 'short', day: 'numeric' };
-    var today = new Date();
-    // console.log(today.toLocaleDateString("en-US", options));
-
-    var newNote = {
-      title: title,
-      description: description,
-      date: today.toLocaleDateString("en-US", options),
-      timestamp: firebase.database.ServerValue.TIMESTAMP
-    }
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates[noteId] = newNote;
-
-    return firebase.database().ref(signInUserEmail).update(updates);
-  }
-
-  deleteNotefunction = (noteId) => {
-    return firebase.database().ref(signInUserEmail).child(noteId).remove();
   }
 });
+
+addNotefunction = (title, description) => {
+  //Start the add note function
+  // console.log("Add Note");
+
+  var options = { month: 'short', day: 'numeric' };
+  var today = new Date();
+  // console.log(today.toLocaleDateString("en-US", options));
+
+  var newNote = {
+    title: title,
+    description: description,
+    date: today.toLocaleDateString("en-US", options),
+    timestamp: firebase.database.ServerValue.TIMESTAMP
+  }
+
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref(signInUserEmail).push().key;
+
+  // console.log(newPostKey);
+  // Now this is going to be the current value which we are editing
+  window.currentNote = newPostKey;
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  var updates = {};
+  updates[newPostKey] = newNote;
+
+  return firebase.database().ref(signInUserEmail).update(updates);
+}
+
+updateNotefunction = (noteId, title, description) => {
+
+  //Start the update note function
+  // console.log("Update Note");
+
+  var options = { month: 'short', day: 'numeric' };
+  var today = new Date();
+  // console.log(today.toLocaleDateString("en-US", options));
+
+  var newNote = {
+    title: title,
+    description: description,
+    date: today.toLocaleDateString("en-US", options),
+    timestamp: firebase.database.ServerValue.TIMESTAMP
+  }
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  var updates = {};
+  updates[noteId] = newNote;
+
+  return firebase.database().ref(signInUserEmail).update(updates);
+}
+
+deleteNotefunction = (noteId) => {
+  return firebase.database().ref(signInUserEmail).child(noteId).remove();
+}
+
 
 
 // <!-- Script to add the data of the currentNote to description on button click -->
@@ -624,14 +622,6 @@ document.onkeyup = function (e) {
 byId('top-nav-toggler').onclick = function () {
   // console.log("Togller")
   byId('top-nav-items').classList.toggle('top-nav-hide');
-}
-
-Split(['#sidebar', '#main-content-main'], {
-  sizes: [25, 75],
-});
-
-if (screen.width <= 720) {
-  byId('sidebar').style.width = "100vw";
 }
 
 byId('share-img').onclick = function () {

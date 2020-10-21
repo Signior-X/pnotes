@@ -13,13 +13,6 @@
   <link rel="icon" href="article-24px.svg" type="image/svg+xml">
   <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
 
-  <!-- Firebase Scripts, currently using app, auth and database for right now! -->
-  <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
-  <script defer src="/__/firebase/7.14.4/firebase-auth.js"></script>
-  <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
-  <!-- initialize the SDK after all desired features are loaded -->
-  <script defer src="/__/firebase/init.js"></script>
-
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/laptop-style.css">
 
@@ -41,7 +34,8 @@
   <div id="main">
     <div id="top-nav">
 
-      <div title = "Hide Sidebar" id="sidebar-toggler"><img id = "side-img" src="/images/object.svg" alt = "sidebar-collapse"/></div>
+      <div title="Hide Sidebar" id="sidebar-toggler"><img id="side-img" src="/images/object.svg"
+          alt="sidebar-collapse" /></div>
 
       <div id="logo-header"><img src="pnotes-logo-dark.png" alt="pnotes-logo"></img></div>
       <div id="top-nav-wrap">
@@ -69,8 +63,9 @@
             <% if(islogin) { %>
             <button class="btn btn-danger" id="sign-out-button" onclick=signOutFromGoogle()>Sign Out</button>
             <% } else { %>
-            <button id="sign-in-button" class="btn btn-primary" onclick=signInToGoogle()><em 
-                style="padding-right: 4px;"></em><img alt="google-sign-in" src="/images/google.svg" height="15px" width="20px"> SIGN
+            <button id="sign-in-button" class="btn btn-primary" onclick=signInToGoogle()><em
+                style="padding-right: 4px;"></em><img alt="google-sign-in" src="/images/google.svg" height="15px"
+                width="20px"> SIGN
               IN</button>
             <% } %>
           </div>
@@ -81,7 +76,7 @@
 
     <!-- Main content contains the title and description -->
     <div id="main-content">
-      <div  class = "split" id="sidebar">
+      <div class="split" id="sidebar">
         <div id="search-notes-box-container">
           <div id="search-notes-box">
             <span class="search-icon"><i class="fa fa-search"></i></span>
@@ -101,24 +96,24 @@
         </div>
       </div>
 
-      <div class = "split" id="main-content-main">
+      <div class="split" id="main-content-main">
         <div id="tab-nav" class="hidden">
           <div id="preview-button" class="tab">Preview</div>
           <div id="editing-button" class="tab">Edit</div>
 
           <div id="right-tab-menu">
             <div id="typing-img-c" class="hidden">
-              Typing 
-              <img title = "Saved" id = "typing-img" src = "images/typing.svg" alt = "Typing">
+              Typing
+              <img title="Saved" id="typing-img" src="images/typing.svg" alt="Typing">
             </div>
             <div id="saved-img-c">
-              <img title = "Saved" id = "saved-img" src = "images/saved.svg" alt = "Note is Saved">
+              <img title="Saved" id="saved-img" src="images/saved.svg" alt="Note is Saved">
             </div>
-            <div id = "download-img-c"> 
-              <img title="Download HTML" id = "download-img" src = "images/download.svg" alt = "Download Button">
+            <div id="download-img-c">
+              <img title="Download HTML" id="download-img" src="images/download.svg" alt="Download Button">
             </div>
             <div id="share-img-c">
-              <img title=" Share Note" id="share-img" src="images/share.svg" alt = "Share Button">
+              <img title=" Share Note" id="share-img" src="images/share.svg" alt="Share Button">
             </div>
           </div>
         </div>
@@ -154,8 +149,12 @@
   </div>
 
 
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.0/split.min.js"></script>
+  <!-- Firebase Scripts, currently using app, auth and database for right now! -->
+  <script src="/__/firebase/7.14.4/firebase-app.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-auth.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-database.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script src="/__/firebase/init.js"></script>
 
   <script src="js/shortcuts.js"></script>
   <script src="js/theme.js"></script>
@@ -168,6 +167,13 @@
   <!-- Highlight js-->
   <script src="https://cdn.jsdelivr.net/highlight.js/8.4.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.0/split.min.js"></script>
+  <script>
+    Split(['#sidebar', '#main-content-main'], {sizes: [25, 75],});
+    if (screen.width <= 720) {byId('sidebar').style.width = "100vw";}
+  </script>
 
 </body>
 

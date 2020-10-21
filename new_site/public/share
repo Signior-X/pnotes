@@ -13,12 +13,6 @@
   <link rel="icon" href="article-24px.svg" type="image/svg+xml">
   <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
 
-  <!-- Firebase Scripts, currently using app, auth and database for right now! -->
-  <script defer src="/__/firebase/7.14.4/firebase-app.js"></script>
-  <script defer src="/__/firebase/7.14.4/firebase-database.js"></script>
-  <!-- initialize the SDK after all desired features are loaded -->
-  <script defer src="/__/firebase/init.js"></script>
-
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/laptop-style.css">
 
@@ -47,6 +41,16 @@
     </div>
   </div>
 
+  <!-- Firebase Scripts, currently using app, auth and database for right now! -->
+  <script src="/__/firebase/7.14.4/firebase-app.js"></script>
+  <script src="/__/firebase/7.14.4/firebase-database.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script src="/__/firebase/init.js"></script>
+
+  <script src="js/shortcuts.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/share.js"></script>
+
   <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
   <script>var md = new Remarkable({ html: !0, breaks: true, linkify: true });</script>
 
@@ -58,9 +62,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.4.0/styles/solarized_light.min.css">
 
-  <script src="js/shortcuts.js"></script>
-  <script src="js/theme.js"></script>
-  <script src="js/share.js"></script>
 
 </body>
 
