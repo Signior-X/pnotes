@@ -233,14 +233,13 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     flex-flow: column;
-    overflow-y: hidden;
     font-family: 'Hind Siliguri', sans-serif;
     font-size: 20px;
 }
 
 #note-description-content {
     overflow-y: auto;
-    height: 100%;
+    height: 94%;
     padding: 16px;
     padding-top: 0px;
     border: 1px solid #e1e4e8!important;
@@ -250,7 +249,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #note-description-preview {
     overflow-y: hidden;
-    height: 100%;
+    height: 97%;
     padding-top: 0px;
     border: 1px solid #e1e4e8;
     border-radius: 4px;
@@ -365,9 +364,9 @@ pre code {
 
 #note-description-editor {
     resize: none;
-    height: 95%;
+    height: 97%;
     width: 95%;
-    padding: 16px;
+    padding: 8px;
     border: none;
 }
 
@@ -827,7 +826,7 @@ green {
     /* For scrollbar for both the views */
     /* width */
     ::-webkit-scrollbar {
-        width: 10px;
+        width: 7px;
     }
     
     /* Track */
@@ -862,3 +861,19 @@ green {
     cursor: ew-resize;
 }
 
+.force-block {
+    display: block !important;
+}
+
+#split-view-holder {
+    height: 96%;
+}
+
+.flex-view {
+    display: flex;
+}
+
+.flex-view div {
+    flex: 1;
+    display: block !important;
+}
