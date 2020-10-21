@@ -344,6 +344,17 @@ pre code {
     height: 28px;
 }
 
+#download-img-c {
+    display: inline-block;
+}
+
+#download-img {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    margin-bottom: -6px;
+}
+
 #note-description-editor {
     resize: none;
     height: 95%;
@@ -842,3 +853,4 @@ green {
 .gutter.gutter-horizontal {
     cursor: ew-resize;
 }
+

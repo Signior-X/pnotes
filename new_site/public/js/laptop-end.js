@@ -553,9 +553,11 @@ byId('sidebar-toggler').onclick = function () {
   if (curImg[curImg.length - 1] === "top.svg") {
     byId('side-img').src = "/images/object.svg";
     byId('search-notes-box').classList.remove('hidden');
+    byId('side-img').title = "Hide Sidebar";
   } else {
     byId('side-img').src = "/images/top.svg";
     byId('search-notes-box').classList.add('hidden');
+    byId('side-img').title = "Show Sidebar";
   }
 }
 
@@ -604,3 +606,23 @@ byId('share-img').onclick = function () {
   let url = "/share?id=" + window.currentNote + "&user=" + cuserEmail
   window.open(url);
 }
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+byId('download-img').onclick = function() {
+  let file = md.render(window.editor.description);
+  console.log (file);
+  download(window.editor.title + ".html", file)
+}
+
