@@ -7,6 +7,8 @@ const signInUserEmail = cuserEmail;
 window.currentNote = '';
 window.editor = { id: '', title: '', description: '' };
 
+window.splitView = true;
+
 // console.log("Email using:", signInUserEmail);
 
 // Now call the data extract for only once so as to get the list of datas
@@ -160,6 +162,10 @@ function doOnNoteClick(noteRow) {
   // console.log(window.editor);
   // Making the preview tab active
   makePreviewTabActive();
+
+  if(window.splitView){
+    makeEditTabActive();
+  }
 
   if (screen.width <= 720) {
     byId('sidebar-toggler').click();

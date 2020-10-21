@@ -117,14 +117,16 @@
             </div>
           </div>
         </div>
-        <div id="note-description-content">
-          <div id="welcome-message">
-            <%- include('include/welcome-message'); %>
+        <div id="split-view-holder" class="flex-view">
+          <div id="note-description-content">
+            <div id="welcome-message">
+              <%- include('include/welcome-message'); %>
+            </div>
           </div>
-        </div>
-        <div id="note-description-preview" class="hidden">
-          <textarea id="note-description-editor" oninput=changeWindowEditorDescription(this)
-            placeholder="Add Note description here.."></textarea>
+          <div id="note-description-preview" class="hidden">
+            <textarea id="note-description-editor" oninput=changeWindowEditorDescription(this)
+              placeholder="Add Note description here.."></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -171,8 +173,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.0/split.min.js"></script>
   <script>
-    Split(['#sidebar', '#main-content-main'], {sizes: [25, 75],});
-    if (screen.width <= 720) {byId('sidebar').style.width = "100vw";}
+    Split(['#sidebar', '#main-content-main'], { sizes: [25, 75], });
+    if (screen.width <= 720) { byId('sidebar').style.width = "100vw"; }
   </script>
 
 </body>
