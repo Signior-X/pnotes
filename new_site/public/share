@@ -36,7 +36,14 @@
     <div id="main-content">
       <div id="main-content-main">
 
-        <div id="note-description-content">
+        <div id="note-description-content" style="max-width: 1260px; margin: auto;">
+          <style>
+            @media (min-width: 1260px) {
+              #note-description-content {
+                width: 1260px;
+              }
+            }
+          </style>
           <div style="display: flex; justify-content: center;">
             <img width="500px" height="400px" src="/images/typing.svg" alt="Loading ...">
           </div>

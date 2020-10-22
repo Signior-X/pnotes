@@ -644,7 +644,7 @@ document.addEventListener('DOMContentLoaded', function () {
     element: document.getElementById("note-description-editor")
   });
 
-  simplemde.codemirror.on("keydown", function () {
+  simplemde.codemirror.on("keyup", function () {
     console.log(simplemde.value());
 
     // Start a timer for 3000 ms
