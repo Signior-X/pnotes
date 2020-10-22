@@ -8,6 +8,9 @@ window.currentNote = '';
 window.editor = { id: '', title: '', description: '' };
 
 window.splitView = false;
+var simplemde = ''; // Initialised with emoty string
+var saveTimer = null;
+
 
 // console.log("Email using:", signInUserEmail);
 
@@ -55,7 +58,7 @@ firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', f
   // make the current note active if present
   if (window.currentNote) {
 
-    if(window.splitView) {
+    if (window.splitView) {
       makePreviewTabActive();
     }
 
@@ -169,7 +172,7 @@ function doOnNoteClick(noteRow) {
   // Making the preview tab active
   makePreviewTabActive();
 
-  if(window.splitView){
+  if (window.splitView) {
     makeEditTabActive();
   }
 
@@ -188,19 +191,22 @@ function makeEditTabActive() {
 
   // console.log(window.editor);
 
-  // Now add the description
-  var editorWindowTextArea = byId('note-description-editor');
-  editorWindowTextArea.innerHTML = window.editor.description;
-  editorWindowTextArea.value = window.editor.description;
-
   byId('editing-button').classList.add('tab-active');
   byId('preview-button').classList.remove('tab-active');
 
   byId('note-description-content').classList.add('hidden');
   byId('note-description-preview').classList.remove('hidden');
 
+  // Now add the description
+  var editorWindowTextArea = byId('note-description-editor');
+  editorWindowTextArea.innerHTML = window.editor.description;
+  editorWindowTextArea.value = window.editor.description;
+
+  // Adding for simple mde editor
+  simplemde.value(window.editor.description);
+
   // REMOVED focus
-  byId('note-description-editor').focus();
+  // byId('note-description-editor').focus();
 }
 
 
@@ -237,16 +243,16 @@ function makePreviewTabActive() {
 
 
 // <!-- Script to change the editor values on textarea change -->
-function changeWindowEditorDescription(textArea) {
-  // console.log("Text Area changed!");
+// function changeWindowEditorDescription(textArea) {
+//   // console.log("Text Area changed!");
 
-  // Choose which is better value comes as the real time parameter
-  // console.log(textArea.innerHTML);
-  // console.log(textArea.value);
+//   // Choose which is better value comes as the real time parameter
+//   // console.log(textArea.innerHTML);
+//   // console.log(textArea.value);
 
-  // Change the editor values
-  window.editor.description = textArea.value;
-}
+//   // Change the editor values
+//   window.editor.description = textArea.value;
+// }
 
 
 // <!-- Sccript to open add a note create -->
@@ -332,6 +338,10 @@ function deleteCurrentNote() {
   byId('note-description-content').innerHTML = '';
   byId('note-description-editor').innerHTML = '';
   byId('note-description-editor').value = '';
+
+  // Empty simple mde
+  simplemde.value("");
+
   byId('remove-note-button').classList.add('hidden');
   byId('edit-note-title-box').classList.add('hidden');
   byId('edit-title-button').classList.add('hidden');
@@ -410,48 +420,6 @@ function saveForUnSavedChanges() {
     }
   }
 }
-
-// The work for tabs done by Prashant
-HTMLTextAreaElement.prototype.getCaretPosition = function () { //return the caret position of the textarea
-  return this.selectionStart;
-};
-
-HTMLTextAreaElement.prototype.setCaretPosition = function (position) { //change the caret position of the textarea
-  this.selectionStart = position;
-  this.selectionEnd = position;
-  this.focus();
-};
-
-var saveTimer = null;
-
-var textarea = byId('note-description-editor');
-// console.log(textarea)
-textarea.onkeydown = function (event) {
-
-  // support tab on textarea
-  if (event.keyCode == 9) { // tab was pressed
-    var newCaretPosition;
-    newCaretPosition = textarea.getCaretPosition() + "    ".length;
-    textarea.value = textarea.value.substring(0, textarea.getCaretPosition()) + "    " + textarea.value.substring(textarea.getCaretPosition(), textarea.value.length);
-    textarea.setCaretPosition(newCaretPosition);
-    return false;
-  }
-
-  // Start a timer for 3000 ms
-
-  clearTimeout(saveTimer);
-  byId('saved-img-c').classList.add('hidden');
-  byId('typing-img-c').classList.remove('hidden');
-
-  saveTimer = setTimeout(function () {
-    console.log("Hello work");
-    byId('saved-img-c').classList.remove('hidden');
-    byId('typing-img-c').classList.add('hidden');
-    saveNote();
-  }, 800);
-
-};
-// End of Tabs work
 
 // const serachValue = byId("search-input");
 // serachValue.addEventListener("input",() => {
@@ -657,15 +625,41 @@ byId('download-img').onclick = function () {
 }
 
 byId('split-btn').onclick = function () {
-  if(window.splitView) {
+  if (window.splitView) {
     window.splitView = false;
-    byId('split-view-holder').classList.remove('flex-view');
+    byId('split-view-holder').classList.remove('pflex-view');
   }
   else {
     window.splitView = true;
-    byId('split-view-holder').classList.add('flex-view');
+    byId('split-view-holder').classList.add('pflex-view');
     saveForUnSavedChanges();
     makeEditTabActive();
     // Save the current note and editor values if changed!
   }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  console.log("DOM LOADED");
+  simplemde = new SimpleMDE({
+    element: document.getElementById("note-description-editor")
+  });
+
+  simplemde.codemirror.on("keydown", function () {
+    console.log(simplemde.value());
+
+    // Start a timer for 3000 ms
+    window.editor.description = simplemde.value();
+
+    clearTimeout(saveTimer);
+    byId('saved-img-c').classList.add('hidden');
+    byId('typing-img-c').classList.remove('hidden');
+
+    saveTimer = setTimeout(function () {
+      console.log("Hello work");
+      byId('saved-img-c').classList.remove('hidden');
+      byId('typing-img-c').classList.add('hidden');
+      saveNote();
+    }, 800);
+
+  });
+});

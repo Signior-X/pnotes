@@ -244,11 +244,11 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: 0px;
     border: 1px solid #e1e4e8!important;
     border-radius: 4px;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 #note-description-preview {
-    overflow-y: hidden;
+    overflow-y: auto;
     height: 97%;
     padding-top: 0px;
     border: 1px solid #e1e4e8;
@@ -660,18 +660,18 @@ pre code {
 }
 
 .dark .tab-active {
-    background: rgba(0,0,0,.2);
+    background: rgba(0,0,0,.3);
     border: #2b2b2b !important;
     color: #6ab0f3;
 }
 
 .dark .tab-active:hover {
-    background: rgba(0,0,0,.2);
+    background: rgba(0,0,0,.3);
     border: #2b2b2b !important;
 }
 
 .dark #note-description-content {
-    background: rgba(0,0,0,.2);
+    background: rgba(0,0,0,.3);
     border: 1px solid #2b2b2b !important;
 }
 
@@ -681,7 +681,7 @@ pre code {
 
 .dark #note-description-editor {
     border: 1px solid #2b2b2b !important;
-    background: rgba(0,0,0,.2);
+    background: rgba(0,0,0,.3);
     color:  #b3b9c5;
 }
 
@@ -877,11 +877,48 @@ green {
     height: 96%;
 }
 
-.flex-view {
+.pflex-view {
     display: flex;
 }
 
-.flex-view div {
+.pflex-view #note-description-content {
     flex: 1;
     display: block !important;
+}
+
+.pflex-view #note-description-preview {
+    flex: 1;
+    display: block !important;
+}
+
+/** For the new editor */
+.editor-toolbar {
+    position: sticky !important;
+    top: 0;
+    z-index: 42;
+}
+
+.dark .editor-toolbar {
+    background: #060505;
+    opacity: 1;
+    border: none;
+}
+
+.dark .editor-toolbar a {
+    color: #fff !important;
+}
+
+.dark .editor-toolbar a.active, .dark .editor-toolbar a:hover {
+    background: transparent !important;
+}
+
+/** Custome dark theme for codeMirror */
+.dark .CodeMirror {
+    color: #b3b9c5;
+    background: rgba(0,0,0,.3);
+    border: none;
+}
+
+.dark .CodeMirror-cursor {
+    border: 1px solid #fff;
 }
