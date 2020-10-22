@@ -155,8 +155,8 @@ function doOnNoteClick(noteRow) {
   noteRow.classList.add("is--active");
   noteRow.classList.remove("hoverable");
 
-  // Show the remove and edit title buttons
-  byId('remove-note-button').classList.remove('hidden');
+  // // Show the remove and edit title buttons
+  // byId('remove-note-button').classList.remove('hidden');
   byId('edit-title-button').classList.remove('hidden');
 
   // Show the tab-nav
@@ -278,7 +278,7 @@ function newNoteWindow() {
 
   // First show the buttons of top nav
   // Show the remove and edit title buttons
-  byId('remove-note-button').classList.remove('hidden');
+  // byId('remove-note-button').classList.remove('hidden');
   byId('edit-title-button').classList.remove('hidden');
 
   // Now open new edit title dialog
@@ -586,9 +586,9 @@ document.onkeyup = function (e) {
     openDeleteNoteModal()
   }
 
-  else if (e.shiftKey && e.which == 37) {
+  else if (e.ctrlKey && e.shiftKey && e.which == 37 ) {
     byId('side-img').click();
-  } else if (e.shiftKey && e.which == 39) {
+  } else if (e.ctrlKey && e.shiftKey && e.which == 39) {
     byId('side-img').click();
   }
 };
@@ -634,6 +634,7 @@ byId('split-btn').onclick = function () {
     byId('split-view-holder').classList.add('pflex-view');
     saveForUnSavedChanges();
     makeEditTabActive();
+    }
     // Save the current note and editor values if changed!
   }
 }

@@ -376,6 +376,7 @@ pre code {
     width: 95%;
     padding: 8px;
     border: none;
+    word-break: break-word;
 }
 
 #note-description-editor:focus {
@@ -921,4 +922,11 @@ green {
 
 .dark .CodeMirror-cursor {
     border: 1px solid #fff;
+}
+
+#delete-img {
+    width: 33px;
+    height: 33px;
+    margin-bottom: -8px;
+    cursor: pointer;
 }
