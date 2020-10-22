@@ -636,7 +636,6 @@ byId('split-btn').onclick = function () {
     makeEditTabActive();
     }
     // Save the current note and editor values if changed!
-  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
