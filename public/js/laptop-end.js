@@ -342,7 +342,6 @@ function deleteCurrentNote() {
   // Empty simple mde
   simplemde.value("");
 
-  byId('remove-note-button').classList.add('hidden');
   byId('edit-note-title-box').classList.add('hidden');
   byId('edit-title-button').classList.add('hidden');
   byId('tab-nav').classList.add('hidden');
