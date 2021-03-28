@@ -1,4 +1,3 @@
-// console.log("What??????????")
 // Take care to load shortcuts.js file first
 
 // Here add using the const variable
@@ -12,19 +11,17 @@ var simplemde = ''; // Initialised with emoty string
 var saveTimer = null;
 
 
-// console.log("Email using:", signInUserEmail);
+// "Email using:" signInUserEmail
 
 // Now call the data extract for only once so as to get the list of datas
 firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', function (snapshot) {
 
-  //console.log(snapshot);
   var descNoteList = [];
 
   snapshot.forEach(function (childSnapshot) {
     var childKey = childSnapshot.key;
     var childData = childSnapshot.val();
-    //console.log("childkey", childKey);
-    //console.log("childData", childData);
+
     // ...
     descNoteList.push({ childKey: childKey, childData: childData });
 
@@ -66,18 +63,16 @@ firebase.database().ref(signInUserEmail).orderByChild('timestamp').on('value', f
       byId(window.currentNote).classList.add('is--active');
       byId(window.currentNote).classList.remove('hoverable');
     } catch (e) {
-      // console.log("Ignore this error, comes at time of delete", e.toString)
+      console.log("Ignore this error, comes at time of delete", e.toString)
     }
   }
 });
 
 const addNotefunction = (title, description) => {
   //Start the add note function
-  // console.log("Add Note");
 
   var options = { month: 'short', day: 'numeric' };
   var today = new Date();
-  // console.log(today.toLocaleDateString("en-US", options));
 
   var newNote = {
     title: title,
@@ -89,7 +84,6 @@ const addNotefunction = (title, description) => {
   // Get a key for a new Post.
   var newPostKey = firebase.database().ref(signInUserEmail).push().key;
 
-  // console.log(newPostKey);
   // Now this is going to be the current value which we are editing
   window.currentNote = newPostKey;
 
@@ -101,13 +95,10 @@ const addNotefunction = (title, description) => {
 }
 
 const updateNotefunction = (noteId, title, description) => {
-
   //Start the update note function
-  // console.log("Update Note");
 
   var options = { month: 'short', day: 'numeric' };
   var today = new Date();
-  // console.log(today.toLocaleDateString("en-US", options));
 
   var newNote = {
     title: title,
@@ -131,24 +122,19 @@ const deleteNotefunction = (noteId) => {
 // <!-- Script to add the data of the currentNote to description on button click -->
 function doOnNoteClick(noteRow) {
 
-  // console.log(md.render('# Remarkable rulezz!'));
-
-  // To be removed after autosave, as no longer needed plus, it gives more error and problems than needed
+  // To be removed after autosave, as no longer needed plus,
+  // it gives more error and problems than needed
   // saveForUnSavedChanges();
 
   // First deselect the current selected Note
-  // console.log("Current Note", window.currentNote);
-
   if (window.currentNote) {
     try {
       byId(window.currentNote).classList.remove('is--active');
       byId(window.currentNote).classList.add('hoverable');
     } catch (e) {
-      // console.log("Error currentNote invalid!", e.toString());
+      console.log("Error currentNote invalid!", e.toString());
     }
   }
-  // console.log(noteRow);
-  // console.log(noteRow.id);
 
   // Select the note
   window.currentNote = noteRow.id;
@@ -167,8 +153,7 @@ function doOnNoteClick(noteRow) {
   window.editor['id'] = noteRow.id;
   window.editor['title'] = window.notesData[noteRow.id].title;
   window.editor['description'] = window.notesData[noteRow.id].description;
-  // console.log("Editor changed success!");
-  // console.log(window.editor);
+  // Editor changed success!
   // Making the preview tab active
   makePreviewTabActive();
 
@@ -188,8 +173,7 @@ function doOnNoteClick(noteRow) {
 // Remember click actions are taken care by jquery
 
 function makeEditTabActive() {
-
-  // console.log(window.editor);
+  // Takes values from window.editor
 
   byId('editing-button').classList.add('tab-active');
   byId('preview-button').classList.remove('tab-active');
@@ -207,17 +191,17 @@ function makeEditTabActive() {
 
   // REMOVED focus
   // byId('note-description-editor').focus();
+  // TODO Add focus properly to be seen
 }
 
 
 // <!-- To make the preview tab active -->
 
 function makePreviewTabActive() {
-
-  // console.log(window.editor);
+  // Takes values from window.editor
+  // Do any markdown changes here if you wan to
 
   // Now update the preview with the editor values
-
   // Now add the description
   var descriptionWindow = byId('note-description-content');
   descriptionWindow.innerHTML = md.render(window.editor.description);
@@ -243,13 +227,8 @@ function makePreviewTabActive() {
 
 
 // <!-- Script to change the editor values on textarea change -->
+// Removed after shifting to markdown editor
 // function changeWindowEditorDescription(textArea) {
-//   // console.log("Text Area changed!");
-
-//   // Choose which is better value comes as the real time parameter
-//   // console.log(textArea.innerHTML);
-//   // console.log(textArea.value);
-
 //   // Change the editor values
 //   window.editor.description = textArea.value;
 // }
@@ -257,6 +236,9 @@ function makePreviewTabActive() {
 
 // <!-- Sccript to open add a note create -->
 function newNoteWindow() {
+  // This funciton create a new note and call this when you want
+  // to create a new note
+  // TODO Add a shortcut for calling and creating a new note
 
   // Save the current note and editor values if changed!
   saveForUnSavedChanges();
@@ -266,12 +248,12 @@ function newNoteWindow() {
   addNotefunction('New Note Title', '# New Note')
 
   // noteFamily.innerHTML = dataToAppend + presentData;
-  // console.log("Check Now if new note is created!");
-  // console.log("Now open the new note editor");
+  // Check Now if new note is created!
+  // Now open the new note editor
 
   // Move the values of current note to editor
   window.editor = { id: window.currentNote, title: window.notesData[currentNote].title, description: window.notesData[currentNote].description };
-  // console.log(window.editor);
+  // Check window.editor have the proper values needed
 
   byId('tab-nav').classList.remove('hidden');
   makeEditTabActive();  // This sets focus to description editor
@@ -287,19 +269,20 @@ function newNoteWindow() {
 
 
 // <!-- Script to cancel saving a note or restore the state -->
+// This function is of not much use after autosave feature implemented
 function restoreState() {
   // Makes the description to open with the current Note values 
-  // console.log(window.editor);
+  // See window.editor here for more info
   window.editor.description = window.notesData[window.currentNote].description;
   makePreviewTabActive();
 }
 
 // <!-- Script to update or say save a note and remain at that note -->
 function saveNote() {
-  // console.log(window.editor);
   updateNotefunction(window.editor.id, window.editor.title, window.editor.description);
-  // console.log(promisedResult);
+  // window.editor has the values and this saves giving a promise
 
+  // Line commented as not needed after autosave
   // restoreState(); // This will be done after the update
   window.editor.description = window.notesData[window.currentNote].description;
 }
@@ -307,6 +290,9 @@ function saveNote() {
 
 // <!-- Show delete note modal -->
 function openDeleteNoteModal() {
+  // This function opens the delete note modal and
+  // sets the listeners to the modal buttons
+
   var deleteModal = byId("delete-modal");
   deleteModal.classList.remove('hidden');
 
@@ -325,13 +311,14 @@ function openDeleteNoteModal() {
   }
   byId('modal-message-p').innerHTML = 'Are you sure you want to delete ' + window.editor.title + '?'
 
+  // Making the focus to the confirm delete button
   confirmDelete.focus();
 }
 
 // This function deletes the current active note
 function deleteCurrentNote() {
-
-  // console.log(window.currentNote);
+  // It deletes the currently selected modal window.currentNote
+  // does nothing if no modal is selected
 
   // Make a confirm message for delete of a note
   deleteNotefunction(window.currentNote);
@@ -339,35 +326,35 @@ function deleteCurrentNote() {
   byId('note-description-editor').innerHTML = '';
   byId('note-description-editor').value = '';
 
-  // Empty simple mde
+  // Empty simple mde the note description editor
   simplemde.value("");
 
+  // Removing current note options
   byId('edit-note-title-box').classList.add('hidden');
   byId('edit-title-button').classList.add('hidden');
   byId('tab-nav').classList.add('hidden');
 
-  window.currentNote = ''; // Now no note is in progress to be edited!
+  // Now no note is in progress to be edited!
+  window.currentNote = '';
 }
 
 // <!-- Sript to have the values updated -->
 window.onbeforeunload = function (event) {
-  // do stuff here
+  // If user tried to leave with some values changed, this alerts the user
   try {
     if (window.notesData[window.currentNote].description !== window.editor.description) {
-      // console.log('Unsaved Changes Found!');
+      // Unsaved Changes Found!
       return "you have unsaved changes. Are you sure you want to navigate away?";
-    } else {
-      // console.log("No unsaved changes found");
     }
   } catch (error) {
-    // console.log("No unsaved changes as no note selected");
+    // No unsaved changes as no note selected
   }
 };
 
 // <!-- Script to show edit title box -->
 function makeEditTitleBoxVisible() {
+  // It opens the note title editor for updating it
 
-  // console.log("Update title");
   let editNoteTitleBox = byId('edit-note-title-box');
   editNoteTitleBox.classList.remove('hidden');
   editNoteTitleBox.getElementsByTagName('input')[0].value = window.editor.title;
@@ -376,6 +363,8 @@ function makeEditTitleBoxVisible() {
     editNoteTitleBox.classList.add('hidden');
   }
 
+  // TODO refractor this unciton name and make more clear
+  // This updates the title of the note
   function NotePageVisible() { //Due to repetion of code i created this function
     var editNoteTitleIinputValue = byId('edit-note-title-input').value;
     if (editNoteTitleIinputValue.toString().trim() === '') {
@@ -388,8 +377,8 @@ function makeEditTitleBoxVisible() {
   }
   editNoteTitleBox.getElementsByClassName('save')[0].addEventListener("click", NotePageVisible);
   editNoteTitleBox.addEventListener("keypress", (event) => {
-    // console.log(event.keyCode)
     if (event.keyCode === 13) {
+      // Enter key press
       NotePageVisible();
     }
   });
@@ -400,8 +389,8 @@ function makeEditTitleBoxVisible() {
 }
 
 function saveForUnSavedChanges() {
-
   // console.log('Trying to save unsaved changes if present');
+
   if (window.currentNote && window.currentNote !== '') {
     // Current note is not empty
     // console.log('Current Note is not empty');
@@ -450,20 +439,18 @@ const signOutFromGoogle = () => {
   // Save any unsaved changes present
   saveForUnSavedChanges();
 
-  // console.log("Sign Out User!");
-
   firebase.auth().signOut();
 
   var xhttp = new XMLHttpRequest();
 
   xhttp.addEventListener("error", function (evt) {
-    // console.log("Failed");
+    console.log("Failed");
     // console.log(evt.toString());
   });
 
   xhttp.addEventListener("load", function (evt) {
     // console.log("Sign Out Success!");
-    // location.reload();
+    location.reload();
   });
 
   // Defining parameters 
@@ -477,7 +464,6 @@ const signOutFromGoogle = () => {
 // Sign in function
 const signInToGoogle = () => {
   // Start the sign in Activity!
-  // console.log("Sign In to Google!");
 
   // Google sign in
   var provider = new firebase.auth.GoogleAuthProvider();
@@ -496,7 +482,7 @@ const signInToGoogle = () => {
     var xhttp = new XMLHttpRequest();
 
     xhttp.addEventListener("error", function (evt) {
-      // console.log("Failed");
+      console.log("Failed");
       // console.log(evt.toString());
     });
 
@@ -510,6 +496,8 @@ const signInToGoogle = () => {
       // } else {
       //   // console.log("Failed to sign In");
       // }
+
+      // Finally reload the page and the user will be logged in
       location.reload();
     });
 
@@ -521,12 +509,18 @@ const signInToGoogle = () => {
 
   }).catch(function (err) {
     // console.log(err);
-    // console.log("Failed to do");
+    console.log("Sign in Failed!");
   });
 }
 
+
+/// Below are some features and functionalities that are added overtime
+// ADD Any code for additional functionality here
+
 byId('sidebar-toggler').onclick = function () {
-  // console.log("Side Toggler");
+  // The sidebar toggler button listener that expands/collapse
+  // the lefft sidebar
+
   var sidbar = byId('sidebar');
 
   if (screen.width <= 720) {
@@ -539,6 +533,7 @@ byId('sidebar-toggler').onclick = function () {
   }, 500);
 
 
+  // Updating the icon of the toggler
   let curImg = byId('side-img').src.split('/');
 
   if (curImg[curImg.length - 1] === "top.svg") {
@@ -563,6 +558,7 @@ byId('editing-button').onclick = function () {
   makeEditTabActive();
 };
 
+// gloabl keyboard shortcuts
 window.onkeydown = function (event) {
   if (event.ctrlKey || event.metaKey) {
     switch (String.fromCharCode(event.which).toLowerCase()) {
@@ -571,15 +567,16 @@ window.onkeydown = function (event) {
         // console.log("Trigger key press saved");
         // This means save the note now
         if (window.currentNote) {
-          // console.log('Saving Note');
           saveNote();
           makePreviewTabActive();
         }
+
         break;
     }
   }
 }
 
+// global keyboard shortcuts
 document.onkeyup = function (e) {
   if (e.shiftKey && e.which == 46) {
     openDeleteNoteModal()
@@ -593,17 +590,17 @@ document.onkeyup = function (e) {
 };
 
 /** Mobile Toggler */
-// console.log("y")
 byId('top-nav-toggler').onclick = function () {
-  // console.log("Togller")
   byId('top-nav-items').classList.toggle('top-nav-hide');
 }
 
+// Share a note
 byId('share-img').onclick = function () {
   let url = "/share?id=" + window.currentNote + "&user=" + cuserEmail
   window.open(url);
 }
 
+// Download html source function
 function download(filename, text) {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -623,6 +620,7 @@ byId('download-img').onclick = function () {
   download(window.editor.title + ".html", file)
 }
 
+// Toggle split view
 byId('split-btn').onclick = function () {
   if (window.splitView) {
     window.splitView = false;
@@ -637,15 +635,13 @@ byId('split-btn').onclick = function () {
     // Save the current note and editor values if changed!
 }
 
+// Making the t3ext ediot to simple mde
 document.addEventListener('DOMContentLoaded', function () {
-  console.log("DOM LOADED");
   simplemde = new SimpleMDE({
     element: document.getElementById("note-description-editor")
   });
 
   simplemde.codemirror.on("keyup", function () {
-    console.log(simplemde.value());
-
     // Start a timer for 3000 ms
     window.editor.description = simplemde.value();
 
@@ -654,7 +650,6 @@ document.addEventListener('DOMContentLoaded', function () {
     byId('typing-img-c').classList.remove('hidden');
 
     saveTimer = setTimeout(function () {
-      console.log("Hello work");
       byId('saved-img-c').classList.remove('hidden');
       byId('typing-img-c').classList.add('hidden');
       saveNote();
