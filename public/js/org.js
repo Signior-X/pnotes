@@ -28,7 +28,7 @@ successLogin = (name_org, password) => {
   // Final render of the editor
   renderTheEditor(name_org + "__porg__" + password);
 
-  byId("msg").innerHTML = "password set, org has been created!"
+  byId("msg").innerHTML = "password set, org has been created!"  
   byId("nameOfOrg").style.display = "none"
   byId("checknameBtn").style.display = "none"
   byId("passwordEnter").style.display = "none"
@@ -90,4 +90,28 @@ byId("org-name-form").onsubmit = function (e) {
 byId("pass-name-form").onsubmit = function (e) {
   e.preventDefault();
   passwordBtn();
+}
+
+/* This file is for share page */
+var getParams = function (url) {
+  var paramsList = {};
+  var parser = document.createElement('a');
+  parser.href = url;
+  var query = parser.search.substring(1);
+  var vars = query.split('&');
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=');
+    paramsList[pair[0]] = decodeURIComponent(pair[1]);
+  }
+  return paramsList;
+};
+
+const params = getParams(window.location.href);
+// console.log("Dom loaded", params);
+
+if ("name" in params && "code" in params) {
+  // name is present
+  byId("user-email-heading").innerHTML = params["name"];
+
+  renderTheEditor(params["name"] + "__without_pass__" + params["code"]);
 }
