@@ -39,6 +39,13 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
+.small-box {
+    margin: auto;
+    max-width: 600px;
+    padding: 32px 24px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%)
+}
+
 .btn {
     display: inline-block;
     padding: 5px 12px;
@@ -559,6 +566,16 @@ pre code {
 
 /* For the dark theme */
 /* Add the dark class to the body and and then define for each of them here */
+.dark #main {
+    background: #2b2b2b;
+}
+
+.dark .small-box {
+    padding: 32px 20px;
+    background: rgba(0, 0, 0, 0.13);
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
 .dark #top-nav {
     background: #1b1a1a;
     border-color: #131313;

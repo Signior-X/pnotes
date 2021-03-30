@@ -11,6 +11,27 @@ var simplemde = ''; // Initialised with emoty string
 var saveTimer = null;
 
 
+// Making the t3ext ediot to simple mde
+simplemde = new SimpleMDE({
+  element: document.getElementById("note-description-editor")
+});
+
+simplemde.codemirror.on("keyup", function () {
+  // Start a timer for 3000 ms
+  window.editor.description = simplemde.value();
+
+  clearTimeout(saveTimer);
+  byId('saved-img-c').classList.add('hidden');
+  byId('typing-img-c').classList.remove('hidden');
+
+  saveTimer = setTimeout(function () {
+    byId('saved-img-c').classList.remove('hidden');
+    byId('typing-img-c').classList.add('hidden');
+    saveNote();
+  }, 800);
+
+});
+
 // "Email using:" signInUserEmail
 
 // Now call the data extract for only once so as to get the list of datas
@@ -582,7 +603,7 @@ document.onkeyup = function (e) {
     openDeleteNoteModal()
   }
 
-  else if (e.ctrlKey && e.shiftKey && e.which == 37 ) {
+  else if (e.ctrlKey && e.shiftKey && e.which == 37) {
     byId('side-img').click();
   } else if (e.ctrlKey && e.shiftKey && e.which == 39) {
     byId('side-img').click();
@@ -631,29 +652,6 @@ byId('split-btn').onclick = function () {
     byId('split-view-holder').classList.add('pflex-view');
     saveForUnSavedChanges();
     makeEditTabActive();
-    }
-    // Save the current note and editor values if changed!
+  }
+  // Save the current note and editor values if changed!
 }
-
-// Making the t3ext ediot to simple mde
-document.addEventListener('DOMContentLoaded', function () {
-  simplemde = new SimpleMDE({
-    element: document.getElementById("note-description-editor")
-  });
-
-  simplemde.codemirror.on("keyup", function () {
-    // Start a timer for 3000 ms
-    window.editor.description = simplemde.value();
-
-    clearTimeout(saveTimer);
-    byId('saved-img-c').classList.add('hidden');
-    byId('typing-img-c').classList.remove('hidden');
-
-    saveTimer = setTimeout(function () {
-      byId('saved-img-c').classList.remove('hidden');
-      byId('typing-img-c').classList.add('hidden');
-      saveNote();
-    }, 800);
-
-  });
-});

@@ -1,0 +1,21 @@
+#org-container {
+  display: flex;
+  height: 60vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.inp2 {
+  width: 90%;
+  padding: 4px;
+  margin: 4px auto;
+}
+
+#org-container .btn {
+  margin: 8px auto;
+  display: block;
+}
+
+.dark #org-container .btn {
+  background: black;
+}
