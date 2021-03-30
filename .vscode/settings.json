@@ -1,0 +1,8 @@
+{
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2,
+    "files.associations": {
+        "org": "html",
+        "share": "html"
+    }
+}
