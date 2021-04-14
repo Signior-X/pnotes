@@ -34,7 +34,7 @@ router.get('/', (req, res, next) => {
             // For not logined only allow to see my welcome notes
             // give option at login.ejs to have signed in as anonymous
             res.status(200);
-            res.render('laptop.ejs', { theme: req.cookies.themeData, userEmail: 'anonymousNotSigned', displayName: 'Anonymous', islogin: false });
+            res.render('laptop.ejs', { theme: req.cookies.themeData, userEmail: 'anonymousUserPriyam', displayName: 'Anonymous', islogin: false });
         }
     } else {
         // This is mobile or tablet site
