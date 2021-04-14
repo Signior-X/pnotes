@@ -18,7 +18,7 @@ const params = getParams(window.location.href);
 var descriptionWindow = byId('note-description-content');
 
 if ("id" in params) {
-  let user = 'anonymousNotSigned';
+  let user = 'anonymousUserPriyam';
   if ("user" in params) {
     user = params['user'];
 
