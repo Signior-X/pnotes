@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/css/org.css">
 
   <title>Org</title>
+  <link rel="icon" href="article-24px.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="article-24px.svg" type="image/svg+xml">
 </head>
 
 <body>
