@@ -207,7 +207,7 @@ h6 {
   width: 90%;
 }
 .dark .search-input-container ::placeholder {
-  color: white;
+  color: #bdbcbc;
 }
 
 #note-family {
