@@ -1,6 +1,9 @@
 #main {
     display: block;
     height: 100%;
+    display: flex;
+    flex-flow: column;
+    flex-direction: column;
 }
 
 @media(min-width: 720px) {
@@ -34,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #main-content {
-    height: calc(100vh - 48px);
+    flex: 1;
     display: flex;
     overflow: hidden;
 }
@@ -235,6 +238,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #main-content-main {
+    height: 100%;
     margin: 12px 16px;
     flex: 3 2 auto;
     display: flex;
@@ -892,7 +896,10 @@ green {
 }
 
 #split-view-holder {
-    height: 96%;
+    flex: 1;
+
+    /* Height is just added dummy here for flex to work*/
+    height: 10px;
 }
 
 .pflex-view {
