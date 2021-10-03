@@ -11,7 +11,7 @@ def createJSFile(inputFile='public/', outputFile='templates/game-scripts-min.htm
 
     script = script_file.read()
 
-    url = 'https://javascript-minifier.com/raw'
+    url = 'https://www.toptal.com/developers/javascript-minifier/raw'
     myobj = {'input': script}
 
     x = requests.post(url, data=myobj)
