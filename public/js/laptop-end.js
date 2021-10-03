@@ -28,7 +28,7 @@ simplemde.codemirror.on("keyup", function () {
     byId('saved-img-c').classList.remove('hidden');
     byId('typing-img-c').classList.add('hidden');
     saveNote();
-  }, 3000);
+  }, 2000);
 
 });
 
