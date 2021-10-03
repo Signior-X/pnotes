@@ -983,3 +983,6 @@ green {
 .CodeMirror-selected {
   background-color: #f35e18 !important;
 }
+.CodeMirror-selectedtext {
+  color: white;
+}
