@@ -30,3 +30,6 @@ firebase serve
 ```
 Server will be opened at the localhost port 5000, visit it in your browser
 
+## What's new
+This project now works without Node.js
+A major breaking change while removing google sign in feature also.
