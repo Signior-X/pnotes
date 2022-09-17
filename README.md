@@ -1,8 +1,12 @@
-![Pnotes Banner](https://i.imgur.com/o8ETSv3.png)  
-
 # pnotesapp
 The Web app to store notes and have them sync with the Pnotes Android App.
 Check out the Android app at https://github.com/Signior-X/Pnotes-android
+
+![image](https://user-images.githubusercontent.com/56730716/190873308-3beef392-ed7d-45c6-8ba5-9ce730869dae.png)
+
+![pnotes-white-web](https://user-images.githubusercontent.com/56730716/190873230-27b1b9e9-dc43-42b7-abab-4b1ca440179d.png)
+
+![portfolio-6](https://user-images.githubusercontent.com/56730716/190873321-74e861d3-a5ca-4f04-b53d-4e76cf88c711.jpeg)
 
 ## Want to contribute
 Contributing has never been made more easy than before now.
